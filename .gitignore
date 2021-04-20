@@ -35,3 +35,9 @@ out/
 
 ### VS Code ###
 .vscode/
+gradle-wrapper.jar
+build.gradle
+gradlew
+gradlew.bat
+settings.gradle
+gradle-wrapper.properties
