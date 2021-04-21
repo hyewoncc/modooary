@@ -41,3 +41,4 @@ gradlew
 gradlew.bat
 settings.gradle
 gradle-wrapper.properties
+application.yml
