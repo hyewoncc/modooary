@@ -17,4 +17,9 @@ public class DiaryRepository {
     public void save(Diary diary){
         em.persist(diary);
     }
+
+    //단일 다이어리 조회
+    public Diary findOne(Long diaryId){
+        return em.find(Diary.class, diaryId);
+    }
 }

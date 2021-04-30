@@ -4,17 +4,20 @@ import com.modooary.domain.Diary;
 import com.modooary.domain.DiaryMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
 @Repository
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class DiaryMemberRepository {
 
     private final EntityManager em;
 
     //다이어리-회원 소속 정보 저장
+    @Transactional
     public void save(DiaryMember diaryMember){
         em.persist(diaryMember);
     }

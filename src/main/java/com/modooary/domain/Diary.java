@@ -21,7 +21,22 @@ public class Diary {
 
     private String title;
     private LocalDateTime regdate;
-    private LocalDateTime newdate;
 
     protected Diary(){};
+
+    private void setTitle(String title){
+        this.title = title;
+    }
+
+    private void setCreateTime(){
+        this.regdate = LocalDateTime.now();
+    }
+
+    /* 생성 메서드 */
+    public static Diary createDiary(String title){
+        Diary diary = new Diary();
+        diary.setTitle(title);
+        diary.setCreateTime();
+        return diary;
+    }
 }
