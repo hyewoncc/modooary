@@ -1,9 +1,12 @@
 package com.modooary.domain;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
 public class DiaryPost {
 
     @Id

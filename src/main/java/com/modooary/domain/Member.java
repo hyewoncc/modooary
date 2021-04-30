@@ -1,11 +1,16 @@
 package com.modooary.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
+@Getter
+@AllArgsConstructor
 public class Member {
 
     @Id @GeneratedValue
@@ -14,4 +19,7 @@ public class Member {
 
     private String name;
     private String email;
+    private String password;
+
+    protected Member(){}
 }
