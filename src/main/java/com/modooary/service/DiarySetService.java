@@ -45,6 +45,22 @@ public class DiarySetService {
         return diary.getId();
     }
 
+    //단일 다이어리 조회
+    public Diary findDairy(Long dairyId){
+        return diaryRepository.findOne(dairyId);
+    }
+
+    //단일 다이어리의 모든 다이어리-회원 소속 정보 조회
+    public List<DiaryMember> findDairyMembers(Diary diary){
+
+        List<DiaryMember> diaryMembers = new ArrayList<>();
+
+        //해당 다이어리-회원 소속 정보 조회
+        diaryMembers = diaryMemberRepository.findDairyMembers(diary.getId());
+
+        return diaryMembers;
+    }
+
     //단일 다이어리의 모든 회원 조회
     public List<Member> listDairyMembers(Diary diary){
 
