@@ -14,8 +14,8 @@ public class DiaryReply {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "DIARY_ID")
-    private Diary diary;
+    @JoinColumn(name = "DIARYPOST_ID")
+    private DiaryPost diaryPost;
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")

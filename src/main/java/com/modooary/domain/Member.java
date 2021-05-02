@@ -20,6 +20,7 @@ public class Member {
     private String name;
     private String email;
     private String password;
+    private String picture;
 
 
     private void setMemberInfo(String name, String email, String password){

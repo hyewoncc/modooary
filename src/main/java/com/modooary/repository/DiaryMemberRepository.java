@@ -23,10 +23,10 @@ public class DiaryMemberRepository {
     }
 
     //단일 다이어리에 속한 모든 회원 찾기
-    public List<DiaryMember> findDairyMembers(Long dairyId){
+    public List<DiaryMember> findDairyMembers(Long diaryId){
         return em.createQuery("select dm from DiaryMember dm" +
-                " where dm.diary.id = :dairyId", DiaryMember.class)
-                .setParameter("dairyId", dairyId)
+                " where dm.diary.id = :diaryId", DiaryMember.class)
+                .setParameter("diaryId", diaryId)
                 .getResultList();
     }
 
