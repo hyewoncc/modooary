@@ -14,13 +14,13 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class DairyBoardService {
+public class DiaryBoardService {
 
     private final DiaryPostRepository diaryPostRepository;
 
     //포스트 생성과 저장
     @Transactional
-    public Long registerDiaryPost(Diary diary, Member member, DiaryPost diaryPost) {
+    public Long registerDiaryPost(DiaryPost diaryPost) {
         //포스트를 저장
         diaryPostRepository.save(diaryPost);
 
@@ -33,11 +33,16 @@ public class DairyBoardService {
         diaryPostRepository.delete(diaryPost);
     }
 
+    //단일 포스트 조회
+    public DiaryPost findOne(Long id) {
+        return diaryPostRepository.findOne(id);
+    }
+
     //해당 다이어리의 모든 포스트 조회
     public List<DiaryPost> listDiaryPosts(Diary diary) {
         List<DiaryPost> diaryPosts = new ArrayList<>();
 
-        //해당 다이어리의 모든 포트트를 조회
+        //해당 다이어리의 모든 포스트를 조회
         diaryPosts = diaryPostRepository.findDiaryPosts(diary.getId());
         return diaryPosts;
     }

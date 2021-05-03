@@ -27,6 +27,12 @@ public class DiaryPostRepository {
         em.remove(diaryPost);
     }
 
+    //단일 포스트 조회
+    @Transactional
+    public DiaryPost findOne(Long id) {
+        return em.find(DiaryPost.class, id);
+    }
+
     //특정 다이어리에 속한 모든 포스트 조회
     public List<DiaryPost> findDiaryPosts(Long diaryId){
         return em.createQuery("select dp from DiaryPost dp" +
