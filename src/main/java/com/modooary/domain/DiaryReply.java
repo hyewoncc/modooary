@@ -1,11 +1,12 @@
 package com.modooary.domain;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
+@Getter
 public class DiaryReply {
 
     @Id
@@ -21,13 +22,33 @@ public class DiaryReply {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @ManyToOne
-    @JoinColumn(name = "PARENT_ID")
-    private DiaryReply parent;
-
-    @OneToMany(mappedBy = "parent")
-    private List<DiaryReply> child = new ArrayList<>();
-
     private String content;
     private LocalDateTime regdate;
+
+    private void setDiaryPost(DiaryPost diaryPost) {
+        this.diaryPost = diaryPost;
+    }
+
+    private void setMember(Member member) {
+        this.member = member;
+    }
+
+    private void setContent(String content) {
+        this.content = content;
+    }
+
+    private void setCreateTime() {
+        this.regdate = LocalDateTime.now();
+    }
+
+    /* 생성 메서드 */
+    public static DiaryReply createDiaryReply (DiaryPost diaryPost, Member member, String content) {
+        DiaryReply diaryReply = new DiaryReply();
+        diaryReply.setDiaryPost(diaryPost);
+        diaryReply.setMember(member);
+        diaryReply.setContent(content);
+        diaryReply.setCreateTime();
+
+        return diaryReply;
+    }
 }

@@ -28,7 +28,6 @@ public class DiaryPostRepository {
     }
 
     //단일 포스트 조회
-    @Transactional
     public DiaryPost findOne(Long id) {
         return em.find(DiaryPost.class, id);
     }

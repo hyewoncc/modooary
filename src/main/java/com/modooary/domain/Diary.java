@@ -21,6 +21,7 @@ public class Diary {
 
     private String title;
     private LocalDateTime regdate;
+    private String color;
 
     protected Diary(){};
 
