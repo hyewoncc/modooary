@@ -3,11 +3,10 @@ package com.modooary.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,6 +17,9 @@ public class Diary {
     @GeneratedValue
     @Column(name = "DIARY_ID")
     private Long id;
+
+    @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL)
+    private List<DiaryMember> diaryMembers = new ArrayList<>();
 
     private String title;
     private LocalDateTime regdate;

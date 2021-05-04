@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -15,13 +17,16 @@ public class DiaryPost {
     @Column(name = "DIARYPOST_ID")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DIARY_ID")
     private Diary diary;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
+
+    @OneToMany(mappedBy = "diaryPost", cascade = CascadeType.ALL)
+    private List<PostReply> postReplies = new ArrayList<>();
 
     private String content;
     private LocalDateTime regdate;

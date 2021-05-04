@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -16,6 +18,9 @@ public class Member {
     @GeneratedValue
     @Column(name = "MEMBER_ID")
     private Long id;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<DiaryMember> diaryMembers = new ArrayList<>();
 
     private String name;
     private String email;

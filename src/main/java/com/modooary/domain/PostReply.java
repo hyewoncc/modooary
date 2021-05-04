@@ -14,11 +14,11 @@ public class PostReply {
     @Column(name = "DIARYREPLY_ID")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DIARYPOST_ID")
     private DiaryPost diaryPost;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
