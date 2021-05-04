@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-public class DiaryReply {
+public class PostReply {
 
     @Id
     @GeneratedValue
@@ -42,13 +42,13 @@ public class DiaryReply {
     }
 
     /* 생성 메서드 */
-    public static DiaryReply createDiaryReply (DiaryPost diaryPost, Member member, String content) {
-        DiaryReply diaryReply = new DiaryReply();
-        diaryReply.setDiaryPost(diaryPost);
-        diaryReply.setMember(member);
-        diaryReply.setContent(content);
-        diaryReply.setCreateTime();
+    public static PostReply createDiaryReply (DiaryPost diaryPost, Member member, String content) {
+        PostReply postReply = new PostReply();
+        postReply.setDiaryPost(diaryPost);
+        postReply.setMember(member);
+        postReply.setContent(content);
+        postReply.setCreateTime();
 
-        return diaryReply;
+        return postReply;
     }
 }

@@ -2,10 +2,9 @@ package com.modooary.service;
 
 import com.modooary.domain.Diary;
 import com.modooary.domain.DiaryPost;
-import com.modooary.domain.DiaryReply;
-import com.modooary.domain.Member;
+import com.modooary.domain.PostReply;
 import com.modooary.repository.DiaryPostRepository;
-import com.modooary.repository.DiaryReplyRepository;
+import com.modooary.repository.PostReplyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +18,7 @@ import java.util.List;
 public class DiaryBoardService {
 
     private final DiaryPostRepository diaryPostRepository;
-    private final DiaryReplyRepository diaryReplyRepository;
+    private final PostReplyRepository postReplyRepository;
 
     /* 포스트 CRUD */
     //포스트 생성과 저장
@@ -55,25 +54,25 @@ public class DiaryBoardService {
     /* 댓글 CRUD */
     //댓글 생성과 저장
     @Transactional
-    public Long registerDiaryReply(DiaryReply diaryReply) {
+    public Long registerDiaryReply(PostReply postReply) {
         //댓글을 저장
-        diaryReplyRepository.save(diaryReply);
+        postReplyRepository.save(postReply);
 
-        return diaryReply.getId();
+        return postReply.getId();
     }
 
     //단일 댓글 삭제
     @Transactional
-    public void deleteDiaryReply(DiaryReply diaryReply) {
-        diaryReplyRepository.delete(diaryReply);
+    public void deleteDiaryReply(PostReply postReply) {
+        postReplyRepository.delete(postReply);
     }
 
     //특정 포스트의 모든 댓글 조회
-    public List<DiaryReply> listPostReplies (DiaryPost diaryPost) {
-        List<DiaryReply> diaryReplies = new ArrayList<>();
+    public List<PostReply> listPostReplies (DiaryPost diaryPost) {
+        List<PostReply> diaryReplies = new ArrayList<>();
 
         // 해당 포스트의 모든 댓글 조회
-        diaryReplies = diaryReplyRepository.findPostReplies(diaryPost.getId());
+        diaryReplies = postReplyRepository.findPostReplies(diaryPost.getId());
         return diaryReplies;
     }
 
