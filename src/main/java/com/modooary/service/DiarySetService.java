@@ -42,7 +42,7 @@ public class DiarySetService {
         DiaryMember diaryMember = DiaryMember.createGuest(member, diary);
         diaryMemberRepository.save(diaryMember);
 
-        return diary.getId();
+        return diaryMember.getId();
     }
 
     //단일 다이어리 조회

@@ -51,6 +51,7 @@ public class DiaryMember {
         diaryMember.setMember(member);
         diaryMember.setDiary(diary);
         diaryMember.setHost();
+        member.addDiaryInfo(diaryMember);
 
         return diaryMember;
     }
@@ -61,6 +62,7 @@ public class DiaryMember {
         diaryMember.setMember(member);
         diaryMember.setDiary(diary);
         diaryMember.setGuest();
+        member.addDiaryInfo(diaryMember);
 
         return diaryMember;
     }

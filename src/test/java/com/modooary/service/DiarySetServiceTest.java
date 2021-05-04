@@ -32,6 +32,7 @@ public class DiarySetServiceTest {
 
         //계정 생성
         Member member = Member.createMember("cat", "cat@gmail.com", "0000");
+        memberService.join(member);
 
         //다이어리 생성
         Diary diary = Diary.createDiary("모두의일기장");
@@ -67,8 +68,13 @@ public class DiarySetServiceTest {
             members.add(member);
         }
 
-        //다이어리 생성
+        //호스트를 맡을 회원 생성과 저장
+        Member hostMember = Member.createMember("방장", "host@gmail.com", "1111");
+        Long hostId = memberService.join(hostMember);
+
+        //다이어리 생성과 저장
         Diary diary = Diary.createDiary("모두의일기장");
+        diarySetService.registerDiary(diary, hostMember);
 
         //복수 계정을 다이어리에 게스트로 등록
         for (Member m : members) {
@@ -78,9 +84,11 @@ public class DiarySetServiceTest {
         //다이어리-회원 등록 정보를 조회
         List<DiaryMember> diaryMembers = diarySetService.findDairyMembers(diary);
 
-        //현재 다이어리-회원 등록 정보가 모두 GUEST인지 확인
+        //현재 다이어리-회원 등록 정보가 방장을 제외하고 모두 GUEST인지 확인
         for (DiaryMember dm : diaryMembers){
-            Assert.assertEquals("다이어리에 등록된 회원은 모두 GUEST다", Grade.GUEST, dm.getGrade());
+            if (dm.getMember().getId() != hostId) {
+                Assert.assertEquals("다이어리에 등록된 회원은 모두 GUEST다", Grade.GUEST, dm.getGrade());
+            }
         }
     }
 }

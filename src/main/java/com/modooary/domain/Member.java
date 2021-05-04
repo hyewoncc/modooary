@@ -34,10 +34,16 @@ public class Member {
         this.password = password;
     }
 
+    /* 생성 메소드 */
     public static Member createMember(String name, String email, String password){
         Member member = new Member();
         member.setMemberInfo(name, email, password);
         return member;
+    }
+
+    /* 연관관계 메소드 */
+    public void addDiaryInfo(DiaryMember diaryMember) {
+        diaryMembers.add(diaryMember);
     }
 
 }
