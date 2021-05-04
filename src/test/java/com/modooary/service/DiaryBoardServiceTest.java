@@ -4,6 +4,7 @@ import com.modooary.domain.Diary;
 import com.modooary.domain.DiaryPost;
 import com.modooary.domain.Member;
 import com.modooary.domain.PostReply;
+import org.assertj.core.api.Assertions;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +15,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -120,7 +123,7 @@ public class DiaryBoardServiceTest {
      * 각각의 포스트 id가 댓글의 포스트 id와 동일한지 검증
      * */
     @Test
-    @Rollback(value = false)
+    //@Rollback(value = false)
     public void 각기_다른_포스트에_댓글_등록() {
         //게정 생성과 저장
         Member member = Member.createMember("cat", "cat@gmail.com", "1111");
@@ -147,4 +150,37 @@ public class DiaryBoardServiceTest {
         Assert.assertEquals("포스트2의 id 값이 댓글2의 포스트 id값과 같은지 검증",
                 postId2, diaryBoardService.findOneReply(replyId2).getDiaryPost().getId());
     }
+
+    @Test
+    public void 포스트에서_여러_댓글_등록_및_조회(){
+        //게정 생성과 저장
+        Member member = Member.createMember("cat", "cat@gmail.com", "1111");
+        Long memberId = memberService.join(member);
+        //다이어리 생성과 저장
+        Diary diary = Diary.createDiary("일기장A");
+        Long diaryId = diarySetService.registerDiary(diary, member);
+        //포스트 생성과 저장
+        DiaryPost diaryPost = DiaryPost.createPost(diary, member, "안녕");
+        diaryBoardService.registerDiaryPost(diaryPost);
+
+        //댓글 세 개 생성 후 등록, 비교를 위해 HashMap에 저장
+        Map<Long, PostReply> replies = new HashMap<>();
+        for(int i = 0; i < 3; i++) {
+            PostReply postReply = PostReply.createPostReply(diaryPost, member, i + "번째 댓글");
+            Long replyId = diaryBoardService.registerPostReply(postReply);
+            replies.put(replyId, diaryBoardService.findOneReply(replyId));
+        }
+
+        //포스트에서 댓글 조회 후 HashMap에 저장
+        Map<Long, PostReply> findReplies = new HashMap<>();
+        List<PostReply> postReplies = diaryBoardService.listPostReplies(diaryPost);
+        for (PostReply postReply : postReplies) {
+            findReplies.put(postReply.getId(), postReply);
+        }
+
+        //두 해시맵 비교
+        Assertions.assertThat(replies).isEqualTo(findReplies);
+    }
+
+
 }

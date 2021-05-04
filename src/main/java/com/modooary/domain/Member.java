@@ -10,8 +10,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
 public class Member {
 
     @Id
@@ -40,6 +38,8 @@ public class Member {
         member.setMemberInfo(name, email, password);
         return member;
     }
+
+    protected Member(){}
 
     /* 연관관계 메소드 */
     public void addDiaryInfo(DiaryMember diaryMember) {
