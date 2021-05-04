@@ -42,7 +42,7 @@ public class PostReply {
     }
 
     /* 생성 메서드 */
-    public static PostReply createDiaryReply (DiaryPost diaryPost, Member member, String content) {
+    public static PostReply createPostReply (DiaryPost diaryPost, Member member, String content) {
         PostReply postReply = new PostReply();
         postReply.setDiaryPost(diaryPost);
         postReply.setMember(member);

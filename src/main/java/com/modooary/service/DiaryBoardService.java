@@ -37,7 +37,7 @@ public class DiaryBoardService {
     }
 
     //단일 포스트 조회
-    public DiaryPost findOne(Long id) {
+    public DiaryPost findOnePost(Long id) {
         return diaryPostRepository.findOne(id);
     }
 
@@ -54,7 +54,7 @@ public class DiaryBoardService {
     /* 댓글 CRUD */
     //댓글 생성과 저장
     @Transactional
-    public Long registerDiaryReply(PostReply postReply) {
+    public Long registerPostReply(PostReply postReply) {
         //댓글을 저장
         postReplyRepository.save(postReply);
 
@@ -63,8 +63,13 @@ public class DiaryBoardService {
 
     //단일 댓글 삭제
     @Transactional
-    public void deleteDiaryReply(PostReply postReply) {
+    public void deletePostReply(PostReply postReply) {
         postReplyRepository.delete(postReply);
+    }
+
+    //단일 댓글 조회
+    public PostReply findOneReply(Long id) {
+        return postReplyRepository.findOne(id);
     }
 
     //특정 포스트의 모든 댓글 조회

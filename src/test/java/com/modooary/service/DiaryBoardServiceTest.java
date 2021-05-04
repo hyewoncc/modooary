@@ -3,6 +3,7 @@ package com.modooary.service;
 import com.modooary.domain.Diary;
 import com.modooary.domain.DiaryPost;
 import com.modooary.domain.Member;
+import com.modooary.domain.PostReply;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,7 +45,7 @@ public class DiaryBoardServiceTest {
         Long postId = diaryBoardService.registerDiaryPost(diaryPost);
 
         //포스트 조회 후 일치하는지 확인
-        Assert.assertEquals("생성된 포스트와 조회한 포스트가 동일한지 테스트", diaryPost, diaryBoardService.findOne(postId));
+        Assert.assertEquals("생성된 포스트와 조회한 포스트가 동일한지 테스트", diaryPost, diaryBoardService.findOnePost(postId));
     }
 
     @Test
@@ -102,14 +103,48 @@ public class DiaryBoardServiceTest {
 
         //각각 포스트가 맞는 다이어리 id를 갖고 있는지 확인
         Assert.assertEquals("포스트1의 다이어리 id는 다이어리1과 같다",
-                diaryId1, diaryBoardService.findOne(postId1).getDiary().getId());
+                diaryId1, diaryBoardService.findOnePost(postId1).getDiary().getId());
         Assert.assertEquals("포스트2의 다이어리id는 다이어리2와 같다",
-                diaryId2, diaryBoardService.findOne(postId2).getDiary().getId());
+                diaryId2, diaryBoardService.findOnePost(postId2).getDiary().getId());
 
         //각각 포스트가 맞는 계정 id를 갖고 있는지 확인
         Assert.assertEquals("포스트1의 멤버 id는 멤버1과 같다",
-                memberId1, diaryBoardService.findOne(postId1).getMember().getId());
+                memberId1, diaryBoardService.findOnePost(postId1).getMember().getId());
         Assert.assertEquals("포스트2의 멤버 id는 멤버2와 같다",
-                memberId2, diaryBoardService.findOne(postId2).getMember().getId());
+                memberId2, diaryBoardService.findOnePost(postId2).getMember().getId());
+    }
+
+    /**
+     * 단일 다이어리에 같은 계정으로 다른 포스트 등록
+     * 그 후 각각 포스트에 댓글 작성
+     * 각각의 포스트 id가 댓글의 포스트 id와 동일한지 검증
+     * */
+    @Test
+    @Rollback(value = false)
+    public void 각기_다른_포스트에_댓글_등록() {
+        //게정 생성과 저장
+        Member member = Member.createMember("cat", "cat@gmail.com", "1111");
+        Long memberId = memberService.join(member);
+        //다이어리 생성과 저장
+        Diary diary = Diary.createDiary("일기장A");
+        Long diaryId = diarySetService.registerDiary(diary, member);
+
+        //각기 다른 포스트 생성과 저장
+        DiaryPost diaryPost1 = DiaryPost.createPost(diary, member, "안녕하세요");
+        Long postId1 = diaryBoardService.registerDiaryPost(diaryPost1);
+        DiaryPost diaryPost2 = DiaryPost.createPost(diary, member, "저녁 메뉴는 무엇입니까");
+        Long postId2 = diaryBoardService.registerDiaryPost(diaryPost2);
+
+        //각 포스트에 댓글 생성 후 저장
+        PostReply postReply1 = PostReply.createPostReply(diaryPost1, member, "반갑습니다");
+        Long replyId1 = diaryBoardService.registerPostReply(postReply1);
+        PostReply postReply2 = PostReply.createPostReply(diaryPost2, member, "고등어 구이 입니다");
+        Long replyId2 = diaryBoardService.registerPostReply(postReply2);
+
+        //저장된 댓글의 포스트 id 조회값이 기존값과 동일한지 검증
+        Assert.assertEquals("포스트1의 id 값이 댓글1의 포스트 id값과 같은지 검증",
+                postId1, diaryBoardService.findOneReply(replyId1).getDiaryPost().getId());
+        Assert.assertEquals("포스트2의 id 값이 댓글2의 포스트 id값과 같은지 검증",
+                postId2, diaryBoardService.findOneReply(replyId2).getDiaryPost().getId());
     }
 }
