@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h3>회원가입</h3>
+    <div class="sign-in form">
+        <form role="form" action="/sign-in" th:object="${memberForm}" method="post">
+            <input type="text" th:field="*{name}" placeholder="이름"> 나중에 변경할 수 있어요
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+            <br>
+            <input type="text" th:field="*{email}" placeholder="이메일 주소"> 변경 불가
+            <br>
+            <input type="password" th:field="*{password}" placeholder="비밀번호">
+            <br>
+            <button type="submit">인증메일 전송</button>
+        </form>
+    </div>
+</body>
+</html>

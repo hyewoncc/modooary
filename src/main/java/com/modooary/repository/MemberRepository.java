@@ -29,4 +29,18 @@ public class MemberRepository {
                 .getResultList();
     }
 
+    //중복되는 이메일이 있는지 검사
+    public boolean checkEmail(String email) {
+        Member member = em.createQuery("select m from Member m" + "" +
+                " where m.email = :email", Member.class)
+                .setParameter("email", email)
+                .getSingleResult();
+
+        if (member != null){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
 }
