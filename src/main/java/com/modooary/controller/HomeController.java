@@ -1,42 +1,38 @@
 package com.modooary.controller;
 
-import com.modooary.controller.form.LoginForm;
+import com.modooary.domain.Diary;
+import com.modooary.domain.DiaryMember;
+import com.modooary.domain.Member;
+import com.modooary.service.DiaryBoardService;
 import com.modooary.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.validation.Valid;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
 
     private final MemberService memberService;
+    private final DiaryBoardService diaryBoardService;
 
-    @RequestMapping("/")
-    public String main(Model model) {
-        model.addAttribute("loginForm", new LoginForm());
-        return "main";
-    }
-
-    @PostMapping("/login")
-    public String memberLogin(@Valid LoginForm form, BindingResult result) {
-
-        if (result.hasErrors()) {
-            return "main";
+    @GetMapping("/diary")
+    public String diaryHome(HttpSession session, Model model) {
+        Long memberId = (Long)session.getAttribute("memberId");
+        Member oneMember = memberService.findOneMember(memberId);
+        List<DiaryMember> diaryMembers = oneMember.getDiaryMembers();
+        List<Diary> diaries = new ArrayList<>();
+        for (DiaryMember dm : diaryMembers) {
+            diaries.add(dm.getDiary());
         }
 
-        if(memberService.memberLogin(form.getEmail(), form.getPassword())) {
-            return "home";
-        }else {
-            return "redirect:/";
-        }
+        model.addAttribute("diaryList", diaries);
+
+        return "diary";
     }
-
-
 }

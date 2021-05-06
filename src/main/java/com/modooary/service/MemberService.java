@@ -82,4 +82,9 @@ public class MemberService {
             return false;
         }
     }
+
+    //이메일 검색 후 멤버를 반환
+    public Member findOneByEmail(String email){
+        return memberRepository.findOneByEmail(email);
+    }
 }
