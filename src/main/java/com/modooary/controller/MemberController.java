@@ -9,9 +9,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -39,10 +41,25 @@ public class MemberController {
                 memberForm.getEmail(), memberForm.getPassword(), memberForm.getName());
         memberService.joinPreMember(preMember);
 
+        //임시 회원 정보를 바탕으로 확인 이메일 발송 후 메인으로 리다이렉트
         try {
-            emailUtil.sendMail(preMember.getEmail(), "모두어리 가입", "가입하세요");
+            emailUtil.sendMail(
+                    preMember.getName(), preMember.getEmail(), preMember.getId(), preMember.getKey());
         } catch (MessagingException e) {
             e.printStackTrace();
+        }
+
+        return "redirect:/";
+    }
+
+    //인증 메일 링크로 들어올 시 파라미터 값을 DB와 비교하여 일치 시 정회원으로 등록
+    @GetMapping("/sign-up/confirm")
+    public String signUpConfirm(
+            @RequestParam("id") Long id, @RequestParam("key") String key) {
+
+        //임시 회원의 키값 조회 후 일치시 정회원 전환
+        if (memberService.checkPreMemberKey(id, key)) {
+            memberService.approveMember(id);
         }
 
         return "redirect:/";

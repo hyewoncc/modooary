@@ -15,12 +15,22 @@ public class EmailUtil {
     private final JavaMailSender javaMailSender;
 
     public void sendMail(
-            String email, String subject, String content) throws MessagingException {
+            String name, String email, Long prememberId, String key) throws MessagingException {
         MimeMessage message = javaMailSender.createMimeMessage();
         message.setFrom("noreply@modooary.com");
         message.setRecipients(Message.RecipientType.TO, email);
-        message.setSubject(subject);
-        message.setText(content);
+        message.setSubject(name + "님의 모두어리 가입을 환영합니다");
+
+        String content = new StringBuffer().append("<h2>모두어리</h2>")
+                .append("링크를 눌러 가입을 완료하세요.<br>")
+                .append("<a href='http://localhost:8080/sign-up/confirm?id=")
+                .append(prememberId)
+                .append("&key=")
+                .append(key)
+                .append("' target='_blenk'>이메일 인증하기</a>")
+                .toString();
+
+        message.setText(content, "UTF-8", "html");
         javaMailSender.send(message);
     }
 }
