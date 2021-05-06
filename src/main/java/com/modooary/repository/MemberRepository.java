@@ -29,6 +29,14 @@ public class MemberRepository {
                 .getResultList();
     }
 
+    //단일 이메일로 조회
+    public Member findOneByEmail(String email){
+        return em.createQuery("select m from Member m" +
+                " where m.email = :email", Member.class)
+                .setParameter("email", email)
+                .getSingleResult();
+    }
+
     //중복되는 이메일이 있는지 검사
     public boolean checkEmail(String email) {
         Member member = em.createQuery("select m from Member m" + "" +

@@ -1,5 +1,6 @@
 package com.modooary.controller;
 
+import com.modooary.controller.form.MemberForm;
 import com.modooary.domain.PreMember;
 import com.modooary.service.MemberService;
 import com.modooary.utils.EmailUtil;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
-import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor

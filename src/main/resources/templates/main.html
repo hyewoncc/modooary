@@ -9,11 +9,17 @@
 <body>
 
     <h3>Modooary</h3>
-    <input type="text" id="email" name="email" placeholder="이메일 주소">
-    <br>
-    <input type="password" id="password" name="password" placeholder="비밀번호">
-    <br>
-    <button type="button" onclick="location.href = '/login'">로그인</button>
+    <div class="login form">
+        <form role="form" action="/login" th:object="${loginForm}" method="post">
+            <input type="text" th:field="*{email}" placeholder="이메일 주소">
+            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+            <br>
+            <input type="password" th:field="*{password}" placeholder="비밀번호">
+            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+            <br>
+            <button type="submit">로그인</button>
+        </form>
+    </div>
     <button type="button" onclick="location.href = '/sign-in'">회원가입</button>
 
 </body>
