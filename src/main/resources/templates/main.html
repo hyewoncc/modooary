@@ -5,22 +5,51 @@
 <head>
     <meta charset="UTF-8">
     <title>main</title>
+    <link href="css/mainStyle.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 
-    <h3>Modooary</h3>
-    <div class="login form">
-        <form role="form" action="/login" th:object="${loginForm}" method="post">
-            <input type="text" th:field="*{email}" placeholder="이메일 주소">
-            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
-            <br>
-            <input type="password" th:field="*{password}" placeholder="비밀번호">
-            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
-            <br>
-            <button type="submit">로그인</button>
-        </form>
+<div class="body-wrap">
+
+    <div class="modooary-wrap">
+
+        <div class="content-wrap">
+
+            <div class="introduce-wrap">
+                <div class="content-title">Modooary</div>
+                <div class="content-subtitle">모두 같이 쓰는 교환 일기장 모두어리</div>
+            </div>
+
+            <div class="login-wrap">
+                <div class="login-form">
+                    <form role="form" action="/login" th:object="${loginForm}" method="post">
+                        <div class="login-form-low">
+                            <label for="email" class="input-label">&#x2709;️</label>
+                            <input type="text" class="text-input" id="email" th:field="*{email}" placeholder="이메일 주소">
+                            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                        </div>
+                        <div class="login-form-low">
+                            <label for="password" class="input-label">🔑</label>
+                            <input type="password" class="text-input" id="password" th:field="*{password}" placeholder="비밀번호">
+                            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                        </div>
+                        <div class="login-form-low">
+                            <button type="submit">로그인</button>
+                        </div>
+                        <div class="login-form-low">
+                            <button type="button" onclick="location.href = '/sign-in'">회원가입</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </div>
-    <button type="button" onclick="location.href = '/sign-in'">회원가입</button>
+
+</div>
 
 </body>
 </html>
