@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>main</title>
-    <link href="css/mainStyle.css" rel="stylesheet">
+    <link href="/css/mainStyle.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,23 +26,26 @@
             <div class="login-wrap">
                 <div class="login-form">
                     <form role="form" action="/login" th:object="${loginForm}" method="post">
-                        <div class="login-form-low">
+                        <div class="form-low">
                             <label for="email" class="input-label">&#x2709;️</label>
                             <input type="text" class="text-input" id="email" th:field="*{email}" placeholder="이메일 주소">
                             <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
                         </div>
-                        <div class="login-form-low">
+                        <div class="form-low">
                             <label for="password" class="input-label">🔑</label>
                             <input type="password" class="text-input" id="password" th:field="*{password}" placeholder="비밀번호">
                             <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
                         </div>
-                        <div class="login-form-low">
+                        <div class="form-low">
                             <button type="submit">로그인</button>
-                        </div>
-                        <div class="login-form-low">
                             <button type="button" onclick="location.href = '/sign-in'">회원가입</button>
                         </div>
                     </form>
+                        <div class="form-low" th:switch="${emailAlert}">
+                            <span th:case="''"></span>
+                            <span th:case="'success'">가입완료 링크가 포함된 메일을 보내드렸어요.</span>
+                            <span th:case="'fail'">메일 발송에 실패했어요. 다시 시도해주세요.</span>
+                        </div>
                 </div>
             </div>
         </div>

@@ -5,20 +5,49 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="/css/mainStyle.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <h3>회원가입</h3>
-    <div class="sign-in form">
-        <form role="form" action="/sign-in" th:object="${memberForm}" method="post">
-            <input type="text" th:field="*{name}" placeholder="이름"> 나중에 변경할 수 있어요
-            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
-            <br>
-            <input type="text" th:field="*{email}" placeholder="이메일 주소"> 변경 불가
-            <br>
-            <input type="password" th:field="*{password}" placeholder="비밀번호">
-            <br>
-            <button type="submit">인증메일 전송</button>
-        </form>
+<div class="body-wrap">
+
+    <div class="modooary-wrap">
+
+        <div class="content-wrap">
+
+            <div class="introduce-wrap">
+                <div class="content-title">회원가입</div>
+                <div class="content-subtitle">모두어리에 오신 걸 환영해요</div>
+            </div>
+            <div class="login-wrap">
+                <div class="sign-in login-form">
+                    <form role="form" action="/sign-in" th:object="${memberForm}" method="post">
+                        <div class="form-low">
+                            <label for="name">닉네임</label>
+                            <input type="text" class="text-input" id="name" th:field="*{name}" placeholder="나중에 변경할 수 있어요">
+                            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                        </div>
+                        <div class="form-low">
+                            <label for="email">이메일</label>
+                            <input type="text" class="text-input" id="email" th:field="*{email}" placeholder="변경할 수 없어요">
+                        </div>
+                        <div class="form-low">
+                            <label for="password">비밀번호</label>
+                            <input type="password" class="text-input" id="password" th:field="*{password}" placeholder="비밀번호">
+                        </div>
+                        <div>
+                            <button type="submit">인증메일 전송</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </div>
+
+</div>
+
 </body>
 </html>

@@ -25,6 +25,9 @@ public class MainController {
     @RequestMapping("/")
     public String main(Model model) {
         model.addAttribute("loginForm", new LoginForm());
+        if(!model.containsAttribute("emailAlert")){
+            model.addAttribute("emailAlert", "");
+        }
         return "main";
     }
 

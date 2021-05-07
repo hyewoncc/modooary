@@ -29,7 +29,7 @@ public class MemberController {
     }
 
     @PostMapping("/sign-in")
-    public String sendSignInMail(@Valid MemberForm memberForm, BindingResult result) {
+    public String sendSignInMail(@Valid MemberForm memberForm, BindingResult result, Model model) {
 
         //공란이 있을 시 재작성
         if (result.hasErrors()) {
@@ -45,7 +45,9 @@ public class MemberController {
         try {
             emailUtil.sendMail(
                     preMember.getName(), preMember.getEmail(), preMember.getId(), preMember.getKey());
+            model.addAttribute("emailAlert", "success");
         } catch (MessagingException e) {
+            model.addAttribute("emailAlert", "fail");
             e.printStackTrace();
         }
 
