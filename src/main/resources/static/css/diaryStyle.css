@@ -1,0 +1,75 @@
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.body-wrap {
+    display: flex;
+}
+
+.diary-list-wrap {
+    position: relative;
+    width: 20%;
+    height: 100%;
+}
+
+.diary-list {
+    padding-top: 20px;
+    background-color: lightgray;
+}
+
+.diary-flag {
+    margin-left: auto;
+    width: 160px;
+    height: 30px;
+    background-color: slategray;
+    margin-bottom: 20px;
+}
+
+.diary-flag:hover {
+    background-color: aquamarine;
+}
+
+.diary-post-wrap {
+    position: relative;
+    width: 60%;
+    height: 100%;
+    background-color: azure;
+}
+
+.diary-post {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.post-low {
+    width: 100%;
+}
+
+.post-reply {
+    width: 100%;
+    font-size: 0.8rem;
+}
+
+.member-list-wrap {
+    position: relative;
+    width: 20%;
+    height: 100%;
+    background-color: linen;
+}
+
+.member-list {
+    width: 100%;
+}
+
+@media (max-width: 1000px) {
+    .diary-list-wrap {
+        width: 200px;
+    }
+    .diary-post-wrap {
+        width: 600px;
+    }
+    .member-list-wrap{
+        width: 200px;
+    }
+
+}

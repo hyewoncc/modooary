@@ -35,7 +35,8 @@ public class DiaryPostRepository {
     //특정 다이어리에 속한 모든 포스트 조회
     public List<DiaryPost> findDiaryPosts(Long diaryId){
         return em.createQuery("select dp from DiaryPost dp" +
-                " where dp.diary.id = :diaryId", DiaryPost.class)
+                " where dp.diary.id = :diaryId" +
+                " order by dp.regdate desc ", DiaryPost.class)
                 .setParameter("diaryId", diaryId)
                 .getResultList();
     }

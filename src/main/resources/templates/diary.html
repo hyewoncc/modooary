@@ -5,10 +5,57 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="/css/diaryStyle.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <div th:each="diary : ${diaryList}">
-        <p th:text="${diary.getTitle()}"></p>
-    <div>
+    <div class="body-wrap">
+        <div class="diary-list-wrap">
+            <div class="diary-list">
+                <div class="diary-flag" th:each="diary : ${diaries}" th:onclick="'location.href=\'/diary/' + ${diary.getId()} + '\''">
+                    <a th:text="${diary.getTitle()}"></a>
+                </div>
+                <div class="diary-flag">
+                    <a>+ 새 다이어리 만들기</a>
+                </div>
+            </div>
+        </div>
+        <div class="diary-post-wrap">
+            <div class="new-post">
+                <form role="form" action="/post" method="post">
+                    <textarea name="post_text" id="post_text"></textarea>
+                    <button type="submit">글 등록</button>
+                </form>
+            </div>
+            <div class="diary-post" th:each="post : ${posts}">
+                <div class="post-low">
+                    <span th:text="${post.getMember().getName()}"></span>
+                    <span th:text="${#temporals.format(post.getRegdate(),'yyyy년 MM월 dd일 hh시 mm분')}"></span>
+                </div>
+                <div class="post-low">
+                    <span class="post-content" th:text="${post.getContent()}"></span>
+                </div>
+                <div class="post-low">
+                    <div class="post-reply" th:each="reply : ${replyMap.get(post.getId())}">
+                        <span th:text="${reply.getContent()}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="member-list-wrap">
+            <div class="member-list" th:each="member : ${members}">
+                <span th:text="${member.getMember().getName()}"></span>
+                <span th:text="${member.getGrade()}"></span>
+                <br/>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function goDiary(id) {
+            location.href = "localhost:8080/diary/" + id;
+        }
+    </script>
 </body>
 </html>
