@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="/css/diaryStyle.css" rel="stylesheet">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,6 +26,7 @@
     </div>
 
     <div class="body-wrap">
+
         <div class="diary-list-wrap">
             <div class="diary-list">
                 <div class="diary-flag" th:each="diary : ${diaries}" th:onclick="'location.href=\'/diary/' + ${diary.getId()} + '\''">
@@ -35,6 +37,7 @@
                 </div>
             </div>
         </div>
+
         <div class="diary-post-wrap">
             <div class="new-post">
                 <form role="form" action="/post" method="post">
@@ -50,13 +53,19 @@
                 <div class="post-low">
                     <span class="post-content" th:text="${post.getContent()}"></span>
                 </div>
-                <div class="post-low">
+                <div class="post-low" th:id="'reply-list' + ${post.getId()}">
                     <div class="post-reply" th:each="reply : ${replyMap.get(post.getId())}">
+                        <span th:text="${reply.getMember().getName()}"></span>
                         <span th:text="${reply.getContent()}"></span>
                     </div>
                 </div>
+                    <div class="add-post-reply">
+                        <input type="text" th:id="'reply-content' + ${post.getId()}" placeholder="댓글 작성">
+                        <button type="button" th:onclick="'registerReply(' + ${post.getId()} + ');'">등록</button>
+                    </div>
             </div>
         </div>
+
         <div class="member-list-wrap">
             <div class="member-list" th:each="member : ${members}">
                 <span th:text="${member.getMember().getName()}"></span>
