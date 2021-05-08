@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,6 +45,26 @@ public class DiaryController {
 
             return "redirect:/diary/" + diary.getId();
         }
+    }
+
+    //새로운 다이어리 생성
+    @PostMapping("/diary")
+    public String registerDiary(HttpServletRequest request, Model model) {
+
+        //세션에서 현재 사용자를 받아옴
+        HttpSession session = request.getSession();
+        Long memberId = (Long) session.getAttribute("memberId");
+        Member member = memberService.findOneMember(memberId);
+
+        //입력된 다이어리 제목 정보를 받아옴
+        String diaryTitle = request.getParameter("add-diary-title");
+
+        //현재 사용자를 HOST로 새로운 다이어리 개설
+        Diary diary = Diary.createDiary(diaryTitle);
+        Long diaryId = diarySetService.registerDiary(diary, member);
+
+        //새로운 다이어리로 이동
+        return "redirect:/diary/" + diaryId;
     }
 
     //특정 다이어리 보여주기

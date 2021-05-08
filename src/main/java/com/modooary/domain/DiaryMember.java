@@ -12,7 +12,7 @@ public class DiaryMember {
 
     @Id
     @GeneratedValue
-    @Column(name = "DIARY_MEMBER_ID")
+    @Column(name = "DIARYMEMBER_ID")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
