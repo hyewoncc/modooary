@@ -18,7 +18,7 @@ import java.util.List;
 public class InvitationService {
 
     private final InvitationRepository invitationRepository;
-    
+
     //초대장 등록
     @Transactional
     public Long registerInvitation(Invitation invitation) {
@@ -39,5 +39,4 @@ public class InvitationService {
         invitations = invitationRepository.findInvitations(memberId);
         return invitations;
     }
-
 }
