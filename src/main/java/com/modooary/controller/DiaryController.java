@@ -90,7 +90,8 @@ public class DiaryController {
         Diary diary = diarySetService.findDairy(diaryId);
         List<DiaryPost> diaryPosts = diaryBoardService.listDiaryPosts(diary);
 
-        //모델에 포스트 목록 추가
+        //모델에 다이어리와 포스트 목록 추가
+        model.addAttribute("diary", diary);
         model.addAttribute("posts", diaryPosts);
 
         //모든 포스트의 댓글 조회

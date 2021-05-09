@@ -41,6 +41,10 @@ body {
     background-color: lightgray;
 }
 
+.list-header {
+    height: 40px;
+}
+
 .diary-flag {
     margin-left: auto;
     width: 160px;

@@ -28,9 +28,12 @@
     <div class="body-wrap">
 
         <div class="diary-list-wrap">
+            <div class="list-header">
+                <a>다이어리 목록</a>
+            </div>
             <div class="diary-list">
-                <div class="diary-flag" th:each="diary : ${diaries}" th:onclick="'location.href=\'/diary/' + ${diary.getId()} + '\''">
-                    <a th:text="${diary.getTitle()}"></a>
+                <div class="diary-flag" th:each="d : ${diaries}" th:onclick="'location.href=\'/diary/' + ${d.getId()} + '\''">
+                    <a th:text="${d.getTitle()}"></a>
                 </div>
                 <div class="diary-flag">
                     <a id="add-diary-open">+ 새 다이어리 만들기</a>
@@ -39,37 +42,43 @@
         </div>
 
         <div class="diary-post-wrap">
+            <div class="list-header">
+                <a th:text="${diary.getTitle()}"></a>
+            </div>
             <div class="new-post">
                 <form role="form" action="/post" method="post">
                     <textarea name="post_text" id="post_text"></textarea>
                     <button type="submit">글 등록</button>
                 </form>
             </div>
-            <div class="diary-post" th:each="post : ${posts}">
+            <div class="diary-post" th:each="p : ${posts}">
                 <div class="post-low">
-                    <span th:text="${post.getMember().getName()}"></span>
-                    <span th:text="${#temporals.format(post.getRegdate(),'yyyy년 MM월 dd일 hh시 mm분')}"></span>
+                    <span th:text="${p.getMember().getName()}"></span>
+                    <span th:text="${#temporals.format(p.getRegdate(),'yyyy년 MM월 dd일 hh시 mm분')}"></span>
                 </div>
                 <div class="post-low">
-                    <span class="post-content" th:text="${post.getContent()}"></span>
+                    <span class="post-content" th:text="${p.getContent()}"></span>
                 </div>
-                <div class="post-low" th:id="'reply-list' + ${post.getId()}">
-                    <div class="post-reply" th:each="reply : ${replyMap.get(post.getId())}">
+                <div class="post-low" th:id="'reply-list' + ${p.getId()}">
+                    <div class="post-reply" th:each="reply : ${replyMap.get(p.getId())}">
                         <span th:text="${reply.getMember().getName()}"></span>
                         <span th:text="${reply.getContent()}"></span>
                     </div>
                 </div>
                     <div class="add-post-reply">
-                        <input type="text" th:id="'reply-content' + ${post.getId()}" placeholder="댓글 작성">
-                        <button type="button" th:onclick="'registerReply(' + ${post.getId()} + ');'">등록</button>
+                        <input type="text" th:id="'reply-content' + ${p.getId()}" placeholder="댓글 작성">
+                        <button type="button" th:onclick="'registerReply(' + ${p.getId()} + ');'">등록</button>
                     </div>
             </div>
         </div>
 
         <div class="member-list-wrap">
-            <div class="member-list" th:each="member : ${members}">
-                <span th:text="${member.getMember().getName()}"></span>
-                <span th:text="${member.getGrade()}"></span>
+            <div class="list-header">
+                <a>이 다이어리의 친구들</a>
+            </div>
+            <div class="member-list" th:each="m : ${members}">
+                <span th:text="${m.getMember().getName()}"></span>
+                <span th:text="${m.getGrade()}"></span>
                 <br/>
             </div>
         </div>
