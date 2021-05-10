@@ -26,11 +26,7 @@ window.onload = function () {
         modalOff('show-invitation-wrap');
         location.reload();
     }
-    /*
-    document.getElementById('add-friend-close').onclick = function () {
-        modalOff('add-friend-wrap');
-    }
-     */
+
 
     /* 친구 찾기 키워드 입력창에서 엔터키를 쳐도 검색이 되도록 이벤트 등록*/
     document.getElementById('search-keyword').addEventListener(
@@ -50,10 +46,13 @@ function registerReply(postId) {
         url: '/reply',
         data: data,
         type: 'post',
-        success: function(data){
-            let reply = $('<div class="post-reply"><span>' + data.name + '</span> ' +
-                '<span>' + data.content +'</span></div>')
-            $('#reply-list' + postId).append(reply);
+        success: function(replyList){
+            $('#reply-list' + postId).empty();
+            $.each(replyList, function (index, reply){
+                let replyDiv = $('<div class="post-reply"><span>' + reply.name + '</span> ' +
+                    '<span>' + reply.content +'</span></div>');
+                $('#reply-list' + postId).append(replyDiv);
+            })
             $('#reply-content' + postId).val('');
         }
     })

@@ -60,7 +60,8 @@
                 <a>다이어리 목록</a>
             </div>
             <div class="diary-list">
-                <div class="diary-flag" th:each="d : ${diaries}" th:onclick="'location.href=\'/diary/' + ${d.getId()} + '\''">
+                <div class="diary-flag" th:each="d : ${diaries}" th:onclick="'location.href=\'/diary/' + ${d.getId()} + '\''"
+                 th:style="'background-color:' + '#' + ${d.getColor()}">
                     <a th:text="${d.getTitle()}"></a>
                 </div>
                 <div class="diary-flag">
@@ -96,7 +97,7 @@
                     </div>
                 </div>
                     <div class="add-post-reply">
-                        <input type="text" th:id="'reply-content' + ${p.getId()}" placeholder="댓글 작성">
+                        <input type="text" class="reply-content" th:id="'reply-content' + ${p.getId()}" placeholder="댓글 작성">
                         <button type="button" th:onclick="'registerReply(' + ${p.getId()} + ');'">등록</button>
                     </div>
             </div>
