@@ -63,9 +63,23 @@ function searchMember() {
         success: function(data){
             $('#result-list').empty();
             $.each(data, function (index, member){
-                let result = $('<span>' + member.name +'</span> ' + '<span>' + member.email +'</span><br/>');
+                let result = $('<div onclick="sendInvitation(' + member.id + ')"><span>' + member.name +'</span> '
+                    + '<span>' + member.email +'</span></div><br/>');
                 $('#result-list').append(result);
             })
+        }
+    })
+}
+
+//친구에게 초대장 보내기 ajax 통신
+function sendInvitation(memberId) {
+    $.ajax({
+        url: '/send-invitation',
+        data: {'memberId' : memberId},
+        type: 'post',
+        success: function (){
+            alert("초대장을 전송했습니다");
+            modalOff('add-friend-wrap');
         }
     })
 }
