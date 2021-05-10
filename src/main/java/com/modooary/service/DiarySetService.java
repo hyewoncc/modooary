@@ -92,4 +92,15 @@ public class DiarySetService {
 
         return diaries;
     }
+
+    //단일 회원이 특정 다이어리에 속해있는지 확인
+    public boolean checkMemberInDiary(Member member, Diary diary){
+        List<DiaryMember> diaryMembers = diaryMemberRepository.findDairyMembers(diary.getId());
+        for (DiaryMember diaryMember : diaryMembers) {
+            if (diaryMember.getMember().equals(member)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

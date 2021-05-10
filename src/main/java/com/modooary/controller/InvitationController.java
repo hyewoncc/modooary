@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,7 +25,7 @@ public class InvitationController {
 
     @PostMapping("/send-invitation")
     @ResponseBody
-    public void sendInvitation(HttpServletRequest request) {
+    public String sendInvitation(HttpServletRequest request) {
         //세션에서 현재 사용자 id값을 받아 사용자 설정
         HttpSession session = request.getSession();
         Long memberId = (Long) session.getAttribute("memberId");
@@ -38,9 +39,23 @@ public class InvitationController {
         Long receiverId = Long.parseLong(request.getParameter("memberId"));
         Member receiverMember = memberService.findOneMember(receiverId);
 
-        //초대장을 생성하고 저장
+        //보낼 회원이 이미 현재 다이어리에 있다면 already 반환
+        if(diarySetService.checkMemberInDiary(receiverMember, diary)){
+            return "already";
+        }
+
+        //보낼 회원에게 이미 초대장을 보낸 상태라면 waiting 반환
+        List<Invitation> invitations = invitationService.findInvitations(receiverId);
+        for (Invitation invitation : invitations) {
+            if(invitation.getDiary().equals(diary)){
+                return "waiting";
+            }
+        }
+
+        //현재 다이어리에 없다면 초대장을 생성하고 저장
         Invitation invitation = Invitation.createInvitation(member, receiverMember, diary);
         invitationService.registerInvitation(invitation);
+        return "complete";
     }
 
     @PostMapping("/accept-invitation")

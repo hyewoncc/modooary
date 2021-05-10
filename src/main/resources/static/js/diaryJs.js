@@ -84,9 +84,16 @@ function sendInvitation(memberId) {
         url: '/send-invitation',
         data: {'memberId' : memberId},
         type: 'post',
-        success: function (){
-            alert("초대장을 전송했습니다");
-            modalOff('add-friend-wrap');
+        success: function (result){
+            switch (result) {
+                case 'already':
+                    alert('이미 가입한 친구입니다'); break;
+                case 'waiting':
+                    alert('이미 초대장을 보낸 친구입니다'); break;
+                case 'complete':
+                    alert('초대장을 전송했습니다'); break;
+                default: break;
+            }
         }
     })
 }
