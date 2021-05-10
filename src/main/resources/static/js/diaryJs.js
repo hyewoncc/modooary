@@ -19,6 +19,9 @@ window.onload = function () {
     document.getElementById('add-friend-open').onclick = function () {
         modalOn('add-friend-wrap');
     }
+    document.getElementById('show-invitation-open').onclick = function () {
+        modalOn('show-invitation-wrap');
+    }
     /*
     document.getElementById('add-friend-close').onclick = function () {
         modalOff('add-friend-wrap');

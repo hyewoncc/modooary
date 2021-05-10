@@ -43,6 +43,8 @@ body {
 
 .list-header {
     height: 40px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .diary-flag {

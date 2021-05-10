@@ -14,6 +14,7 @@
 <body>
 
     <!-- 모달 창 모음 -->
+    <!-- 다이어리 생성 창 -->
     <div class="modal-wrap" id="add-diary-wrap">
         <div class="modal-content" id="add-diary-content">
             <h3>새 다이어리 추가</h3>
@@ -25,12 +26,26 @@
         </div>
     </div>
 
+    <!-- 친구 초대 창 -->
     <div class="modal-wrap" id="add-friend-wrap">
         <div class="modal-content" id="add-friend-content">
             <h3>친구 초대</h3>
             <input type="text" id="search-keyword" placeholder="이름 또는 이메일">
             <button type="button" th:onclick="'searchMember();'">찾기</button>
             <div id="result-list">
+            </div>
+        </div>
+    </div>
+
+    <!-- 초대장 보기 창 -->
+    <div class="modal-wrap" id="show-invitation-wrap">
+        <div class="modal-content" id="show-invitation-content">
+            <h3>초대장</h3>
+            <div class="invitation" th:each="i : ${invitations}">
+                <span th:text="${i.getSender_name()} + '님이 '"> </span>
+                <span th:text="${i.getDiary_title()} + '로 초대하셨습니다' "></span>
+                <button type="button">수락</button>
+                <button type="button">거절</button>
             </div>
         </div>
     </div>
@@ -54,6 +69,7 @@
         <div class="diary-post-wrap">
             <div class="list-header">
                 <a th:text="${diary.getTitle()}"></a>
+                <button type="button" id="show-invitation-open">초대장</button>
             </div>
             <div class="new-post">
                 <form role="form" action="/post" method="post">

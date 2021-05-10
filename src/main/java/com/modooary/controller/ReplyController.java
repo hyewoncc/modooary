@@ -24,7 +24,7 @@ public class ReplyController {
 
     @PostMapping("/reply")
     @ResponseBody
-    public postReplyDto registerReply(HttpServletRequest request) {
+    public PostReplyDto registerReply(HttpServletRequest request) {
 
         //세션에서 현재 사용자 id값을 받아 사용자 설정
         HttpSession session = request.getSession();
@@ -38,13 +38,13 @@ public class ReplyController {
         PostReply postReply = PostReply.createPostReply(diaryPost, member, reply);
         diaryBoardService.registerPostReply(postReply);
 
-        return new postReplyDto(member.getName(), postReply.getContent());
+        return new PostReplyDto(member.getName(), postReply.getContent());
     }
 
 
     @Data
     @AllArgsConstructor
-    static class postReplyDto {
+    static class PostReplyDto {
         private String name;
         private String content;
     }
