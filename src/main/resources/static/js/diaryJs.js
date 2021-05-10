@@ -9,12 +9,29 @@ function modalOff(wrap){
 }
 
 window.onload = function () {
+    /* 모달 창에 열고 닫기 등록 */
     document.getElementById('add-diary-open').onclick = function () {
         modalOn('add-diary-wrap');
     }
     document.getElementById('add-diary-close').onclick = function () {
         modalOff('add-diary-wrap');
     }
+    document.getElementById('add-friend-open').onclick = function () {
+        modalOn('add-friend-wrap');
+    }
+    /*
+    document.getElementById('add-friend-close').onclick = function () {
+        modalOff('add-friend-wrap');
+    }
+     */
+
+    /* 친구 찾기 키워드 입력창에서 엔터키를 쳐도 검색이 되도록 이벤트 등록*/
+    document.getElementById('search-keyword').addEventListener(
+        'keyup', function (e) {
+            if (e.key === 'Enter') {
+                searchMember();
+            }
+    })
 }
 
 
@@ -33,5 +50,22 @@ function registerReply(postId) {
             $('#reply-content' + postId).val('');
         }
     })
+}
 
+//친구 찾기 ajax 통신
+function searchMember() {
+    let keyword = {'keyword' : document.getElementById('search-keyword').value };
+
+    $.ajax({
+        url: '/search',
+        data: keyword,
+        type: 'get',
+        success: function(data){
+            $('#result-list').empty();
+            $.each(data, function (index, member){
+                let result = $('<span>' + member.name +'</span> ' + '<span>' + member.email +'</span><br/>');
+                $('#result-list').append(result);
+            })
+        }
+    })
 }

@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface MemberSearchRepository extends JpaRepository <Member, Long> {
     List<Member> findByNameLike(String keyword);
-
     List<Member> findByEmailLike(String keyword);
 }

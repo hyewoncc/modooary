@@ -16,12 +16,22 @@
     <!-- 모달 창 모음 -->
     <div class="modal-wrap" id="add-diary-wrap">
         <div class="modal-content" id="add-diary-content">
-        <h3>새 다이어리 추가</h3>
+            <h3>새 다이어리 추가</h3>
             <form role="form" action="/diary" method="post">
                 <input type="text" id="add-diary-title" name="add-diary-title" placeholder="다이어리 제목">
                 <button type="submit">등록</button>
                 <button type="button" id="add-diary-close">취소</button>
             </form>
+        </div>
+    </div>
+
+    <div class="modal-wrap" id="add-friend-wrap">
+        <div class="modal-content" id="add-friend-content">
+            <h3>친구 초대</h3>
+            <input type="text" id="search-keyword" placeholder="이름 또는 이메일">
+            <button type="button" th:onclick="'searchMember();'">찾기</button>
+            <div id="result-list">
+            </div>
         </div>
     </div>
 
@@ -80,6 +90,9 @@
                 <span th:text="${m.getMember().getName()}"></span>
                 <span th:text="${m.getGrade()}"></span>
                 <br/>
+            </div>
+            <div class="member-list">
+                <a id="add-friend-open">친구 초대하기</a>
             </div>
         </div>
     </div>
