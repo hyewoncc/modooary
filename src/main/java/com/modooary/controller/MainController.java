@@ -23,10 +23,15 @@ public class MainController {
     private final MemberService memberService;
 
     @RequestMapping("/")
-    public String main(Model model) {
+    public String main(Model model, HttpSession session) {
         model.addAttribute("loginForm", new LoginForm());
-        if(!model.containsAttribute("emailAlert")){
+        if (!model.containsAttribute("emailAlert")) {
             model.addAttribute("emailAlert", "");
+        }
+
+        //이미 로그인 한 사람이라면 다이어리 페이지로 이동시킴
+        if (session.getAttribute("memberId") != null) {
+            return "redirect:/diary";
         }
         return "main";
     }
@@ -39,14 +44,19 @@ public class MainController {
             return "main";
         }
 
-        if(memberService.memberLogin(form.getEmail(), form.getPassword())) {
+        if (memberService.memberLogin(form.getEmail(), form.getPassword())) {
             Member member = memberService.findOneByEmail(form.getEmail());
             session.setAttribute("memberId", member.getId());
             return "redirect:/diary";
-        }else {
+        } else {
             return "redirect:/";
         }
     }
 
+    @GetMapping("/logout")
+    public String memberLogout(HttpSession session){
+        session.removeAttribute("memberId");
 
+        return "redirect:/";
+    }
 }

@@ -73,6 +73,7 @@
             <div class="list-header">
                 <a th:text="${diary.getTitle()}"></a>
                 <button type="button" id="show-invitation-open">초대장</button>
+                <button type="button" onclick="location.href='/logout'">로그아웃</button>
             </div>
             <div class="new-post">
                 <form role="form" action="/post" method="post">
