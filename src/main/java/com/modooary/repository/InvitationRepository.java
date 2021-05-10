@@ -27,6 +27,11 @@ public class InvitationRepository {
         em.remove(invitation);
     }
 
+    //단일 초대장 조회
+    public Invitation findOne(Long id) {
+        return em.find(Invitation.class, id);
+    }
+
     //특정 회원이 받은 모든 초대장 조회
     public List<Invitation> findInvitations(Long memberId) {
         return em.createQuery("select i from Invitation i" +

@@ -41,11 +41,14 @@
     <div class="modal-wrap" id="show-invitation-wrap">
         <div class="modal-content" id="show-invitation-content">
             <h3>초대장</h3>
-            <div class="invitation" th:each="i : ${invitations}">
+            <div class="invitation" th:id="'invitation-' + ${i.getId()}" th:each="i : ${invitations}">
                 <span th:text="${i.getSender_name()} + '님이 '"> </span>
                 <span th:text="${i.getDiary_title()} + '로 초대하셨습니다' "></span>
-                <button type="button">수락</button>
-                <button type="button">거절</button>
+                <button type="button" th:onclick="'acceptInvitation(' + ${i.getId()} + ');'">수락</button>
+                <button type="button" th:onclick="'rejectInvitation(' + ${i.getId()} + ');'">거절</button>
+            </div>
+            <div class="modal-control">
+                <button type="button" id="show-invitation-close">우편함 닫기</button>
             </div>
         </div>
     </div>

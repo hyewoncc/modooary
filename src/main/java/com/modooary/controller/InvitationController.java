@@ -43,4 +43,29 @@ public class InvitationController {
         invitationService.registerInvitation(invitation);
     }
 
+    @PostMapping("/accept-invitation")
+    @ResponseBody
+    public void acceptInvitation(HttpServletRequest request) {
+        //전송된 초대장 id값을 받아와서 찾음
+        Long invitationId = Long.parseLong(request.getParameter("invitationId"));
+        Invitation invitation = invitationService.findOne(invitationId);
+
+        //초대장 정보를 바탕으로 회원을 다이어리에 등록
+        diarySetService.registerDiaryMember(invitation.getDiary(), invitation.getReceiver());
+
+        //초대장 삭제
+        invitationService.deleteInvitation(invitation);
+    }
+
+    @PostMapping("/reject-invitation")
+    @ResponseBody
+    public void rejectInvitation(HttpServletRequest request) {
+        //전송된 초대장 id값을 받아와서 찾음
+        Long invitationId = Long.parseLong(request.getParameter("invitationId"));
+        Invitation invitation = invitationService.findOne(invitationId);
+
+        //초대장 삭제
+        invitationService.deleteInvitation(invitation);
+    }
+
 }

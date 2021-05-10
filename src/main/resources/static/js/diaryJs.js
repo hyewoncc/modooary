@@ -22,6 +22,10 @@ window.onload = function () {
     document.getElementById('show-invitation-open').onclick = function () {
         modalOn('show-invitation-wrap');
     }
+    document.getElementById('show-invitation-close').onclick = function () {
+        modalOff('show-invitation-wrap');
+        location.reload();
+    }
     /*
     document.getElementById('add-friend-close').onclick = function () {
         modalOff('add-friend-wrap');
@@ -83,6 +87,30 @@ function sendInvitation(memberId) {
         success: function (){
             alert("초대장을 전송했습니다");
             modalOff('add-friend-wrap');
+        }
+    })
+}
+
+//초대장 수락하기 ajax 통신
+function acceptInvitation(invitationId) {
+    $.ajax({
+        url: '/accept-invitation',
+        data: {'invitationId': invitationId},
+        type: 'post',
+        success: function (){
+            $('#invitation-' + invitationId).remove();
+        }
+    })
+}
+
+//초대장 거절하기 ajax 통신
+function rejectInvitation(invitationId) {
+    $.ajax({
+        url: '/reject-invitation',
+        data: {'invitationId': invitationId},
+        type: 'post',
+        success: function (){
+            $('#invitation-' + invitationId).remove();
         }
     })
 }

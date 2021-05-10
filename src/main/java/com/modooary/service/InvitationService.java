@@ -33,6 +33,11 @@ public class InvitationService {
         invitationRepository.delete(invitation);
     }
 
+    //단일 초대장 조회
+    public Invitation findOne(Long invitationId) {
+        return invitationRepository.findOne(invitationId);
+    }
+
     //회원에게 온 모든 초대장 조회
     public List<Invitation> findInvitations(Long memberId) {
         List<Invitation> invitations = new ArrayList<>();
