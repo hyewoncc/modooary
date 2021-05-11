@@ -42,10 +42,10 @@
         <div class="modal-content" id="show-invitation-content">
             <h3>초대장</h3>
             <div class="invitation" th:id="'invitation-' + ${i.getId()}" th:each="i : ${invitations}">
-                <span th:text="${i.getSender_name()} + '님이 '"> </span>
-                <span th:text="${i.getDiary_title()} + '로 초대하셨습니다' "></span>
-                <button type="button" th:onclick="'acceptInvitation(' + ${i.getId()} + ');'">수락</button>
-                <button type="button" th:onclick="'rejectInvitation(' + ${i.getId()} + ');'">거절</button>
+                <span th:text="${i.sender_name} + '님이 '"> </span>
+                <span th:text="${i.diary_title} + '로 초대하셨습니다' "></span>
+                <button type="button" th:onclick="'acceptInvitation(' + ${i.id} + ');'">수락</button>
+                <button type="button" th:onclick="'rejectInvitation(' + ${i.id} + ');'">거절</button>
             </div>
             <div class="modal-control">
                 <button type="button" id="show-invitation-close">우편함 닫기</button>
@@ -60,9 +60,9 @@
                 <a>다이어리 목록</a>
             </div>
             <div class="diary-list">
-                <div class="diary-flag" th:each="d : ${diaries}" th:onclick="'location.href=\'/diary/' + ${d.getId()} + '\''"
-                 th:style="'background-color:' + '#' + ${d.getColor()}">
-                    <a th:text="${d.getTitle()}"></a>
+                <div class="diary-flag" th:each="d : ${diaries}" th:onclick="'location.href=\'/diary/' + ${d.id} + '\''"
+                 th:style="'background-color:' + '#' + ${d.color}">
+                    <a th:text="${d.title}"></a>
                 </div>
                 <div class="diary-flag">
                     <a id="add-diary-open">+ 새 다이어리 만들기</a>
@@ -73,7 +73,7 @@
 
         <div class="diary-post-wrap">
             <div class="list-header">
-                <a th:text="${diary.getTitle()}"></a>
+                <a th:text="${diary.title}"></a>
                 <button type="button" id="show-invitation-open">초대장</button>
                 <button type="button" onclick="location.href='/logout'">로그아웃</button>
             </div>
@@ -86,22 +86,32 @@
             </div>
 
             <div class="diary-post" th:each="p : ${posts}">
-                <div class="post-low">
-                    <span th:text="${p.getMember().getName()}"></span>
-                    <span th:text="${#temporals.format(p.getRegdate(),'yyyy년 MM월 dd일 hh시 mm분')}"></span>
+                <div class="post-low post-header">
+                    <div class="post-picture-wrap">
+                        <img class="post-picture" th:src="'/img/' + ${p.member.picture}">
+                    </div>
+                    <div class="post-header-content">
+                        <a th:text="${p.member.name}"></a>
+                        <a th:text="${#temporals.format(p.regdate,'yyyy년 MM월 dd일 hh시 mm분')}"></a>
+                    </div>
                 </div>
                 <div class="post-low">
-                    <span class="post-content" th:text="${p.getContent()}"></span>
+                    <span class="post-content" th:text="${p.content}"></span>
                 </div>
-                <div class="post-low" th:id="'reply-list' + ${p.getId()}">
-                    <div class="post-reply" th:each="reply : ${replyMap.get(p.getId())}">
-                        <span th:text="${reply.getMember().getName()}"></span>
-                        <span th:text="${reply.getContent()}"></span>
+                <div class="post-low" th:id="'reply-list' + ${p.id}">
+                    <div class="post-reply" th:each="reply : ${replyMap.get(p.id)}">
+                        <div class="reply-picture-wrap">
+                            <img class="reply-picture" th:src="'/img/' + ${reply.picture}">
+                        </div>
+                        <div class="reply-content">
+                            <span th:text="${reply.name}"></span>
+                            <span th:text="${reply.content}"></span>
+                        </div>
                     </div>
                 </div>
                     <div class="add-post-reply">
-                        <input type="text" class="reply-content" th:id="'reply-content' + ${p.getId()}" placeholder="댓글 작성">
-                        <button type="button" th:onclick="'registerReply(' + ${p.getId()} + ');'">등록</button>
+                        <input type="text" class="reply-content" th:id="'reply-content' + ${p.id}" placeholder="댓글 작성">
+                        <button type="button" th:onclick="'registerReply(' + ${p.id} + ');'">등록</button>
                     </div>
             </div>
         </div>
@@ -112,8 +122,8 @@
                 <a>이 다이어리의 친구들</a>
             </div>
             <div class="member-list" th:each="m : ${members}">
-                <span th:text="${m.getMember().getName()}"></span>
-                <span th:text="${m.getGrade()}"></span>
+                <span th:text="${m.member.name}"></span>
+                <span th:text="${m.grade}"></span>
                 <br/>
             </div>
             <div th:if="${host}" class="member-list">

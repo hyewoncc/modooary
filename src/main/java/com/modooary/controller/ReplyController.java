@@ -1,12 +1,11 @@
 package com.modooary.controller;
 
+import com.modooary.controller.dto.PostReplyDto;
 import com.modooary.domain.DiaryPost;
 import com.modooary.domain.Member;
 import com.modooary.domain.PostReply;
 import com.modooary.service.DiaryBoardService;
 import com.modooary.service.MemberService;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,23 +42,9 @@ public class ReplyController {
         //댓글을 작성한 포스트의 id값으로 댓글을 다시 읽어오기
         List<PostReply> postReplies = diaryBoardService.listPostReplies(diaryPost);
         List<PostReplyDto> postReplyDtos = postReplies.stream()
-                .map(r -> new PostReplyDto(r))
+                .map(p -> new PostReplyDto(p))
                 .collect(Collectors.toList());
 
         return postReplyDtos;
     }
-
-
-    @Data
-    @AllArgsConstructor
-    static class PostReplyDto {
-        private String name;
-        private String content;
-
-        public PostReplyDto(PostReply postReply){
-            name = postReply.getMember().getName();
-            content = postReply.getContent();
-        }
-    }
-
 }

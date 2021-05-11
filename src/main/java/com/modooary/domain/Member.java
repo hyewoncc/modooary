@@ -5,6 +5,7 @@ import lombok.Getter;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Entity
 @Getter
@@ -42,6 +43,16 @@ public class Member {
     /* 연관관계 메소드 */
     public void addDiaryInfo(DiaryMember diaryMember) {
         diaryMembers.add(diaryMember);
+    }
+
+    public void changePicture(String picture) {
+        this.picture = picture;
+    }
+
+    public void setRandomPicture() {
+        String[] randomPictures = {
+                "bear.png", "blackcat.png", "graycat.png", "parrot.png", "rabbit.png", "yellowcat.png"};
+        this.picture = randomPictures[new Random().nextInt(6)];
     }
 
 }

@@ -80,6 +80,4 @@ public class DiaryBoardService {
         diaryReplies = postReplyRepository.findPostReplies(diaryPost.getId());
         return diaryReplies;
     }
-
-
 }

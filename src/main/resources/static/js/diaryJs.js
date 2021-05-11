@@ -54,8 +54,10 @@ function registerReply(postId) {
         success: function(replyList){
             $('#reply-list' + postId).empty();
             $.each(replyList, function (index, reply){
-                let replyDiv = $('<div class="post-reply"><span>' + reply.name + '</span> ' +
-                    '<span>' + reply.content +'</span></div>');
+                let replyDiv = $('<div class="post-reply"><div class="reply-picture-wrap">' +
+                    '<img class="reply-picture" src="/img/' + reply.picture +'"></div>' +
+                    '<div class="reply-content"><span>' + reply.name + '</span> ' +
+                    '<span>' + reply.content +'</span></div></div>');
                 $('#reply-list' + postId).append(replyDiv);
             })
             $('#reply-content' + postId).val('');

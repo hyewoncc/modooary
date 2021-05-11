@@ -57,6 +57,8 @@ public class MemberService {
                 preMember.getName(), preMember.getEmail(), preMember.getPassword());
 
         //회원을 등록하고 임시 회원을 삭제
+        //등록 시 임시 프로필사진을 지정해줌
+        member.setRandomPicture();
         memberRepository.save(member);
         preMemberRepository.delete(preMember);
 

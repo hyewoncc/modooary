@@ -1,5 +1,6 @@
 package com.modooary.controller;
 
+import com.modooary.controller.dto.PostReplyDto;
 import com.modooary.domain.*;
 import com.modooary.service.DiaryBoardService;
 import com.modooary.service.DiarySetService;
@@ -79,6 +80,8 @@ public class DiaryController {
         //세션에서 현재 사용자를 받아옴
         Long memberId = (Long) session.getAttribute("memberId");
         Member member = memberService.findOneMember(memberId);
+        //모델에 현재 사용자 추가
+        model.addAttribute("member", member);
 
         //현재 사용자의 모든 다이어리 목록 찾기
         List<DiaryMember> diaryMemberForDiary = member.getDiaryMembers();
@@ -100,9 +103,13 @@ public class DiaryController {
 
 
         //모든 포스트의 댓글 조회
-        Map<Long, List<PostReply>> replyMap = new HashMap<>();
+        Map<Long, List<PostReplyDto>> replyMap = new HashMap<>();
         for (DiaryPost dp : diaryPosts) {
-            replyMap.put(dp.getId(), diaryBoardService.listPostReplies(dp));
+            List<PostReply> postReplies = diaryBoardService.listPostReplies(dp);
+            List<PostReplyDto> postReplyDtos = postReplies.stream()
+                    .map(p -> new PostReplyDto(p))
+                    .collect(Collectors.toList());
+            replyMap.put(dp.getId(), postReplyDtos);
         }
         //모델에 댓글 맵 추가
         model.addAttribute("replyMap", replyMap);
