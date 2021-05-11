@@ -22,6 +22,11 @@ window.onload = function () {
     document.getElementById('show-invitation-open').onclick = function () {
         modalOn('show-invitation-wrap');
     }
+    Array.from(document.getElementsByClassName('modal-wrap')).forEach((w) => {
+        w.onclick = function () {
+            modalOff(w.getAttribute('id'));
+        }
+    })
     document.getElementById('show-invitation-close').onclick = function () {
         modalOff('show-invitation-wrap');
         location.reload();

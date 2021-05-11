@@ -112,7 +112,12 @@ public class DiaryController {
         List<DiaryMember> members = diary.getDiaryMembers();
         //모델에 멤버 목록 추가
         model.addAttribute("members", members);
-
+        //현재 다이어리에서 내 권한 찾아서 모델에 추가
+        for (DiaryMember diaryMember : members) {
+            if (diaryMember.getMember().equals(member) && diaryMember.getGrade().equals(Grade.HOST)){
+                    model.addAttribute("host", true);
+                }
+            }
 
         //현재 회원의 모든 초대장 조회
         List<Invitation> invitations = invitationService.findInvitations(memberId);

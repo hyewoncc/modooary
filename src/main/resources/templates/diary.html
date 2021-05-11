@@ -70,18 +70,21 @@
             </div>
         </div>
 
+
         <div class="diary-post-wrap">
             <div class="list-header">
                 <a th:text="${diary.getTitle()}"></a>
                 <button type="button" id="show-invitation-open">초대장</button>
                 <button type="button" onclick="location.href='/logout'">로그아웃</button>
             </div>
+
             <div class="new-post">
                 <form role="form" action="/post" method="post">
-                    <textarea name="post_text" id="post_text"></textarea>
+                    <textarea class="post-text" name="post_text" id="post_text"></textarea>
                     <button type="submit">글 등록</button>
                 </form>
             </div>
+
             <div class="diary-post" th:each="p : ${posts}">
                 <div class="post-low">
                     <span th:text="${p.getMember().getName()}"></span>
@@ -103,6 +106,7 @@
             </div>
         </div>
 
+
         <div class="member-list-wrap">
             <div class="list-header">
                 <a>이 다이어리의 친구들</a>
@@ -112,7 +116,7 @@
                 <span th:text="${m.getGrade()}"></span>
                 <br/>
             </div>
-            <div class="member-list">
+            <div th:if="${host}" class="member-list">
                 <a id="add-friend-open">친구 초대하기</a>
             </div>
         </div>

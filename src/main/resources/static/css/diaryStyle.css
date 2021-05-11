@@ -65,6 +65,15 @@ body {
     background-color: azure;
 }
 
+.new-post {
+    width: 96%;
+    margin: auto;
+}
+
+.post-text{
+    width: 100%;
+}
+
 .diary-post {
     width: 100%;
     margin-bottom: 20px;
