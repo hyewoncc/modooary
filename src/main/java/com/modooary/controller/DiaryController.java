@@ -33,22 +33,26 @@ public class DiaryController {
     private final InvitationService invitationService;
 
     @GetMapping("/diary")
-    public String diaryHome(HttpSession session) {
+    public String diaryHome(HttpSession session, Model model) {
 
         //세션에서 현재 사용자를 받아옴
         Long memberId = (Long) session.getAttribute("memberId");
         Member member = memberService.findOneMember(memberId);
 
         //현재 사용자의 모든 다이어리 목록 찾기
-        List<DiaryMember> diaryMembers = member.getDiaryMembers();
+        List<DiaryMember> diaryMembers = new ArrayList<>();
+        diaryMembers = member.getDiaryMembers();
 
         //다이어리가 없는 신규 회원이라면 따로 처리
         if(diaryMembers.size() == 0) {
+            model.addAttribute("new", true);
             return "diary";
         }else {
             //현재 사용자의 첫번째 다이어리 (가장 오래 된 다이어리)로 이동
+            if(model.containsAttribute("new")){
+                model.addAttribute("new", false);
+            }
             Diary diary = diaryMembers.get(0).getDiary();
-
             return "redirect:/diary/" + diary.getId();
         }
     }
@@ -63,10 +67,11 @@ public class DiaryController {
         Member member = memberService.findOneMember(memberId);
 
         //입력된 다이어리 제목 정보를 받아옴
-        String diaryTitle = request.getParameter("add-diary-title");
+        String diaryTitle = request.getParameter("new-diary-title");
 
-        //현재 사용자를 HOST로 새로운 다이어리 개설
+        //현재 사용자를 HOST로 새로운 다이어리 개설 후 색상 적용
         Diary diary = Diary.createDiary(diaryTitle);
+        diary.changeColor(request.getParameter("color-code"));
         Long diaryId = diarySetService.registerDiary(diary, member);
 
         //새로운 다이어리로 이동

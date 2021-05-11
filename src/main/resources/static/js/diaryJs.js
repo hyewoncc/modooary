@@ -1,37 +1,37 @@
 
+const colors = ["EA698B", "F15152", "EF8354", "F9C74F", "8cb369",
+    "43AA8B", "4d908e", "277da1", "4d43ac", "7209b7"];
+
 //모달창 열고 닫기 등록
-function modalOn(wrap){
-    document.getElementById(wrap).style.display = 'flex';
-}
-
-function modalOff(wrap){
-    document.getElementById(wrap).style.display = 'none';
-}
-
 window.onload = function () {
-    /* 모달 창에 열고 닫기 등록 */
+    //다이어리 추가 창
     document.getElementById('add-diary-open').onclick = function () {
-        modalOn('add-diary-wrap');
+        document.getElementById('add-diary-wrap').classList.add('show-modal');
     }
     document.getElementById('add-diary-close').onclick = function () {
-        modalOff('add-diary-wrap');
+        document.getElementById('add-diary-wrap').classList.remove('show-modal');
     }
+
+    //친구 추가 창
     document.getElementById('add-friend-open').onclick = function () {
-        modalOn('add-friend-wrap');
+        document.getElementById('add-friend-wrap').classList.add('show-modal');
     }
+
+    //초대장 목록 창
     document.getElementById('show-invitation-open').onclick = function () {
-        modalOn('show-invitation-wrap');
+        document.getElementById('show-invitation-wrap').classList.add('show-modal');
     }
-    Array.from(document.getElementsByClassName('modal-wrap')).forEach((w) => {
-        w.onclick = function () {
-            modalOff(w.getAttribute('id'));
-        }
-    })
     document.getElementById('show-invitation-close').onclick = function () {
-        modalOff('show-invitation-wrap');
+        document.getElementById('show-invitation-wrap').classList.remove('show-modal');
         location.reload();
     }
 
+    //모달창 바깥을 클릭하면 닫히는 기능 추가
+    Array.from(document.getElementsByClassName('modal-wrap')).forEach((w) => {
+        window.addEventListener('click', (e) => {
+            e.target === w ? w.classList.remove('show-modal') : false;
+        })
+    })
 
     /* 친구 찾기 키워드 입력창에서 엔터키를 쳐도 검색이 되도록 이벤트 등록*/
     document.getElementById('search-keyword').addEventListener(
@@ -39,6 +39,20 @@ window.onload = function () {
             if (e.key === 'Enter') {
                 searchMember();
             }
+    })
+
+    //컬러파레트 생성
+    for(let color of colors) {
+        $('#color-palette').append('<div class="color-chip" style=background-color:#' + color + ';' +
+            ' id="' + color +'"></div>');
+    }
+    //컬러칩 클릭 시 선택되는 기능 추가
+    let colorChips = Array.from(document.getElementsByClassName("color-chip"));
+    colorChips.forEach((c) => { c.addEventListener('click', ()=>{
+        colorChips.forEach((cc) => {cc.classList.remove('color-selected')})
+        c.classList.add('color-selected');
+        document.getElementById('new-diary-title').style.backgroundColor = c.style.backgroundColor;
+        document.getElementById('color-code').value = c.id})
     })
 }
 

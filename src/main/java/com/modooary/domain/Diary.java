@@ -42,4 +42,9 @@ public class Diary {
         diary.setCreateTime();
         return diary;
     }
+
+    //다이어리 색상 변경
+    public void changeColor(String color) {
+        this.color = color;
+    }
 }

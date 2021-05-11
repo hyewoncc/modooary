@@ -12,6 +12,10 @@ body {
     display: none;
 }
 
+.modal-wrap.show-modal {
+    display: block;
+}
+
 .modal-content {
     background-color: white;
     border-radius: 6px;
@@ -21,9 +25,94 @@ body {
 }
 
 #add-diary-content {
-    width: 500px;
-    height: 300px;
+    width: 360px;
+    margin: 10% auto auto;
+}
+
+.modal-content-box {
+    width: 80%;
+    height: 100%;
     margin: auto;
+}
+
+.add-diary-title-wrap {
+    position: relative;
+    padding-top: 20px;
+    width: 100%;
+}
+
+.add-diary-title {
+    text-align: center;
+}
+
+.add-diary-form-wrap {
+    width: 100%;
+    margin-top: 30px;
+}
+
+.new-diary-title-wrap {
+    width: 100%;
+    margin: auto;
+}
+
+.new-diary-title {
+    width: 100%;
+    height: 26px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.input-box {
+    color: white;
+    font-size: 16px;
+    width: 100%;
+    padding-top: 3px;
+    background-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0.3);
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-top-width: 0px;
+    border-bottom-width: 1px;
+}
+
+.input-box::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+}
+
+.input-box:focus {
+    outline-color: #adfaff;
+}
+
+.color-palette {
+    width: 100%;
+    height: 24px;
+    display: flex;
+    align-content: baseline;
+    justify-content: space-between;
+}
+
+.color-chip {
+    width: 16px;
+    height: 16px;
+    border-radius: 40%;
+}
+
+.color-chip.color-selected {
+    border: 4px solid #ADFAFF;
+}
+
+.add-diary-button-wrap {
+    width: 100%;
+    margin-top: 30px;
+    padding-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.add-diary-button {
+    width: 48%;
+    height: 30px;
 }
 
 .body-wrap {
@@ -50,12 +139,22 @@ body {
 .diary-flag {
     margin-left: auto;
     width: 160px;
-    height: 30px;
-    margin-bottom: 20px;
+    height: 38px;
+    text-align: right;
+    margin-bottom: 14px;
 }
 
 .diary-flag:hover {
-    background-color: aquamarine;
+    width: 165px;
+}
+
+.diary-flag-title {
+    color: white;
+    padding-right: 12px;
+}
+
+.diary-flag-title:hover {
+    padding-right: 20px;
 }
 
 .diary-post-wrap {
