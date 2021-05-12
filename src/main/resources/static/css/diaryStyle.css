@@ -35,6 +35,23 @@ body {
     margin: auto;
 }
 
+.form-button {
+    border-radius: 6px;
+    border: none;
+    background-color: lightgray;
+    color: black;
+}
+
+.confirm-button:hover {
+    background-color: #6947b4;
+    color: white;
+}
+
+.cancel-button:hover {
+    background-color: lightslategray;
+    color: white;
+}
+
 .add-diary-title-wrap {
     position: relative;
     padding-top: 20px;

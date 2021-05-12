@@ -4,8 +4,27 @@ const colors = ["EA698B", "F15152", "EF8354", "F9C74F", "8cb369",
 
 //모달창 열고 닫기 등록
 window.onload = function () {
+
+    //컬러파레트 생성
+    for(let color of colors) {
+        $('#color-palette').append('<div class="color-chip" style=background-color:#' + color + ';' +
+            ' id="' + color +'"></div>');
+    }
+    //컬러칩 클릭 시 선택되는 기능 추가
+    let colorChips = Array.from(document.getElementsByClassName("color-chip"));
+    colorChips.forEach((c) => { c.addEventListener('click', ()=>{
+        colorChips.forEach((cc) => {cc.classList.remove('color-selected')})
+        c.classList.add('color-selected');
+        document.getElementById('new-diary-title').style.backgroundColor = c.style.backgroundColor;
+        document.getElementById('color-code').value = c.id})
+    })
+
     //다이어리 추가 창
     document.getElementById('add-diary-open').onclick = function () {
+        //추가 창 로드 시 컬러칩 하나 랜덤 선택
+        colorChips[Math.floor(Math.random() * 10)].click();
+        document.getElementById('add-diary-title').innerHTML = '새 다이어리 생성';
+        document.getElementById('new-diary-title').value = "";
         document.getElementById('add-diary-wrap').classList.add('show-modal');
     }
     document.getElementById('add-diary-close').onclick = function () {
@@ -40,20 +59,22 @@ window.onload = function () {
                 searchMember();
             }
     })
+}
 
-    //컬러파레트 생성
-    for(let color of colors) {
-        $('#color-palette').append('<div class="color-chip" style=background-color:#' + color + ';' +
-            ' id="' + color +'"></div>');
-    }
-    //컬러칩 클릭 시 선택되는 기능 추가
+//다이어리 설정 창 열기
+function editDiaryOpen(diaryId) {
+    document.getElementById('add-diary-title').innerHTML = '다이어리 정보 수정';
+    document.getElementById('new-diary-title').value =
+        document.getElementById('diary-title').text;
+
+    //설정 창 로드 시 현재 컬러칩 선택
     let colorChips = Array.from(document.getElementsByClassName("color-chip"));
-    colorChips.forEach((c) => { c.addEventListener('click', ()=>{
-        colorChips.forEach((cc) => {cc.classList.remove('color-selected')})
-        c.classList.add('color-selected');
-        document.getElementById('new-diary-title').style.backgroundColor = c.style.backgroundColor;
-        document.getElementById('color-code').value = c.id})
-    })
+    for(let color of colorChips) {
+        if(color.id == document.getElementById('diary-color' + diaryId).value){
+            color.click();
+        }
+    }
+    document.getElementById('add-diary-wrap').classList.add('show-modal');
 }
 
 
