@@ -47,4 +47,9 @@ public class Diary {
     public void changeColor(String color) {
         this.color = color;
     }
+
+    //다이어리 이름 변경
+    public void changeTitle(String title) {
+        this.title = title;
+    }
 }

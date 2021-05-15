@@ -61,39 +61,35 @@ public class DiaryController {
     @PostMapping("/diary")
     public String setDiary(HttpServletRequest request) {
 
+        //작성된 다이어리 이름과 색상 정보를 얻어옴
+        String diaryTitle = request.getParameter("new-diary-title");
+        String colorCode = request.getParameter("color-code");
+        Long diaryId;
+
         //새 다이어리 생성인지, 기존 다이어리 수정인지 확인
         String purpose = request.getParameter("form-purpose");
 
+        //새 다이어리 생성 또는 정보 수정 후 해당 다이어리로 이동
         if(purpose.equals("create")){
-            Long diaryId = createDiary(request);
-
-            //새로운 다이어리로 이동
-            return "redirect:/diary/" + diaryId;
+            diaryId = createDiary(request.getSession(), diaryTitle, colorCode);
+        } else{
+            //다이어리를 id로 찾아 정보 수정
+            diaryId = Long.parseLong(request.getParameter("diary-id"));
+            Diary diary = diarySetService.findDairy(diaryId);
+            diarySetService.changeDiaryInfo(diary, diaryTitle, colorCode);
         }
-
-        else{
-            String diaryTitle = request.getParameter("new-diary-title");
-            String colorCode = request.getParameter("color-code");
-            Long diaryId = Long.parseLong(request.getParameter("diary-id"));
-
-            //다이어리 정보 수정
-            return "redirect:/diary/" + diaryId;
-        }
+        return "redirect:/diary/" + diaryId;
     }
 
     //다이어리 생성 메소드
-    private Long createDiary(HttpServletRequest request) {
+    private Long createDiary(HttpSession session, String title, String color) {
         //세션에서 현재 사용자를 받아옴
-        HttpSession session = request.getSession();
         Long memberId = (Long) session.getAttribute("memberId");
         Member member = memberService.findOneMember(memberId);
 
-        //입력된 다이어리 제목 정보를 받아옴
-        String diaryTitle = request.getParameter("new-diary-title");
-
         //현재 사용자를 HOST로 새로운 다이어리 개설 후 색상 적용
-        Diary diary = Diary.createDiary(diaryTitle);
-        diary.changeColor(request.getParameter("color-code"));
+        Diary diary = Diary.createDiary(title);
+        diary.changeColor(color);
         Long diaryId = diarySetService.registerDiary(diary, member);
 
         return diaryId;
