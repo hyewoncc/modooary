@@ -57,10 +57,32 @@ public class DiaryController {
         }
     }
 
-    //새로운 다이어리 생성
+    //새로운 다이어리 생성 또는 수정
     @PostMapping("/diary")
-    public String registerDiary(HttpServletRequest request, Model model) {
+    public String setDiary(HttpServletRequest request) {
 
+        //새 다이어리 생성인지, 기존 다이어리 수정인지 확인
+        String purpose = request.getParameter("form-purpose");
+
+        if(purpose.equals("create")){
+            Long diaryId = createDiary(request);
+
+            //새로운 다이어리로 이동
+            return "redirect:/diary/" + diaryId;
+        }
+
+        else{
+            String diaryTitle = request.getParameter("new-diary-title");
+            String colorCode = request.getParameter("color-code");
+            Long diaryId = Long.parseLong(request.getParameter("diary-id"));
+
+            //다이어리 정보 수정
+            return "redirect:/diary/" + diaryId;
+        }
+    }
+
+    //다이어리 생성 메소드
+    private Long createDiary(HttpServletRequest request) {
         //세션에서 현재 사용자를 받아옴
         HttpSession session = request.getSession();
         Long memberId = (Long) session.getAttribute("memberId");
@@ -74,8 +96,7 @@ public class DiaryController {
         diary.changeColor(request.getParameter("color-code"));
         Long diaryId = diarySetService.registerDiary(diary, member);
 
-        //새로운 다이어리로 이동
-        return "redirect:/diary/" + diaryId;
+        return diaryId;
     }
 
     //특정 다이어리 보여주기

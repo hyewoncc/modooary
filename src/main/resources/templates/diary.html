@@ -29,6 +29,7 @@
                         <div class="color-palette" id="color-palette">
                         </div>
                         <input type="hidden" name="color-code" id="color-code" value="">
+                        <input type="hidden" name="diary-id" id="diary-id" th:value="${diary.id}">
                         <input type="hidden" name="form-purpose" id="form-purpose" value="">
                         <div class="add-diary-button-wrap">
                             <button type="submit" class="add-diary-button form-button confirm-button">등록</button>
@@ -91,7 +92,7 @@
             <div class="list-header">
                 <a id="diary-title" th:text="${diary.title}"></a>
                 <button type="button" id="show-invitation-open">초대장</button>
-                <button type="button" id="edit-diary-open" th:onclick="'editDiaryOpen(' + ${diary.id} +');'">다이어리 설정</button>
+                <button type="button" th:if="${host}" id="edit-diary-open" th:onclick="'editDiaryOpen(' + ${diary.id} +');'">다이어리 설정</button>
                 <button type="button" onclick="location.href='/logout'">로그아웃</button>
             </div>
 

@@ -25,6 +25,7 @@ window.onload = function () {
         colorChips[Math.floor(Math.random() * 10)].click();
         document.getElementById('add-diary-title').innerHTML = '새 다이어리 생성';
         document.getElementById('new-diary-title').value = "";
+        document.getElementById('form-purpose').value = "create";
         document.getElementById('add-diary-wrap').classList.add('show-modal');
     }
     document.getElementById('add-diary-close').onclick = function () {
@@ -66,7 +67,8 @@ function editDiaryOpen(diaryId) {
     document.getElementById('add-diary-title').innerHTML = '다이어리 정보 수정';
     document.getElementById('new-diary-title').value =
         document.getElementById('diary-title').text;
-
+    document.getElementById('form-purpose').value = "edit";
+    
     //설정 창 로드 시 현재 컬러칩 선택
     let colorChips = Array.from(document.getElementsByClassName("color-chip"));
     for(let color of colorChips) {
