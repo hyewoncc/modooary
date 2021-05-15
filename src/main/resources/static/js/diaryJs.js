@@ -33,8 +33,10 @@ window.onload = function () {
     }
 
     //친구 추가 창
-    document.getElementById('add-friend-open').onclick = function () {
-        document.getElementById('add-friend-wrap').classList.add('show-modal');
+    if(document.getElementById('add-friend-open') != null){
+        document.getElementById('add-friend-open').onclick = function () {
+            document.getElementById('add-friend-wrap').classList.add('show-modal');
+        }
     }
 
     //초대장 목록 창
