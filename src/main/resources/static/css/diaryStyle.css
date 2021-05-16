@@ -33,6 +33,7 @@ body {
     width: 80%;
     height: 100%;
     margin: auto;
+    padding-bottom: 30px;
 }
 
 .form-button {
@@ -52,13 +53,13 @@ body {
     color: white;
 }
 
-.add-diary-title-wrap {
+.modal-title-wrap {
     position: relative;
     padding-top: 20px;
     width: 100%;
 }
 
-.add-diary-title {
+.modal-title {
     text-align: center;
 }
 
@@ -85,7 +86,7 @@ body {
     width: 100%;
     padding-top: 3px;
     background-color: rgba(0, 0, 0, 0);
-    border-bottom-color: rgba(0, 0, 0, 0.3);
+    border-bottom-color: rgba(0, 0, 0, 0.2);
     border-left-width: 0px;
     border-right-width: 0px;
     border-top-width: 0px;
@@ -98,7 +99,8 @@ body {
 }
 
 .input-box:focus {
-    outline-color: #adfaff;
+    outline: none;
+    border-bottom-color: rgba(0, 0, 0, 1);
 }
 
 .color-palette {
@@ -122,7 +124,6 @@ body {
 .add-diary-button-wrap {
     width: 100%;
     margin-top: 30px;
-    padding-bottom: 30px;
     display: flex;
     justify-content: space-between;
 }
@@ -130,6 +131,40 @@ body {
 .add-diary-button {
     width: 48%;
     height: 30px;
+}
+
+#add-friend-content {
+    width: 400px;
+    margin: 10% auto auto;
+}
+
+#search-keyword {
+    width: 85%;
+    height: 26px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.friend-found {
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.friend-found:hover {
+    background-color: #f0ffa3;
+    cursor: pointer;
+}
+
+.friend-picture {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    vertical-align: sub;
+    margin-right: 4px;
+}
+
+.friend-name {
+    margin-right: 10px;
 }
 
 .body-wrap {

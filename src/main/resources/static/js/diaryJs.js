@@ -115,8 +115,10 @@ function searchMember() {
         success: function(data){
             $('#result-list').empty();
             $.each(data, function (index, member){
-                let result = $('<div onclick="sendInvitation(' + member.id + ')"><span>' + member.name +'</span> '
-                    + '<span>' + member.email +'</span></div><br/>');
+                let result = $('<div onclick="sendInvitation(' + member.id + ')" class="friend-found">'
+                    + '<img class="friend-picture" src="/img/' + member.picture + '">'
+                    + '<span class="friend-name">' + member.name +'</span>'
+                    + '<span class="friend-email">' + member.email +'</span></div>');
                 $('#result-list').append(result);
             })
         }
