@@ -2,6 +2,8 @@
 const colors = ["EA698B", "F15152", "EF8354", "F9C74F", "8cb369",
     "43AA8B", "4d908e", "277da1", "4d43ac", "7209b7"];
 
+const pics = ["bear.png", "blackcat.png", "graycat.png", "parrot.png", "rabbit.png", "yellowcat.png"];
+
 //모달창 열고 닫기 등록
 window.onload = function () {
 
@@ -16,8 +18,30 @@ window.onload = function () {
         colorChips.forEach((cc) => {cc.classList.remove('color-selected')})
         c.classList.add('color-selected');
         document.getElementById('new-diary-title').style.backgroundColor = c.style.backgroundColor;
-        document.getElementById('color-code').value = c.id})
+        document.getElementById('color-code').value = c.id;})
     })
+
+    //사진 수정 클릭 시 기본 사진 목록 생성
+    document.getElementById('edit-picture-open').onclick = function () {
+        if(document.getElementById('edit-picture-open').getAttribute('class') == ''){
+            for(let pic of pics) {
+                $('#sample-pics').append('<div class="picture-chip" id="'+ pic +'">' +
+                    '<img class="picture-chip-img" src="/img/' + pic + '"></div>');
+            }
+            $('#upload-picture-wrap').append('<label for="upload-picture">업로드</label>'
+            + '<input type="file" class="upload-picture" id="upload-picture" onchange="setUploadImg();" onerror="resetImg();">');
+            document.getElementById('edit-picture-open').setAttribute('class', 'opened');
+
+            //기본 사진 클릭 시 선택되는 기능 추가
+            let basicPics = Array.from(document.getElementsByClassName('picture-chip'));
+            basicPics.forEach((p) => { p.addEventListener('click',  ()=>{
+                basicPics.forEach((pp) => {pp.classList.remove('pic-selected')})
+                p.classList.add('pic-selected');
+                setBasicImg(p.id);
+            })})
+        }
+    }
+
 
     //다이어리 추가 창
     document.getElementById('add-diary-open').onclick = function () {
@@ -48,6 +72,11 @@ window.onload = function () {
         location.reload();
     }
 
+    //설정 창
+    document.getElementById('show-info-open').onclick = function () {
+        document.getElementById('show-info-wrap').classList.add('show-modal');
+    }
+
     //모달창 바깥을 클릭하면 닫히는 기능 추가
     Array.from(document.getElementsByClassName('modal-wrap')).forEach((w) => {
         window.addEventListener('click', (e) => {
@@ -62,6 +91,14 @@ window.onload = function () {
                 searchMember();
             }
     })
+
+    //내 설정 정보 버튼에 수정 가능 기능 추가
+    document.getElementById('edit-info-name').onclick = function () {
+        document.getElementById('info-name').removeAttribute('readonly');
+        document.getElementById('info-name').setAttribute('class', 'input-box info-name');
+        document.getElementById('info-name').focus();
+    }
+
 }
 
 //다이어리 설정 창 열기
@@ -167,4 +204,29 @@ function rejectInvitation(invitationId) {
             $('#invitation-' + invitationId).remove();
         }
     })
+}
+
+//사진 업로드 시 프로필 이미지에 바로 반영
+function setUploadImg() {
+    let reader = new FileReader();
+    reader.onload = e => {
+        let img = document.getElementById('info-picture');
+        img.src = e.target.result;
+    }
+    try{
+        reader.readAsDataURL(event.target.files[0]);
+    }catch{
+        resetImg();
+    }
+}
+
+function resetImg(){
+    document.getElementById('info-picture')
+        .setAttribute('src', '/img/' + document.getElementById('past-picture').value);
+}
+
+function setBasicImg(img) {
+    document.getElementById('info-picture')
+        .setAttribute('src', '/img/' + img);
+    document.getElementById('past-picture').value = img;
 }
