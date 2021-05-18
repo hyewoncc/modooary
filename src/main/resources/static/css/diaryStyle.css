@@ -130,6 +130,31 @@ body {
     color: black;
 }
 
+.clear-button {
+    height: 24px;
+    width: 70%;
+    border-bottom-color: rgba(0, 0, 0, 0.2);
+    border-bottom-width: 1px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    background-color: white;
+    color: dimgray;
+}
+
+.clear-button:hover {
+    background-color: #b3e3ff;
+    color: white;
+    cursor: pointer;
+}
+
+.password-input-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
 #add-friend-content {
     width: 400px;
     margin: 10% auto auto;
@@ -198,6 +223,8 @@ body {
     width: 100%;
     display: flex;
     justify-content: space-between;
+    margin-top: 4px;
+    margin-bottom: 4px;
 }
 
 .sample-pics {
@@ -212,6 +239,10 @@ body {
     margin-right: 6px;
 }
 
+.picture-chip:hover {
+    cursor: pointer;
+}
+
 .picture-chip.pic-selected{
     border: 4px solid #ADFAFF;
 }
@@ -219,15 +250,25 @@ body {
 .picture-chip-img{
     width: 100%;
     height: 100%;
+    object-fit: cover;
 }
 
 .upload-picture-wrap label {
-    width: 40px;
+    width: 64px;
+    height: 24px;
     display: inline-block;
-    color: white;
+    color: black;
     font-size: 12px;
-    background-color: #6947b4;
+    background-color: lightgray;
+    border-radius: 4px;
+    text-align: center;
     cursor: pointer;
+}
+
+.upload-picture-wrap label:hover {
+    cursor: pointer;
+    color: white;
+    background-color: #6947b4;
 }
 
 .upload-picture {
@@ -239,8 +280,28 @@ body {
     border: 0;
 }
 
+.info-email-wrap {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+
+.info-email {
+    color: black;
+    width: 70%;
+}
+
 .info-name-wrap {
+    margin-top: 6px;
     margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.info-name-input-wrap {
+    display: flex;
+    justify-content: flex-end;
 }
 
 .info-name {
@@ -254,8 +315,7 @@ body {
 }
 
 .info-password {
-    width: 55%;
-    margin-left: 5px;
+    width: 70%;
     color: black;
 }
 
@@ -263,9 +323,16 @@ body {
     border-bottom-color: rgba(0, 0, 0, 0.2);
 }
 
-.info-email-wrap {
-    display: flex;
-    justify-content: center;
+.info-password.wrong {
+    border-bottom-color: deeppink;
+    border-bottom-width: 2px;
+}
+
+#wrong-alert-wrap {
+    width: 100%;
+    font-size: 12px;
+    text-align: end;
+    margin-top: 0px;
 }
 
 .body-wrap {

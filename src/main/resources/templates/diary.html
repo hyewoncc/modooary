@@ -81,7 +81,7 @@
                     <h3 class="modal-title">내 계정 정보</h3>
                 </div>
                 <div class="info-form-wrap">
-                    <form role="form" action="/info" method="post">
+                    <form role="form" action="/info" onsubmit="return checkInfoForm();" method="post">
                         <div class="info-picture-wrap">
                             <img class="info-picture" id="info-picture" th:src="'/img/' + ${member.picture}">
                             <input type="hidden" id="past-picture" th:value="${member.picture}">
@@ -94,16 +94,23 @@
                             </div>
                         </div>
                         <div class="info-email-wrap">
-                            <span class="info-email" th:text="${member.email}"></span>
+                            <label>이메일</label>
+                            <input type="text" class="input-box info-email" th:value="${member.email}" readonly>
                         </div>
                         <div class="info-name-wrap">
-                            <label>이름</label>
-                            <input type="text" class="input-box info-name readonly" id="info-name" th:value="${member.name}" readonly>
-                            <button type="button" id="edit-info-name">수정</button>
+                            <label for="info-name">이름</label>
+                            <div class="info-name-input-wrap">
+                                <input type="text" class="input-box info-name readonly" id="info-name" th:value="${member.name}" readonly>
+                                <button type="button" id="edit-info-name">수정</button>
+                            </div>
                         </div>
-                        <div class="info-password-wrap">
-                            <span>비밀번호 변경</span>
-                            <button type="button" id="open-edit-password">변경하기</button>
+                        <div class="info-password-wrap" id="info-password-wrap">
+                            <div id="new-password-wrap" class="password-input-wrap">
+                                <span>비밀번호</span>
+                                <button type="button" class="clear-button" id="open-edit-password">변경하기</button>
+                            </div>
+                            <div id="confirm-password-wrap" class="password-input-wrap">
+                            </div>
                         </div>
                         <div class="form-button-wrap">
                             <button type="submit" class="form-button confirm-button">수정</button>

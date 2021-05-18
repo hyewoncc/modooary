@@ -28,8 +28,8 @@ window.onload = function () {
                 $('#sample-pics').append('<div class="picture-chip" id="'+ pic +'">' +
                     '<img class="picture-chip-img" src="/img/' + pic + '"></div>');
             }
-            $('#upload-picture-wrap').append('<label for="upload-picture">업로드</label>'
-            + '<input type="file" class="upload-picture" id="upload-picture" onchange="setUploadImg();" onerror="resetImg();">');
+            $('#upload-picture-wrap').append('<label for="upload-picture">직접 업로드</label>'
+            + '<input type="file" class="upload-picture" id="upload-picture" onchange="setUploadImg(); cancelSelection();" onerror="resetImg();">');
             document.getElementById('edit-picture-open').setAttribute('class', 'opened');
 
             //기본 사진 클릭 시 선택되는 기능 추가
@@ -75,6 +75,20 @@ window.onload = function () {
     //설정 창
     document.getElementById('show-info-open').onclick = function () {
         document.getElementById('show-info-wrap').classList.add('show-modal');
+        $('#new-password-wrap').empty().append('<span>비밀번호</span>' +
+            '<button type="button" class="clear-button" id="open-edit-password">변경하기</button>');
+        $('#confirm-password-wrap').empty();
+        if(document.getElementById('wrong-alert-wrap') != null){
+            document.getElementById('wrong-alert-wrap').remove();
+        }
+
+        //비밀번호 변경 입력 영역 열기
+        document.getElementById('open-edit-password').onclick = function () {
+            document.getElementById('open-edit-password').remove();
+            $('#new-password-wrap').append('<input type="password" class="input-box info-password" id="new-password">');
+            $('#confirm-password-wrap').append('<span>재입력</span>' +
+                '<input type="password" class="input-box info-password" id="confirm-password">');
+        }
     }
 
     //모달창 바깥을 클릭하면 닫히는 기능 추가
@@ -229,4 +243,27 @@ function setBasicImg(img) {
     document.getElementById('info-picture')
         .setAttribute('src', '/img/' + img);
     document.getElementById('past-picture').value = img;
+}
+
+function cancelSelection() {
+    let selection = document.getElementsByClassName('pic-selected');
+    for(let s of selection){
+        s.classList.remove('pic-selected');
+    }
+}
+
+//개인정보 창 입력값 유효성 검사
+function checkInfoForm() {
+    if(document.getElementById('wrong-alert-wrap') != null){
+        document.getElementById('wrong-alert-wrap').remove();
+    }
+    let newPassword = document.getElementById('new-password').value;
+    let confirmPassword = document.getElementById('confirm-password').value;
+    if(newPassword != confirmPassword){
+        document.getElementById('confirm-password').setAttribute('class', 'input-box info-password wrong');
+        $('#confirm-password').focus();
+        $('#info-password-wrap').append('<div id="wrong-alert-wrap"><span class="wrong-alert">비밀번호가 일치하지 않습니다</span></div>');
+        return false;
+    }
+    return true;
 }
