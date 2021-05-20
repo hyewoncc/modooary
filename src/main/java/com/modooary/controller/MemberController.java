@@ -1,6 +1,7 @@
 package com.modooary.controller;
 
 import com.modooary.controller.form.MemberForm;
+import com.modooary.domain.Member;
 import com.modooary.domain.PreMember;
 import com.modooary.service.MemberService;
 import com.modooary.utils.EmailUtil;
@@ -11,9 +12,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,7 +31,7 @@ public class MemberController {
     private final EmailUtil emailUtil;
 
     @GetMapping("/sign-in")
-    public String createForm(Model model){
+    public String createForm(Model model) {
         model.addAttribute("memberForm", new MemberForm());
         return "signIn";
     }
@@ -62,6 +70,34 @@ public class MemberController {
         //임시 회원의 키값 조회 후 일치시 정회원 전환
         if (memberService.checkPreMemberKey(id, key)) {
             memberService.approveMember(id);
+        }
+
+        return "redirect:/";
+    }
+
+    //개인 정보 수정
+    @PostMapping("/info")
+    public String editInfo(HttpServletRequest request, @RequestParam("upload-picture") MultipartFile file)
+        throws MissingServletRequestPartException {
+        //회원 찾기
+        HttpSession session = request.getSession();
+        Long memberId = (Long) session.getAttribute("memberId");
+        Member member = memberService.findOneMember(memberId);
+
+        //회원 정보를 받은 값으로 변경
+
+        //프로필 사진이 업로드 되었다면 업로드 된 사진 저장하고 변경
+        String path = new File("").getAbsolutePath();
+        //이미지 유형 추출하기
+        String imgType = file.getContentType().substring(file.getContentType().indexOf('/') + 1);
+        if(file != null){
+            try{
+                File newFile = new File(path +
+                        "/src/main/resources/static/img/profile_member" + memberId + "." + imgType);
+                file.transferTo(newFile);
+            }catch(IOException e) {
+                e.printStackTrace();
+            }
         }
 
         return "redirect:/";

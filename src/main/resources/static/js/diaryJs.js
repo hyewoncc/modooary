@@ -29,7 +29,7 @@ window.onload = function () {
                     '<img class="picture-chip-img" src="/img/' + pic + '"></div>');
             }
             $('#upload-picture-wrap').append('<label for="upload-picture">직접 업로드</label>'
-            + '<input type="file" class="upload-picture" id="upload-picture" onchange="setUploadImg(); cancelSelection();" onerror="resetImg();">');
+            + '<input type="file" class="upload-picture" id="upload-picture" name="upload-picture" onchange="setUploadImg(); cancelSelection();" onerror="resetImg();">');
             document.getElementById('edit-picture-open').setAttribute('class', 'opened');
 
             //기본 사진 클릭 시 선택되는 기능 추가

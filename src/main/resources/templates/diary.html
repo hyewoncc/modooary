@@ -81,7 +81,7 @@
                     <h3 class="modal-title">내 계정 정보</h3>
                 </div>
                 <div class="info-form-wrap">
-                    <form role="form" action="/info" onsubmit="return checkInfoForm();" method="post">
+                    <form role="form" action="/info" onsubmit="return checkInfoForm();" method="post" enctype="multipart/form-data">
                         <div class="info-picture-wrap">
                             <img class="info-picture" id="info-picture" th:src="'/img/' + ${member.picture}">
                             <input type="hidden" id="past-picture" th:value="${member.picture}">
