@@ -45,8 +45,17 @@ public class Member {
         diaryMembers.add(diaryMember);
     }
 
+
     public void changePicture(String picture) {
         this.picture = picture;
+    }
+
+    public void changeName(String name) {
+        this.name = name;
+    }
+
+    public void changePassword(String password) {
+        this.password = password;
     }
 
     public void setRandomPicture() {

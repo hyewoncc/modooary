@@ -85,7 +85,7 @@ window.onload = function () {
         //비밀번호 변경 입력 영역 열기
         document.getElementById('open-edit-password').onclick = function () {
             document.getElementById('open-edit-password').remove();
-            $('#new-password-wrap').append('<input type="password" class="input-box info-password" id="new-password">');
+            $('#new-password-wrap').append('<input type="password" class="input-box info-password" id="new-password" name="new-password">');
             $('#confirm-password-wrap').append('<span>재입력</span>' +
                 '<input type="password" class="input-box info-password" id="confirm-password">');
         }

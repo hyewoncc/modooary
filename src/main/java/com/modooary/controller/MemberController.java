@@ -78,26 +78,44 @@ public class MemberController {
     //개인 정보 수정
     @PostMapping("/info")
     public String editInfo(HttpServletRequest request, @RequestParam("upload-picture") MultipartFile file)
-        throws MissingServletRequestPartException {
+            throws MissingServletRequestPartException {
         //회원 찾기
         HttpSession session = request.getSession();
         Long memberId = (Long) session.getAttribute("memberId");
         Member member = memberService.findOneMember(memberId);
 
         //회원 정보를 받은 값으로 변경
+        memberService.editMemberName(member, request.getParameter("info-name"));
+        //비밀번호를 입력했다면 받은 값으로 변경
+        if(request.getParameter("new-password") != null) {
+            memberService.editMemberPassword(member, request.getParameter("new-password"));
+        }
 
         //프로필 사진이 업로드 되었다면 업로드 된 사진 저장하고 변경
         String path = new File("").getAbsolutePath();
-        //이미지 유형 추출하기
-        String imgType = file.getContentType().substring(file.getContentType().indexOf('/') + 1);
-        if(file != null){
+        if(file.getSize() != 0){
             try{
-                File newFile = new File(path +
-                        "/src/main/resources/static/img/profile_member" + memberId + "." + imgType);
-                file.transferTo(newFile);
+                //이미지 유형 추출하기
+                String imgType = file.getContentType().substring(file.getContentType().indexOf('/') + 1);
+                String imgName = "profile_member" + memberId + "." + imgType;
+                String imgPath = path + "/src/main/resources/static/img/" + imgName;
+                //기존 이미지가 있다면 삭제
+                File newFile = new File(imgPath);
+                if(newFile.exists()){
+                    newFile.delete();
+                    file.transferTo(new File(imgPath));
+                    System.out.println(file);
+                }else{
+                    file.transferTo(newFile);
+                }
+                memberService.editMemberPicture(member, imgName);
             }catch(IOException e) {
                 e.printStackTrace();
             }
+        }
+        //사진이 업로드 되지 않았다면 선택된 기본 사진을 저장
+        else {
+            memberService.editMemberPicture(member, request.getParameter("past-picture"));
         }
 
         return "redirect:/";

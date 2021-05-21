@@ -33,6 +33,21 @@ public class MemberService {
         return member.getId();
     }
 
+    /* 회원 정보 수정 */
+    @Transactional
+    public void editMemberName(Member member, String name) {
+        member.changeName(name);
+    }
+    @Transactional
+    public void editMemberPassword(Member member, String password) {
+        member.changePassword(password);
+    }
+    @Transactional
+    public void editMemberPicture(Member member, String pic) {
+        member.changePicture(pic);
+    }
+
+
     //단일 회원 조회
     public Member findOneMember(Long memberId){
         return memberRepository.findOne(memberId);

@@ -84,7 +84,7 @@
                     <form role="form" action="/info" onsubmit="return checkInfoForm();" method="post" enctype="multipart/form-data">
                         <div class="info-picture-wrap">
                             <img class="info-picture" id="info-picture" th:src="'/img/' + ${member.picture}">
-                            <input type="hidden" id="past-picture" th:value="${member.picture}">
+                            <input type="hidden" id="past-picture" name="past-picture" th:value="${member.picture}">
                             <button type="button" class="" id="edit-picture-open">변경</button>
                         </div>
                         <div class="picture-list" id="picture-list">
@@ -100,7 +100,7 @@
                         <div class="info-name-wrap">
                             <label for="info-name">이름</label>
                             <div class="info-name-input-wrap">
-                                <input type="text" class="input-box info-name readonly" id="info-name" th:value="${member.name}" readonly>
+                                <input type="text" class="input-box info-name readonly" id="info-name" name="info-name" th:value="${member.name}" readonly>
                                 <button type="button" id="edit-info-name">수정</button>
                             </div>
                         </div>
