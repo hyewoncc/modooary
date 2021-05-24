@@ -28,6 +28,7 @@ window.onload = function () {
                 $('#sample-pics').append('<div class="picture-chip" id="'+ pic +'">' +
                     '<img class="picture-chip-img" src="/img/' + pic + '"></div>');
             }
+            $('#upload-picture-wrap').empty();
             $('#upload-picture-wrap').append('<label for="upload-picture">직접 업로드</label>'
             + '<input type="file" class="upload-picture" id="upload-picture" name="upload-picture" onchange="setUploadImg(); cancelSelection();" onerror="resetImg();">');
             document.getElementById('edit-picture-open').setAttribute('class', 'opened');
@@ -89,6 +90,11 @@ window.onload = function () {
             $('#confirm-password-wrap').append('<span>재입력</span>' +
                 '<input type="password" class="input-box info-password" id="confirm-password">');
         }
+    }
+
+    //설정 창 닫기
+    document.getElementById('info-close').onclick = function () {
+        document.getElementById('show-info-wrap').classList.remove('show-modal');
     }
 
     //모달창 바깥을 클릭하면 닫히는 기능 추가
