@@ -168,12 +168,14 @@ public class DiaryController {
     static class InvitationDto {
         private Long id;
         private String sender_name;
+        private String sender_picture;
         private String receiver_name;
         private String diary_title;
 
         public InvitationDto(Invitation invitation) {
             id = invitation.getId();
             sender_name = invitation.getSender().getName();
+            sender_picture = invitation.getSender().getPicture();
             receiver_name = invitation.getReceiver().getName();
             diary_title = invitation.getDiary().getTitle();
         }

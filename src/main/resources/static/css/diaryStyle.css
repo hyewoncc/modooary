@@ -377,6 +377,48 @@ body {
     padding-right: 20px;
 }
 
+#show-invitation-content {
+    width: 400px;
+    margin-top: 5%;
+}
+
+.invitation-content-box {
+    padding-bottom: 20px;
+}
+
+.invitation-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.invitation-wrap.invisible {
+    display: none;
+}
+
+.invitation-wrap.right {
+    width: 45px;
+}
+
+.invitation-button {
+    font-size: 20px;
+    color: dimgray;
+}
+
+.invitation-button:hover {
+    cursor: pointer;
+}
+
+.invitation-button.accept:hover {
+    color: mediumturquoise;
+}
+
+.invitation-button.reject:hover {
+    color: tomato;
+}
+
 .diary-post-wrap {
     position: relative;
     width: 60%;
@@ -412,6 +454,8 @@ body {
     height: 40px;
     border-radius: 50%;
     overflow: hidden;
+    display: flex;
+    align-items: center;
 }
 
 .post-picture {
