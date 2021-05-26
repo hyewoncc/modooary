@@ -43,3 +43,6 @@ settings.gradle
 gradle-wrapper.properties
 application.yml
 InitDb.java
+
+### 업로드 테스트 프로필 사진들 제외###
+profile_member*
