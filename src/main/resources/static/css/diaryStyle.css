@@ -382,10 +382,6 @@ body {
     margin-top: 5%;
 }
 
-.invitation-content-box {
-    padding-bottom: 20px;
-}
-
 .invitation-wrap {
     display: flex;
     align-items: center;
@@ -417,6 +413,11 @@ body {
 
 .invitation-button.reject:hover {
     color: tomato;
+}
+
+#show-invitation-close {
+    width: 94%;
+    margin: auto;
 }
 
 .diary-post-wrap {
