@@ -63,10 +63,15 @@ window.onload = function () {
             document.getElementById('add-friend-wrap').classList.add('show-modal');
         }
     }
+    document.getElementById('add-friend-close').onclick = function () {
+        document.getElementById('add-friend-wrap').classList.remove('show-modal');
+        document.getElementById('search-keyword').value = '';
+    }
 
     //초대장 목록 창
     document.getElementById('show-invitation-open').onclick = function () {
         document.getElementById('show-invitation-wrap').classList.add('show-modal');
+        checkInvitations();
     }
     document.getElementById('show-invitation-close').onclick = function () {
         document.getElementById('show-invitation-wrap').classList.remove('show-modal');
@@ -210,6 +215,7 @@ function acceptInvitation(invitationId) {
         type: 'post',
         success: function (){
             $('#invitation-' + invitationId).remove();
+            checkInvitations();
         }
     })
 }
@@ -222,6 +228,7 @@ function rejectInvitation(invitationId) {
         type: 'post',
         success: function (){
             $('#invitation-' + invitationId).remove();
+            checkInvitations();
         }
     })
 }
@@ -272,4 +279,12 @@ function checkInfoForm() {
         return false;
     }
     return true;
+}
+
+function checkInvitations() {
+    if(document.getElementsByClassName('invitation-wrap').length == 1) {
+        document.getElementById('no-invitation').classList.remove('invisible');
+    }else {
+        document.getElementById('no-invitation').classList.add('invisible');
+    }
 }
