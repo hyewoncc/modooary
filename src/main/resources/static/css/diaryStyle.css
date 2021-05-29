@@ -343,6 +343,11 @@ body {
     display: flex;
 }
 
+.content-wrap {
+    width: 96%;
+    margin: auto;
+}
+
 .diary-list-wrap {
     position: relative;
     width: 20%;
@@ -358,6 +363,12 @@ body {
     height: 40px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+
+.custom-icon {
+    font-size: 16px;
+    margin-left: 12px;
 }
 
 .diary-flag {
@@ -428,30 +439,25 @@ body {
     position: relative;
     width: 60%;
     height: 100%;
-    background-color: azure;
 }
 
-.new-post {
-    width: 96%;
-    margin: auto;
-}
-
-.post-text{
-    width: 100%;
+.diary-post-content-wrap {
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.4);
 }
 
 .diary-post {
-    width: 100%;
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 
-.post-low {
-    width: 96%;
-    margin: auto;
+.post-text{
+    margin-top: 20px;
+    width: 100%;
 }
 
 .post-header {
     display: flex;
+    align-items: center;
 }
 
 .post-picture-wrap {
@@ -459,8 +465,7 @@ body {
     height: 40px;
     border-radius: 50%;
     overflow: hidden;
-    display: flex;
-    align-items: center;
+    margin-right: 6px;
 }
 
 .post-picture {
@@ -508,6 +513,26 @@ body {
 .member-list {
     width: 100%;
     height: 30px;
+}
+
+.note {
+    font-size: 16px;
+    line-height: 32px;
+    background: -webkit-linear-gradient(
+            top,
+            darkgrey 0%,
+            darkgrey 1px,
+            rgba(255, 255, 255, 0) 1px,
+            rgba(255, 255, 255, 0) 100%
+    );
+    background: linear-gradient(
+            to bottom,
+            darkgrey 0%,
+            darkgrey 1px,
+            rgba(255, 255, 255, 0) 1px,
+            rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 100% 32px;
 }
 
 @media (max-width: 1000px) {

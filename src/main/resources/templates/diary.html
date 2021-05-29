@@ -163,7 +163,7 @@
 
 
         <div class="diary-post-wrap">
-            <div class="list-header">
+            <div class="list-header content-wrap">
                 <div class="diary-title-wrap">
                     <a id="diary-title" th:text="${diary.title}"></a>
                     <i class="fas fa-book custom-icon" th:if="${host}" id="edit-diary-open" th:onclick="'editDiaryOpen(' + ${diary.id} +');'"></i>
@@ -175,41 +175,45 @@
                 </div>
             </div>
 
-            <div class="new-post">
-                <form role="form" action="/post" method="post">
-                    <textarea class="post-text" name="post_text" id="post_text"></textarea>
-                    <button type="submit">글 등록</button>
-                </form>
-            </div>
+            <div class="diary-post-content-wrap">
+                <div class="new-post content-wrap">
+                    <div class="new-post-form-wrap">
+                        <form role="form" action="/post" method="post">
+                            <textarea class="post-text" name="post_text" id="post_text"></textarea>
+                            <button type="submit">글 등록</button>
+                        </form>
+                    </div>
+                </div>
 
-            <div class="diary-post" th:each="p : ${posts}">
-                <div class="post-low post-header">
-                    <div class="post-picture-wrap">
-                        <img class="post-picture" th:src="'/img/' + ${p.member.picture}">
-                    </div>
-                    <div class="post-header-content">
-                        <a th:text="${p.member.name}"></a>
-                        <a th:text="${#temporals.format(p.regdate,'yyyy년 MM월 dd일 hh시 mm분')}"></a>
-                    </div>
-                </div>
-                <div class="post-low">
-                    <span class="post-content" th:text="${p.content}"></span>
-                </div>
-                <div class="post-low" th:id="'reply-list' + ${p.id}">
-                    <div class="post-reply" th:each="reply : ${replyMap.get(p.id)}">
-                        <div class="reply-picture-wrap">
-                            <img class="reply-picture" th:src="'/img/' + ${reply.picture}">
+                <div class="diary-post content-wrap note" th:each="p : ${posts}">
+                    <div class="post-low post-header">
+                        <div class="post-picture-wrap">
+                            <img class="post-picture" th:src="'/img/' + ${p.member.picture}">
                         </div>
-                        <div class="reply-content">
-                            <span th:text="${reply.name}"></span>
-                            <span th:text="${reply.content}"></span>
+                        <div class="post-header-content">
+                            <a th:text="${p.member.name}"></a>
+                            <a th:text="${#temporals.format(p.regdate,'yyyy년 MM월 dd일 hh시 mm분')}"></a>
                         </div>
                     </div>
-                </div>
-                    <div class="add-post-reply">
-                        <input type="text" class="reply-content" th:id="'reply-content' + ${p.id}" placeholder="댓글 작성">
-                        <button type="button" th:onclick="'registerReply(' + ${p.id} + ');'">등록</button>
+                    <div class="post-low">
+                        <span class="post-content" th:text="${p.content}"></span>
                     </div>
+                    <div class="post-low" th:id="'reply-list' + ${p.id}">
+                        <div class="post-reply" th:each="reply : ${replyMap.get(p.id)}">
+                            <div class="reply-picture-wrap">
+                                <img class="reply-picture" th:src="'/img/' + ${reply.picture}">
+                            </div>
+                            <div class="reply-content">
+                                <span th:text="${reply.name}"></span>
+                                <span th:text="${reply.content}"></span>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="add-post-reply">
+                            <input type="text" class="reply-content" th:id="'reply-content' + ${p.id}" placeholder="댓글 작성">
+                            <button type="button" th:onclick="'registerReply(' + ${p.id} + ');'">등록</button>
+                        </div>
+                </div>
             </div>
         </div>
 
