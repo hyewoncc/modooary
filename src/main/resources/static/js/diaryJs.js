@@ -124,6 +124,9 @@ window.onload = function () {
         document.getElementById('info-name').focus();
     }
 
+    $(window).resize(function () {
+        resize_textarea(document.getElementById('post_text'));
+    })
 }
 
 //다이어리 설정 창 열기
@@ -281,10 +284,18 @@ function checkInfoForm() {
     return true;
 }
 
+//초대장이 있는지 확인하고 없을 시 없다는 문구를 보여주기 위해 클래스 변경
 function checkInvitations() {
     if(document.getElementsByClassName('invitation-wrap').length == 1) {
         document.getElementById('no-invitation').classList.remove('invisible');
     }else {
         document.getElementById('no-invitation').classList.add('invisible');
     }
+}
+
+//글쓰기 영역 리사이징
+function resize_textarea(textarea) {
+    textarea.style.height = "30px";
+    textarea.style.height = (30 + (textarea.scrollHeight - 36)) + "px";
+    document.getElementById('new-post-submit').style.marginTop = (28 + (textarea.scrollHeight - 36)) + "px";
 }

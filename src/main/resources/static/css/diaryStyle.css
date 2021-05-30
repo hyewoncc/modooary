@@ -450,9 +450,37 @@ body {
     margin-bottom: 20px;
 }
 
+.new-post-form-wrap {
+    display: flex;
+    padding-top: 12px;
+}
+
+#new-post-picture {
+    margin-top: 16px;
+}
+
+#new-post-form {
+    width: 96%;
+}
+
 .post-text{
     margin-top: 20px;
+    height: 30px;
     width: 100%;
+    border: none;
+    resize: none;
+    overflow: hidden;
+    background: none;
+    font-size: 16px;
+    line-height: 32px;
+}
+
+.post-text:focus {
+    outline: none;
+}
+
+#new-post-submit {
+    margin-top: 28px;
 }
 
 .post-header {
@@ -518,15 +546,8 @@ body {
 .note {
     font-size: 16px;
     line-height: 32px;
-    background: -webkit-linear-gradient(
-            top,
-            darkgrey 0%,
-            darkgrey 1px,
-            rgba(255, 255, 255, 0) 1px,
-            rgba(255, 255, 255, 0) 100%
-    );
     background: linear-gradient(
-            to bottom,
+            to top,
             darkgrey 0%,
             darkgrey 1px,
             rgba(255, 255, 255, 0) 1px,
