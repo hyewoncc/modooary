@@ -299,3 +299,8 @@ function resize_textarea(textarea) {
     textarea.style.height = (30 + (textarea.scrollHeight - 36)) + "px";
     document.getElementById('new-post-submit').style.marginTop = (28 + (textarea.scrollHeight - 36)) + "px";
 }
+
+//새 글 쓰기 전송
+function sendPost() {
+    document.getElementById('new-post-form').submit();
+}
