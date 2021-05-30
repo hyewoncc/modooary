@@ -302,5 +302,18 @@ function resize_textarea(textarea) {
 
 //새 글 쓰기 전송
 function sendPost() {
-    document.getElementById('new-post-form').submit();
+    if(checkBlank(document.getElementById('post_text').value)){
+        document.getElementById('new-post-form').submit();
+    }else {
+        alert("내용을 입력하세요");
+    }
+}
+
+//공백 입력 확인
+function checkBlank(str) {
+    if(str.replace(/\s| /gi, "").length == 0) {
+        return false;
+    }else{
+        return true;
+    }
 }
