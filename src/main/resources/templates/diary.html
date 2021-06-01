@@ -182,7 +182,8 @@
                             <img class="post-picture" th:src="'/img/' + ${member.picture}">
                         </div>
                         <form role="form" action="/post" method="post" id="new-post-form">
-                            <textarea class="post-text" name="post_text" id="post_text" onkeyup="resize_textarea(this)"></textarea>
+                            <textarea class="text-input-clear post" name="post_text" id="post_text"
+                                      onkeyup="resize_postarea(this, 'new-post-submit')"></textarea>
                         </form>
                         <i class="fas fa-pencil-alt custom-icon" id="new-post-submit" onclick="sendPost();"></i>
                     </div>
@@ -195,11 +196,11 @@
                         </div>
                         <div class="post-header-content">
                             <a th:text="${p.member.name}"></a>
-                            <a th:text="${#temporals.format(p.regdate,'yyyy년 MM월 dd일 hh시 mm분')}"></a>
+                            <a th:text="${#temporals.format(p.regdate,'yyyy. MM. dd. HH : mm')}"></a>
                         </div>
                     </div>
                     <div class="post-low">
-                        <span class="post-content" th:text="${p.content}"></span>
+                        <pre class="post-content" th:text="${p.content}"></pre>
                     </div>
                     <div class="post-low" th:id="'reply-list' + ${p.id}">
                         <div class="post-reply" th:each="reply : ${replyMap.get(p.id)}">
@@ -207,14 +208,27 @@
                                 <img class="reply-picture" th:src="'/img/' + ${reply.picture}">
                             </div>
                             <div class="reply-content">
-                                <span th:text="${reply.name}"></span>
-                                <span th:text="${reply.content}"></span>
+                                <div class="reply-name-wrap">
+                                    <span th:text="${reply.name}" class="reply-name"></span>
+                                </div>
+                                <div class="reply-content-wrap">
+                                    <pre th:text="${reply.content}" class="reply-text"></pre>
+                                </div>
                             </div>
                         </div>
                     </div>
                         <div class="add-post-reply">
-                            <input type="text" class="reply-content" th:id="'reply-content' + ${p.id}" placeholder="댓글 작성">
-                            <button type="button" th:onclick="'registerReply(' + ${p.id} + ');'">등록</button>
+                            <div class="post-reply">
+                                <div class="reply-picture-wrap">
+                                    <img class="reply-picture" th:src="'/img/' + ${member.picture}">
+                                </div>
+                                <div class="reply-content add-new-reply">
+                                    <textarea class="text-input-clear reply reply-text" th:id="'reply-content' + ${p.id}"
+                                              th:onkeyup="'resize_replyarea(this, \'new-reply-submit' + ${p.id} + '\');'"></textarea>
+                                    <i class="fas fa-pencil-alt custom-icon reply-submit" th:id="'new-reply-submit' + ${p.id}"
+                                       th:onclick="'sendReply(' + ${p.id} + ');'"></i>
+                                </div>
+                            </div>
                         </div>
                 </div>
             </div>

@@ -369,6 +369,12 @@ body {
 .custom-icon {
     font-size: 16px;
     margin-left: 12px;
+    color: #9ba5b1
+}
+
+.custom-icon:hover {
+    color: #6947b4;
+    cursor: pointer;
 }
 
 .diary-flag {
@@ -446,13 +452,14 @@ body {
 }
 
 .diary-post {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 10px;
+    padding-bottom: 20px;
 }
 
 .new-post-form-wrap {
     display: flex;
     padding-top: 12px;
+    padding-bottom: 20px;
 }
 
 #new-post-picture {
@@ -463,19 +470,29 @@ body {
     width: 96%;
 }
 
-.post-text{
-    margin-top: 20px;
+.text-input-clear{
     height: 30px;
     width: 100%;
     border: none;
     resize: none;
     overflow: hidden;
     background: none;
-    font-size: 16px;
     line-height: 32px;
 }
 
-.post-text:focus {
+.text-input-clear.post {
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.text-input-clear.reply {
+    margin-top: 0px;
+    padding-bottom: 4px;
+    line-height: 32px;
+    padding-left: 2px;
+}
+
+.text-input-clear:focus {
     outline: none;
 }
 
@@ -489,11 +506,12 @@ body {
 }
 
 .post-picture-wrap {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     overflow: hidden;
     margin-right: 6px;
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
 }
 
 .post-picture {
@@ -508,7 +526,15 @@ body {
     justify-content: space-between;
 }
 
+.post-content {
+    margin: 0px;
+    padding-left: 20px;
+    font-size: 15px;
+    white-space: pre-wrap;
+}
+
 .post-reply {
+    padding-left: 16px;
     width: 100%;
     font-size: 0.8rem;
     display: flex;
@@ -519,6 +545,7 @@ body {
     height: 25px;
     border-radius: 50%;
     overflow: hidden;
+    margin-top: 2px;
 }
 
 .reply-picture {
@@ -527,8 +554,52 @@ body {
     object-fit: cover;
 }
 
+.reply-name-wrap {
+    width: 40px;
+    display: contents;
+    height: 100%;
+}
+
+.reply-content-wrap {
+    display: inline;
+}
+
 .reply-content {
     width: 100%;
+    margin-left: 4px;
+    padding-right: 14px;
+    min-height: 32px;
+    line-height: 26px;
+}
+
+.reply-name {
+    width: 40px;
+    height: 100%;
+}
+
+.reply-name.new {
+    line-height: 32px;
+}
+
+.reply-content.add-new-reply {
+    display: flex;
+}
+
+.reply-text {
+    margin: 0px;
+    min-width: 88%;
+    padding-left: 8px;
+    white-space: pre-wrap;
+    display: inline;
+    line-height: 32px;
+}
+
+.reply-submit {
+    margin-top: 6px;
+}
+
+.new-reply {
+
 }
 
 .member-list-wrap {
@@ -545,11 +616,11 @@ body {
 
 .note {
     font-size: 16px;
-    line-height: 32px;
+    line-height: 30px;
     background: linear-gradient(
             to top,
-            darkgrey 0%,
-            darkgrey 1px,
+            #aeb8c5 0%,
+            #aeb8c5 1px,
             rgba(255, 255, 255, 0) 1px,
             rgba(255, 255, 255, 0) 100%
     );

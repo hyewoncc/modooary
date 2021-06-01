@@ -125,7 +125,7 @@ window.onload = function () {
     }
 
     $(window).resize(function () {
-        resize_textarea(document.getElementById('post_text'));
+        resize_postarea(document.getElementById('post_text'), document.getElementById('new-post-submit'));
     })
 }
 
@@ -148,7 +148,7 @@ function editDiaryOpen(diaryId) {
 
 
 //댓글 ajax 통신
-function registerReply(postId) {
+function sendReply(postId) {
     let data = {'reply' : document.getElementById('reply-content' + postId).value,
                 'postId' : postId};
     $.ajax({
@@ -161,10 +161,12 @@ function registerReply(postId) {
                 let replyDiv = $('<div class="post-reply"><div class="reply-picture-wrap">' +
                     '<img class="reply-picture" src="/img/' + reply.picture +'"></div>' +
                     '<div class="reply-content"><span>' + reply.name + '</span> ' +
-                    '<span>' + reply.content +'</span></div></div>');
+                    '<pre class="reply-text">' + reply.content +'</pre></div></div>');
                 $('#reply-list' + postId).append(replyDiv);
             })
             $('#reply-content' + postId).val('');
+            $('#reply-content' + postId).css('height', '30px');
+            $('#new-reply-submit' + postId).css('marginTop', '6px');
         }
     })
 }
@@ -293,11 +295,18 @@ function checkInvitations() {
     }
 }
 
-//글쓰기 영역 리사이징
-function resize_textarea(textarea) {
+//포스트 쓰기 영역 리사이징
+function resize_postarea(textarea, button) {
     textarea.style.height = "30px";
     textarea.style.height = (30 + (textarea.scrollHeight - 36)) + "px";
-    document.getElementById('new-post-submit').style.marginTop = (28 + (textarea.scrollHeight - 36)) + "px";
+    document.getElementById(button).style.marginTop = (28 + (textarea.scrollHeight - 36)) + "px";
+}
+
+//댓글 쓰기 영역 리사이징
+function resize_replyarea(textarea, button) {
+    textarea.style.height = "30px";
+    textarea.style.height = (30 + (textarea.scrollHeight - 36)) + "px";
+    document.getElementById(button).style.marginTop = (6 + (textarea.scrollHeight - 36)) + "px";
 }
 
 //새 글 쓰기 전송
