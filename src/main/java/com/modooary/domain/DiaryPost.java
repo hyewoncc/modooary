@@ -28,6 +28,7 @@ public class DiaryPost {
     @OneToMany(mappedBy = "diaryPost", cascade = CascadeType.ALL)
     private List<PostReply> postReplies = new ArrayList<>();
 
+    @Column(length = 512)
     private String content;
     private LocalDateTime regdate;
 
