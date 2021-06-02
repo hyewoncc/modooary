@@ -92,6 +92,12 @@ public class DiaryController {
         diary.changeColor(color);
         Long diaryId = diarySetService.registerDiary(diary, member);
 
+        //현재 사용자를 작성자로 첫 게시글 자동 등록
+        DiaryPost diaryPost = DiaryPost.createPost(diary, member,
+                member.getName() + "님이 " + diary.getTitle() + " 모두어리를 개설했습니다!" +
+                "\n친구를 초대해 모두 함께 이야기를 나눠보세요");
+        diaryBoardService.registerDiaryPost(diaryPost);
+
         return diaryId;
     }
 
