@@ -105,19 +105,17 @@ public class DiaryController {
     @GetMapping("/diary/{diaryId}")
     public String diaryBoard(@PathVariable("diaryId") Long diaryId, HttpSession session, Model model) {
 
-        //이 다이어리가 존재하지 않는 다이어리라면, 되돌아가기 처리
-        if(diarySetService.findDairy(diaryId) == null) {
-            return "redirect:/";
-        }
-
         //세션에서 현재 사용자를 받아옴
         Long memberId = (Long) session.getAttribute("memberId");
         Member member = memberService.findOneMember(memberId);
         //모델에 현재 사용자 추가
         model.addAttribute("member", member);
 
-        //현재 사용자에게 이 다이어리의 접근 권한이 있는지 확인하고, 없으면 되돌아가기 처리
-        if (!diarySetService.checkMemberInDiary(member, diarySetService.findDairy(diaryId))) {
+
+        //이 다이어리가 존재하지 않는 다이어리거나,
+        //현재 사용자가 소속 회원이 아니라면 되돌아가기 처리
+        if(!(diaryExistCheck(diaryId) &&
+                diarySetService.checkMemberInDiary(member, diarySetService.findDairy(diaryId)))){
             return "redirect:/";
         }
 
@@ -194,6 +192,15 @@ public class DiaryController {
             sender_picture = invitation.getSender().getPicture();
             receiver_name = invitation.getReceiver().getName();
             diary_title = invitation.getDiary().getTitle();
+        }
+    }
+
+    //특정 번호의 다이어리가 존재하는 다이어리인지 확인
+    private boolean diaryExistCheck(Long diaryId){
+        if(diarySetService.findDairy(diaryId) != null){
+            return true;
+        }else {
+            return false;
         }
     }
 }
