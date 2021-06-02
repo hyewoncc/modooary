@@ -105,6 +105,11 @@ public class DiaryController {
     @GetMapping("/diary/{diaryId}")
     public String diaryBoard(@PathVariable("diaryId") Long diaryId, HttpSession session, Model model) {
 
+        //이 다이어리가 존재하지 않는 다이어리라면, 되돌아가기 처리
+        if(diarySetService.findDairy(diaryId) == null) {
+            return "redirect:/";
+        }
+
         //세션에서 현재 사용자를 받아옴
         Long memberId = (Long) session.getAttribute("memberId");
         Member member = memberService.findOneMember(memberId);
