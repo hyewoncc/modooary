@@ -124,8 +124,18 @@ window.onload = function () {
         document.getElementById('info-name').focus();
     }
 
+    //아이콘 강조색을 다이어리 색으로 설정
+    let iconList = Array.from(document.getElementsByClassName('hover-diary-color'));
+    iconList.forEach(i => {i.addEventListener('mouseover', ()=>{
+        i.style.color = document.getElementById('diary-title-wrap').style.backgroundColor;})
+    })
+    iconList.forEach(i => {i.addEventListener('mouseout', ()=>{
+        i.style.color = '#9ba5b1';})
+    })
+
+    //창 크기가 바뀔 때 작성중인 포스트의 입력창 크기도 재조정
     $(window).resize(function () {
-        resize_postarea(document.getElementById('post_text'), document.getElementById('new-post-submit'));
+        resize_postarea(document.getElementById('post_text'), 'new-post-submit');
     })
 }
 

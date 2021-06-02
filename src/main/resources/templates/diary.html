@@ -146,8 +146,10 @@
     <div class="body-wrap">
 
         <div class="diary-list-wrap">
-            <div class="list-header">
-                <a>다이어리 목록</a>
+            <div class="list-header diary-list-title">
+                <div class="diary-list-title-wrap">
+                    <a>다이어리 목록</a>
+                </div>
             </div>
             <div class="diary-list">
                 <div class="diary-flag" th:each="d : ${diaries}" th:onclick="'location.href=\'/diary/' + ${d.id} + '\''"
@@ -155,8 +157,8 @@
                     <input type="hidden" th:id="'diary-color' + ${d.id}" th:value="${d.color}">
                     <a th:text="${d.title}" class="diary-flag-title"></a>
                 </div>
-                <div class="diary-flag">
-                    <a id="add-diary-open">+ 새 다이어리 만들기</a>
+                <div class="diary-flag create-diary" id="add-diary-open">
+                    <span class="diary-flag-title" id="add-diary">새 다이어리 만들기</span>
                 </div>
             </div>
         </div>
@@ -164,14 +166,16 @@
 
         <div class="diary-post-wrap">
             <div class="list-header content-wrap">
-                <div class="diary-title-wrap">
-                    <a id="diary-title" th:text="${diary.title}"></a>
-                    <i class="fas fa-book custom-icon" th:if="${host}" id="edit-diary-open" th:onclick="'editDiaryOpen(' + ${diary.id} +');'"></i>
+                <div class="diary-title-wrap" id="diary-title-wrap" th:style="'background-color:' + '#' + ${diary.color}">
+                    <div class="diary-title-content">
+                        <a id="diary-title" th:text="${diary.title}"></a>
+                        <i class="fas fa-book custom-icon" th:if="${host}" id="edit-diary-open" th:onclick="'editDiaryOpen(' + ${diary.id} +');'"></i>
+                    </div>
                 </div>
                 <div class="user-setting-wrap">
-                    <i class="fas fa-envelope custom-icon" id="show-invitation-open"></i>
-                    <i class="fas fa-user custom-icon" id="show-info-open"></i>
-                    <i class="fas fa-sign-out-alt custom-icon" onclick="location.href='/logout'"></i>
+                    <i class="fas fa-envelope custom-icon hover-diary-color" id="show-invitation-open"></i>
+                    <i class="fas fa-user custom-icon hover-diary-color" id="show-info-open"></i>
+                    <i class="fas fa-sign-out-alt custom-icon hover-diary-color" onclick="location.href='/logout'"></i>
                 </div>
             </div>
 
@@ -185,7 +189,7 @@
                             <textarea class="text-input-clear post" name="post_text" id="post_text"
                                       onkeyup="resize_postarea(this, 'new-post-submit')"></textarea>
                         </form>
-                        <i class="fas fa-pencil-alt custom-icon" id="new-post-submit" onclick="sendPost();"></i>
+                        <i class="fas fa-pen custom-icon hover-diary-color" id="new-post-submit" onclick="sendPost();"></i>
                     </div>
                 </div>
 
@@ -225,7 +229,7 @@
                                 <div class="reply-content add-new-reply">
                                     <textarea class="text-input-clear reply reply-text" th:id="'reply-content' + ${p.id}"
                                               th:onkeyup="'resize_replyarea(this, \'new-reply-submit' + ${p.id} + '\');'"></textarea>
-                                    <i class="fas fa-pencil-alt custom-icon reply-submit" th:id="'new-reply-submit' + ${p.id}"
+                                    <i class="fas fa-pen custom-icon reply-submit hover-diary-color" th:id="'new-reply-submit' + ${p.id}"
                                        th:onclick="'sendReply(' + ${p.id} + ');'"></i>
                                 </div>
                             </div>
@@ -239,13 +243,25 @@
             <div class="list-header">
                 <a>이 다이어리의 친구들</a>
             </div>
-            <div class="member-list" th:each="m : ${members}">
-                <span th:text="${m.member.name}"></span>
-                <span th:text="${m.grade}"></span>
-                <br/>
-            </div>
-            <div th:if="${host}" class="member-list">
-                <a id="add-friend-open">친구 초대하기</a>
+            <div class="member-list-content-wrap">
+                <div class="member-list" th:each="m : ${members}">
+                    <div class="member-list-content">
+                        <div class="member-list-pic-wrap">
+                            <img class="member-list-pic" th:src="'/img/' + ${m.member.picture}">
+                        </div>
+                        <span th:text="${m.member.name}"></span>
+                        <i th:if="${m.grade.toString().equals('HOST')}" class="fas fa-crown crown-icon"></i>
+                    </div>
+                    <br/>
+                </div>
+                <div th:if="${host}" class="member-list" id="invite-friend-wrap">
+                    <div class="member-list-content" id="add-friend-open">
+                        <div class="member-list-pic-wrap icon">
+                            <i class="fas fa-paper-plane"></i>
+                        </div>
+                        <span>친구 초대하기</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

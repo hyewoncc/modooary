@@ -1,6 +1,7 @@
 body {
     font-family: 'Noto Sans KR', sans-serif;
     margin: 0px;
+    background-color: #f3f2f0;
 }
 
 .modal-wrap {
@@ -341,6 +342,7 @@ body {
 
 .body-wrap {
     display: flex;
+    margin-top: 20px;
 }
 
 .content-wrap {
@@ -356,7 +358,6 @@ body {
 
 .diary-list {
     padding-top: 20px;
-    background-color: lightgray;
 }
 
 .list-header {
@@ -366,6 +367,20 @@ body {
     align-items: center;
 }
 
+.list-header.diary-list-title {
+    justify-content: flex-end;
+}
+
+.diary-list-title-wrap {
+    width: 160px;
+}
+
+.crown-icon {
+    margin-left: 4px;
+    font-size: 16px;
+    color: #ffbf00;
+}
+
 .custom-icon {
     font-size: 16px;
     margin-left: 12px;
@@ -373,7 +388,6 @@ body {
 }
 
 .custom-icon:hover {
-    color: #6947b4;
     cursor: pointer;
 }
 
@@ -383,10 +397,19 @@ body {
     height: 38px;
     text-align: right;
     margin-bottom: 14px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .diary-flag:hover {
-    width: 165px;
+    width: 170px;
+    cursor: pointer;
+}
+
+.diary-flag:hover .diary-flag-title {
+    padding-right: 20px;
 }
 
 .diary-flag-title {
@@ -394,8 +417,16 @@ body {
     padding-right: 12px;
 }
 
-.diary-flag-title:hover {
-    padding-right: 20px;
+.create-diary {
+    background-color: whitesmoke;
+}
+
+.create-diary #add-diary {
+    color: #9ba5b1;
+}
+
+.create-diary:hover #add-diary {
+    color: #6947b4;
 }
 
 #show-invitation-content {
@@ -441,14 +472,36 @@ body {
     margin: auto;
 }
 
+.diary-title-wrap {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    border-radius: 4px 4px 0px 0px;
+}
+
+.diary-title-content {
+    color: white;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.fa-book {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.fa-book:hover {
+    color: white;
+}
+
 .diary-post-wrap {
     position: relative;
-    width: 60%;
+    width: 55%;
     height: 100%;
 }
 
 .diary-post-content-wrap {
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.4);
+    background-color: white;
 }
 
 .diary-post {
@@ -604,14 +657,70 @@ body {
 
 .member-list-wrap {
     position: relative;
+    margin-left: 24px;
     width: 20%;
     height: 100%;
-    background-color: linen;
+}
+
+.member-list-content-wrap {
+    background-color: #ffea9c;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .member-list {
     width: 100%;
     height: 30px;
+    padding-bottom: 10px;
+}
+
+.member-list-content {
+    display: flex;
+    align-items: center;
+}
+
+.member-list-pic-wrap {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 8px;
+}
+
+.member-list-pic-wrap.icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.member-list-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#invite-friend-wrap:hover {
+    cursor: pointer;
+}
+
+#add-friend-open {
+    margin-right: 20px;
+    padding: 2px 0px 2px 2px;
+    border-radius: 16px;
+}
+
+#invite-friend-wrap:hover #add-friend-open {
+    background-color: white;
+}
+
+#invite-friend-wrap:hover .fa-paper-plane {
+    color: #ffcb00;
+}
+
+.fa-paper-plane {
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .note {
@@ -632,7 +741,7 @@ body {
         min-width: 200px;
     }
     .diary-post-wrap {
-        min-width: 600px;
+        min-width: 550px;
     }
     .diary-list-wrap {
         min-width: 200px;
