@@ -4,7 +4,6 @@ import com.modooary.controller.form.LoginForm;
 import com.modooary.domain.Member;
 import com.modooary.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

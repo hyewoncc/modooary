@@ -111,6 +111,11 @@ public class DiaryController {
         //모델에 현재 사용자 추가
         model.addAttribute("member", member);
 
+        //현재 사용자에게 이 다이어리의 접근 권한이 있는지 확인하고, 없으면 되돌아가기 처리
+        if (!diarySetService.checkMemberInDiary(member, diarySetService.findDairy(diaryId))) {
+            return "redirect:/";
+        }
+
         //현재 사용자의 모든 다이어리 목록 찾기
         List<DiaryMember> diaryMemberForDiary = member.getDiaryMembers();
         //현재 사용자의 모든 다이어리 찾기
