@@ -43,18 +43,14 @@ public class DiaryController {
         List<DiaryMember> diaryMembers = new ArrayList<>();
         diaryMembers = member.getDiaryMembers();
 
-        //다이어리가 없는 신규 회원이라면 따로 처리
-        if(diaryMembers.size() == 0) {
-            model.addAttribute("new", true);
-            return "diary";
-        }else {
-            //현재 사용자의 첫번째 다이어리 (가장 오래 된 다이어리)로 이동
-            if(model.containsAttribute("new")){
-                model.addAttribute("new", false);
-            }
-            Diary diary = diaryMembers.get(0).getDiary();
-            return "redirect:/diary/" + diary.getId();
+        //다이어리가 하나 이상이라면 안내 다이어리를 빼기
+        if(diaryMembers.size() > 1) {
+            diaryMembers.remove(0);
         }
+
+        //현재 사용자의 첫번째 다이어리 (가장 오래 된 다이어리)로 이동
+        Diary diary = diaryMembers.get(0).getDiary();
+        return "redirect:/diary/" + diary.getId();
     }
 
     //새로운 다이어리 생성 또는 수정
@@ -121,6 +117,12 @@ public class DiaryController {
 
         //현재 사용자의 모든 다이어리 목록 찾기
         List<DiaryMember> diaryMemberForDiary = member.getDiaryMembers();
+
+        //다이어리가 2개 이상이면 처음 안내 다이어리는 삭제
+        if(diaryMemberForDiary.size() > 1) {
+            diaryMemberForDiary.remove(0);
+        }
+
         //현재 사용자의 모든 다이어리 찾기
         List<Diary> diaries = new ArrayList<>();
         for (DiaryMember dm : diaryMemberForDiary) {

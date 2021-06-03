@@ -1,8 +1,9 @@
 package com.modooary.controller;
 
 import com.modooary.controller.form.MemberForm;
-import com.modooary.domain.Member;
-import com.modooary.domain.PreMember;
+import com.modooary.domain.*;
+import com.modooary.service.DiaryBoardService;
+import com.modooary.service.DiarySetService;
 import com.modooary.service.MemberService;
 import com.modooary.utils.EmailUtil;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import javax.validation.Valid;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,6 +31,8 @@ public class MemberController {
 
     private final MemberService memberService;
     private final EmailUtil emailUtil;
+    private final DiarySetService diarySetService;
+    private final DiaryBoardService diaryBoardService;
 
     @GetMapping("/sign-in")
     public String createForm(Model model) {
@@ -54,7 +58,7 @@ public class MemberController {
             emailUtil.sendMail(
                     preMember.getName(), preMember.getEmail(), preMember.getId(), preMember.getKey());
             model.addAttribute("emailAlert", "success");
-        } catch (MessagingException e) {
+        } catch (MessagingException | UnsupportedEncodingException e) {
             model.addAttribute("emailAlert", "fail");
             e.printStackTrace();
         }
@@ -69,7 +73,9 @@ public class MemberController {
 
         //임시 회원의 키값 조회 후 일치시 정회원 전환
         if (memberService.checkPreMemberKey(id, key)) {
-            memberService.approveMember(id);
+            Long memberId = memberService.approveMember(id);
+            Member member = memberService.findOneMember(memberId);
+            createWelcomeMessage(member);
         }
 
         return "redirect:/";
@@ -119,5 +125,23 @@ public class MemberController {
         }
 
         return "redirect:/";
+    }
+
+    private void createWelcomeMessage(Member member) {
+        Diary diary = Diary.createDiary("환영합니다");
+        diary.changeColor("6947b4");
+        Member admin = memberService.findOneByEmail("modooary");
+        diarySetService.registerDiary(diary, admin);
+        diarySetService.registerDiaryMember(diary, member);
+        DiaryPost diaryPost = DiaryPost.createPost(diary, member, "\uD83C\uDF89모두어리에 가입하신 걸 환영합니다\uD83C\uDF89" +
+                "\n새로운 모두어리를 개설하고 친구를 초대하거나," +
+                "\n친구에게 초대를 부탁해보세요!");
+        diaryBoardService.registerDiaryPost(diaryPost);
+        PostReply postReply1 = PostReply.createPostReply(diaryPost, member,
+                "이 모두어리는 다른 모두어리에 가입하면 자동으로 사라져요!");
+        diaryBoardService.registerPostReply(postReply1);
+        PostReply postReply2 = PostReply.createPostReply(diaryPost, admin,
+                "모두어리에서 친구들과 좋은 추억을 남기세요✨");
+        diaryBoardService.registerPostReply(postReply2);
     }
 }

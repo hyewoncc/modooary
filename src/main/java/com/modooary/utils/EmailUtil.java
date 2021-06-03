@@ -6,7 +6,9 @@ import org.springframework.stereotype.Component;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
 
 @Component
 @RequiredArgsConstructor
@@ -15,9 +17,11 @@ public class EmailUtil {
     private final JavaMailSender javaMailSender;
 
     public void sendMail(
-            String name, String email, Long prememberId, String key) throws MessagingException {
+            String name, String email, Long prememberId, String key) throws MessagingException, UnsupportedEncodingException {
         MimeMessage message = javaMailSender.createMimeMessage();
-        message.setFrom("noreply@modooary.com");
+        InternetAddress admin = new InternetAddress("noreply@modooary.com");
+        admin.setPersonal("modooary");
+        message.setFrom(admin);
         message.setRecipients(Message.RecipientType.TO, email);
         message.setSubject(name + "님의 모두어리 가입을 환영합니다");
 
