@@ -23,19 +23,25 @@
             </div>
             <div class="login-wrap">
                 <div class="sign-in login-form">
-                    <form role="form" action="/sign-in" th:object="${memberForm}" method="post">
+                    <form role="form" action="/sign-in" th:object="${memberForm}" onsubmit="return checkJoinForm();" method="post">
                         <div class="form-low">
                             <label for="name">닉네임</label>
                             <input type="text" class="text-input" id="name" th:field="*{name}" placeholder="나중에 변경할 수 있어요">
-                            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                            <span id="name-error" class="error-span"></span>
                         </div>
                         <div class="form-low">
                             <label for="email">이메일</label>
                             <input type="text" class="text-input" id="email" th:field="*{email}" placeholder="변경할 수 없어요">
+                            <span id="email-error" class="error-span"></span>
                         </div>
                         <div class="form-low">
                             <label for="password">비밀번호</label>
                             <input type="password" class="text-input" id="password" th:field="*{password}" placeholder="비밀번호">
+                            <span id="password-error" class="error-span"></span>
+                        </div>
+                        <div class="form-low">
+                            <input type="password" class="text-input" id="password-check" placeholder="비밀번호 확인">
+                            <span id="password-check-error" class="error-span"></span>
                         </div>
                         <div>
                             <button type="submit">인증메일 전송</button>
@@ -48,6 +54,6 @@
     </div>
 
 </div>
-
+<script type="text/javascript" src="/js/joinJs.js"></script>
 </body>
 </html>
