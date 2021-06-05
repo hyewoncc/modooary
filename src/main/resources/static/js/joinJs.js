@@ -6,6 +6,7 @@ function checkJoinForm() {
     let errorSpans = Array.from(document.getElementsByClassName('error-span'));
     for (let i in errorSpans) {
         errorSpans[i].innerHTML = '';
+        errorSpans[i].style.display = 'none';
     }
     let result = true;
 
@@ -18,8 +19,8 @@ function checkJoinForm() {
         result = false;
     }
 
-    if(!checkPasswordCheck(document.getElementById('password').value),
-        document.getElementById('password-check').value) {
+    if(!checkPasswordCheck(document.getElementById('password').value,
+        document.getElementById('password-check').value)) {
         result = false;
     }
 
@@ -52,6 +53,7 @@ function checkBlank(id, name) {
     let str = document.getElementById(id).value;
     if(str.length == 0){
         document.getElementById(id + '-error').innerHTML = name + ' 입력하세요';
+        document.getElementById(id + '-error').style.display = 'inline';
         return false;
     }
     return true;
@@ -62,6 +64,7 @@ function checkEmail(email) {
     let emailRegExp = /^[A-Za-z0-9_]+[A-Za-z0-9]*[@][A-Za-z0-9]+[A-Za-z0-9]*[.][A-Za-z]{1,3}$/;
     if(!emailRegExp.test(email)) {
         document.getElementById('email-error').innerHTML = '올바른 메일 주소를 입력하세요';
+        document.getElementById('email-error').style.display = 'inline';
         return false;
     }
     return true;
@@ -74,10 +77,12 @@ function checkPassword(password) {
     //비밀번호 길이 확인
     if(password.length < 4) {
         errorSpan.innerHTML = '최소 4자리를 입력하세요';
+        errorSpan.style.display = 'inline';
         return false;
     }
     if(password.length > 13) {
         errorSpan.innerHTML = '최대 12자리까지 입력하세요';
+        errorSpan.style.display = 'inline';
         return false;
     }
 
@@ -85,6 +90,7 @@ function checkPassword(password) {
     let passwordRegExp = /^[a-zA-z0-9]/;
     if(!passwordRegExp.test(password)) {
         errorSpan.innerHTML = '영문,숫자만 사용 가능해요';
+        errorSpan.style.display = 'inline';
         return false;
     }
     return true;
@@ -96,6 +102,7 @@ function checkName(name) {
 
     if(name.length > 16) {
         errorSpan.innerHTML = '이름은 최대 15자입니다';
+        errorSpan.style.display = 'inline';
         return false;
     }
     return true;
@@ -104,9 +111,9 @@ function checkName(name) {
 //비밀번호 일치 확인
 function checkPasswordCheck(password, passwordCheck) {
     let errorSpan = document.getElementById('password-check-error');
-
     if (!(password == passwordCheck)) {
         errorSpan.innerHTML = '비밀번호가 일치하지 않습니다';
+        errorSpan.style.display = 'inline';
         return false;
     }
     return true;

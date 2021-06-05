@@ -584,6 +584,7 @@ body {
     padding-left: 20px;
     font-size: 15px;
     white-space: pre-wrap;
+    line-height: 32px;
 }
 
 .post-reply {

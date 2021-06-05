@@ -6,6 +6,7 @@
 
 .modooary-wrap {
     position: absolute;
+    min-width: 600px;
     width: 45%;
     height: 90%;
     border-radius: 12px 12px 0px 0px;
@@ -15,15 +16,9 @@
     background-color: #6947b4;
 }
 
-@media (max-width: 1000px) {
-    .modooary-wrap {
-        width: 550px;
-    }
-}
-
 @media (max-height: 800px){
     .modooary-wrap {
-        height: 700px;
+        min-height: 700px;
     }
 }
 
@@ -60,6 +55,14 @@
     margin-bottom: 10px;
 }
 
+.input-low {
+    color: white;
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .input-label {
     height: 30px;
     font-size: 20px;
@@ -73,7 +76,7 @@ input::placeholder {
 .text-input {
     color: white;
     font-size: 16px;
-    width: 230px;
+    width: 220px;
     height: 30px;
     background-color: rgba(0, 0, 0, 0);
     border-bottom-color: rgba(255, 255, 255, 0.4);
@@ -86,6 +89,33 @@ input::placeholder {
 .text-input:focus {
     outline: none;
     border-bottom-color: rgba(255, 255, 255, 1);
+}
+
+.error-span {
+    margin-left: 75px;
+    display: none;
+    background: purple;
+    border-radius: 4px;
+    padding: 0px 6px 0px 6px;
+    font-size: 14px;
+    color: white;
+}
+
+#submit-join {
+    width: 100%;
+    height: 36px;
+    font-size: 16px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 4px;
+    background: rgba(200, 200, 200, 0.3);
+    color: rgba(255, 255, 255, 0.6);
+}
+
+#submit-join:hover {
+    background: dodgerblue;
+    cursor: pointer;
+    color: white;
 }
 
 input:-webkit-autofill,
