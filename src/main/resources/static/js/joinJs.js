@@ -10,6 +10,11 @@ function checkJoinForm() {
     }
     let result = true;
 
+    //사용 가능한 메일인지 검증
+    if(!checkEmailUsable(document.getElementById('email').value)){
+        result = false;
+    }
+
     //입력값들의 유효성 검증
     if(!checkName(document.getElementById('name').value)){
         result = false;
@@ -117,4 +122,24 @@ function checkPasswordCheck(password, passwordCheck) {
         return false;
     }
     return true;
+}
+
+//사용 가능한 메일인지 확인
+//사용 가능한 메일이면 true, 아니면 false 반환
+function checkEmailUsable(email) {
+    let data = {'email' : email};
+
+    $.ajax({
+        url: '/sign-in/check-email',
+        data: data,
+        type: 'post',
+        success: function (result){
+            if(result){
+                return true;
+            }else{
+                document.getElementById('email-error').innerHTML = '이미 가입된 메일입니다';
+                return false;
+            }
+        }
+    })
 }

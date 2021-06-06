@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
@@ -64,6 +65,20 @@ public class MemberController {
         }
 
         return "redirect:/";
+    }
+
+    @PostMapping("/sign-in/check-email")
+    @ResponseBody
+    public boolean checkEmail(HttpServletRequest request) {
+        //이미 가입된 이메일인지 확인하고 사용 가능할 시 true, 불가일 시 false 반환
+        String email = request.getParameter("email");
+        Member member = memberService.findOneByEmail(email);
+
+        if(member != null){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     //인증 메일 링크로 들어올 시 파라미터 값을 DB와 비교하여 일치 시 정회원으로 등록
