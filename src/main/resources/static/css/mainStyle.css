@@ -118,6 +118,31 @@ input::placeholder {
     color: white;
 }
 
+.form-button-wrap {
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-button {
+    width: 49%;
+    height: 36px;
+    margin-top: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(200, 200, 200, 0.3);
+    color: rgba(255, 255, 255, 0.6);
+}
+
+#button-login {
+    background: rgba(30, 144, 255, 0.4);
+}
+
+#button-login:hover {
+    background: dodgerblue;
+}
+
 input:-webkit-autofill,
     input:-webkit-autofill:hover,
     input:-webkit-autofill:focus,
