@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 
 @Service
@@ -101,7 +102,12 @@ public class MemberService {
     }
 
     //이메일 검색 후 멤버를 반환
-    public Member findOneByEmail(String email){
+    public Member findOneByEmail(String email) {
         return memberRepository.findOneByEmail(email);
+    }
+
+    //사용 가능한 이메일인지 중복 확인 후 가능하면 true, 아니면 false 반환
+    public boolean checkEmailUsable(String email) {
+        return memberRepository.checkEmail(email);
     }
 }

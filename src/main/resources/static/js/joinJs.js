@@ -128,18 +128,22 @@ function checkPasswordCheck(password, passwordCheck) {
 //사용 가능한 메일이면 true, 아니면 false 반환
 function checkEmailUsable(email) {
     let data = {'email' : email};
+    let checkResult = false;
 
     $.ajax({
         url: '/sign-in/check-email',
         data: data,
         type: 'post',
+        async: false,
         success: function (result){
             if(result){
-                return true;
+                checkResult = true;
             }else{
                 document.getElementById('email-error').innerHTML = '이미 가입된 메일입니다';
-                return false;
+                document.getElementById('email-error').style.display = 'inline';
             }
         }
     })
+
+    return checkResult;
 }

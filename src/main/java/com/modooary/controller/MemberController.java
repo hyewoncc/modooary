@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 import javax.mail.MessagingException;
+import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -72,13 +73,7 @@ public class MemberController {
     public boolean checkEmail(HttpServletRequest request) {
         //이미 가입된 이메일인지 확인하고 사용 가능할 시 true, 불가일 시 false 반환
         String email = request.getParameter("email");
-        Member member = memberService.findOneByEmail(email);
-
-        if(member != null){
-            return false;
-        }else{
-            return true;
-        }
+        return memberService.checkEmailUsable(email);
     }
 
     //인증 메일 링크로 들어올 시 파라미터 값을 DB와 비교하여 일치 시 정회원으로 등록
