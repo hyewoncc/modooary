@@ -1,7 +1,80 @@
 @charset "UTF-8";
 
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    margin: 0px;
+}
+
 .body-wrap {
     font-family: 'Noto Sans KR', sans-serif;
+}
+
+.modal-wrap {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none;
+}
+
+.modal-wrap.show-modal {
+    display: block;
+}
+
+.modal-content-box {
+    width: 80%;
+    height: 100%;
+    margin: auto;
+    padding-bottom: 30px;
+}
+
+.modal-title-wrap {
+    position: relative;
+    padding-top: 20px;
+    width: 100%;
+}
+
+.modal-title {
+    text-align: center;
+}
+
+#reset-password-content {
+    width: 400px;
+    margin-top: 10%;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.4);
+    margin: auto;
+    vertical-align: center;
+}
+
+#reset-password-form {
+    margin-top: 16px;
+}
+
+#reset-password-input {
+    color: black;
+}
+
+#reset-password-email {
+    color: black;
+    border-bottom-color: rgba(0, 0, 0, 0.4);
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-top-width: 0px;
+    border-bottom-width: 1px;
+}
+
+#reset-password-email:focus {
+    border-bottom-color: #6947b4;
+}
+
+#reset-password-email::placeholder {
+    color: #8f85b0;
 }
 
 .modooary-wrap {
@@ -119,15 +192,19 @@ input::placeholder {
 }
 
 .form-button-wrap {
-    width: 300px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
+}
+
+#login-button-wrap {
+    width: 300px;
 }
 
 .form-button {
     width: 49%;
     height: 36px;
-    margin-top: 10px;
+    margin-top: 20px;
     font-size: 16px;
     border: none;
     border-radius: 8px;
@@ -135,12 +212,34 @@ input::placeholder {
     color: rgba(255, 255, 255, 0.6);
 }
 
-#button-login {
-    background: rgba(30, 144, 255, 0.4);
+.form-button.reset-button {
+    background: lightgray;
+    color: dimgray;
 }
 
-#button-login:hover {
+.form-button:hover {
+    color: white;
     background: dodgerblue;
+    cursor: pointer;
+}
+
+#button-reset-password:hover {
+    background: #6947b4;
+}
+
+#button-reset-password-cancel:hover {
+    background: slategray;
+}
+
+.form-tag {
+    color: lightgray;
+    font-size: 14px;
+}
+
+.form-tag:hover {
+    color: white;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 input:-webkit-autofill,

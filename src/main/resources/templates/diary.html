@@ -25,7 +25,7 @@
                 <div class="add-diary-form-wrap">
                     <form role="form" action="/diary" method="post">
                         <div class="new-diary-title-wrap">
-                            <input type="text" class="new-diary-title input-box" id="new-diary-title" name="new-diary-title" placeholder="다이어리 제목">
+                            <input type="text" class="new-diary-title input-box" id="new-diary-title" name="new-diary-title" placeholder="모두어리 제목">
                         </div>
                         <div class="color-palette" id="color-palette">
                         </div>
@@ -148,7 +148,7 @@
         <div class="diary-list-wrap">
             <div class="list-header diary-list-title">
                 <div class="diary-list-title-wrap">
-                    <a>다이어리 목록</a>
+                    <a>모두어리 목록</a>
                 </div>
             </div>
             <div class="diary-list">
@@ -158,7 +158,7 @@
                     <a th:text="${d.title}" class="diary-flag-title"></a>
                 </div>
                 <div class="diary-flag create-diary" id="add-diary-open">
-                    <span class="diary-flag-title" id="add-diary">새 다이어리 만들기</span>
+                    <span class="diary-flag-title" id="add-diary">새 모두어리 만들기</span>
                 </div>
             </div>
         </div>
@@ -241,7 +241,7 @@
 
         <div class="member-list-wrap">
             <div class="list-header">
-                <a>이 다이어리의 친구들</a>
+                <a>이 모두어리의 친구들</a>
             </div>
             <div class="member-list-content-wrap">
                 <div class="member-list" th:each="m : ${members}">
