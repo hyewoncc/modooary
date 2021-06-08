@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <title>main</title>
     <link href="/css/mainStyle.css" rel="stylesheet">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,6 +14,37 @@
 <body>
 
 <div class="body-wrap">
+
+    <!-- 모달 창 -->
+    <!-- 임시 비밀번호 전송 창-->
+    <div class="modal-wrap" id="reset-password-wrap">
+        <div class="modal-content" id="reset-password-content">
+            <div class="modal-content-box">
+                <div class="modal-title-wrap">
+                    <h3 class="modal-title" id="reset-password-title">임시 비밀번호 설정</h3>
+                </div>
+                <div class="reset-password-form-wrap">
+                    <span>가입된 메일로 임시 비밀번호를 보내드려요</span>
+                    <form role="form" action="/reset-password" id="reset-password-form" onsubmit="return checkResetForm();" method="post">
+                        <div class="form-low">
+                            <div class="input-low" id="reset-password-input">
+                                <label for="email">이메일️</label>
+                                <input type="text" class="text-input" name="reset-password-email" id="reset-password-email" placeholder="이메일 주소">
+                            </div>
+                            <span id="reset-password-email-error" class="error-span"></span>
+                        </div>
+                        <div class="form-low">
+                            <div class="form-button-wrap">
+                                <button type="submit" class="form-button reset-button" id="button-reset-password">메일 보내기</button>
+                                <button type="button" class="form-button reset-button" id="button-reset-password-cancel">취소</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="modooary-wrap">
 
@@ -25,29 +57,29 @@
 
             <div class="login-wrap">
                 <div class="login-form">
-                    <form role="form" action="/login" th:object="${loginForm}" method="post">
+                    <form role="form" action="/login" th:object="${loginForm}" onsubmit="return checkLoginForm();" method="post">
                         <div class="form-low">
                             <div class="input-low">
                                 <label for="email">이메일️</label>
                                 <input type="text" class="text-input" id="email" th:field="*{email}" placeholder="이메일 주소">
                             </div>
+                            <span id="email-error" class="error-span"></span>
                         </div>
-                        <span id="email-error" class="error-span"></span>
                         <div class="form-low">
                             <div class="input-low">
                                 <label for="password">비밀번호</label>
                                 <input type="password" class="text-input" id="password" th:field="*{password}" placeholder="비밀번호">
                             </div>
+                            <span id="password-error" class="error-span"></span>
                         </div>
-                        <span id="password-error" class="error-span"></span>
                         <div class="form-low">
-                            <div class="form-button-wrap">
+                            <div class="form-button-wrap" id="login-button-wrap">
                                 <button type="submit" class="form-button" id="button-login">로그인</button>
                                 <button type="button" class="form-button" id="button-join" onclick="location.href = '/sign-in'">회원가입</button>
                             </div>
                         </div>
                         <div class="form-low">
-                            <a href="">비밀번호를 잊으셨나요?</a>
+                            <a class="form-tag" id="reset-password-open">비밀번호를 잊으셨나요?</a>
                         </div>
                     </form>
                         <div class="form-low" th:switch="${emailAlert}">
@@ -62,6 +94,6 @@
     </div>
 
 </div>
-
+<script type="text/javascript" src="/js/joinJs.js"></script>
 </body>
 </html>

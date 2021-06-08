@@ -1,13 +1,28 @@
 
+//임시 비밀번호 설정 모달창 열고 닫기
+window.onload = function () {
+    document.getElementById('reset-password-open').onclick = function () {
+        resetPasswordOpen();
+    }
+
+    //모달창 바깥을 클릭하면 닫히는 기능 추가
+    Array.from(document.getElementsByClassName('modal-wrap')).forEach((w) => {
+        window.addEventListener('click', (e) => {
+            e.target === w ? w.classList.remove('show-modal') : false;
+        })
+    })
+}
+
+//임시 비밀번호 설정 창 열기
+function resetPasswordOpen() {
+    document.getElementById('reset-password-wrap').classList.add('show-modal');
+}
+
 //회원가입 폼의 유효성 검증
 function checkJoinForm() {
 
     //이전 검증 후 표시된 에러 문구를 일괄 삭제
-    let errorSpans = Array.from(document.getElementsByClassName('error-span'));
-    for (let i in errorSpans) {
-        errorSpans[i].innerHTML = '';
-        errorSpans[i].style.display = 'none';
-    }
+    eraseErrors();
     let result = true;
 
     //사용 가능한 메일인지 검증
@@ -29,7 +44,7 @@ function checkJoinForm() {
         result = false;
     }
 
-    if(!checkEmail(document.getElementById('email').value)){
+    if(!checkEmail('email-error',document.getElementById('email').value)){
         result = false;
     }
 
@@ -53,6 +68,56 @@ function checkJoinForm() {
     return result;
 }
 
+//로그인 입력값 유효성 검증
+function checkLoginForm() {
+
+    //이전 검증 후 표시된 에러 문구를 일괄 삭제
+    eraseErrors();
+    let result = true;
+
+    //이메일 형식 확인
+    if(!checkEmail('email-error', document.getElementById('email').value)){
+        result = false;
+    }
+
+    //이메일 칸이 비었는지 확인
+    if(!checkBlank('email', '이메일을')){
+        result = false;
+    }
+
+    if(!checkBlank('password', '비밀번호를')) {
+        result = false;
+    }
+
+    return result;
+}
+
+//비밀번호 찾기 유효성 검증
+function checkResetForm() {
+
+    //이전 검증 후 표시된 에러 문구 일괄 삭제
+    eraseErrors();
+    let result = true;
+
+    //가입된 이메일인지 확인
+    if(!checkEmailMember(document.getElementById('reset-password-email').value)){
+        result = false;
+    }
+
+    //이메일 형식 홗인
+    if(!checkEmail('reset-password-email-error', document.getElementById('reset-password-email').value)){
+        result = false;
+    }
+
+    //이메일 칸이 비었는지 확인
+    if(!checkBlank('reset-password-email', '이메일을')){
+        result = false;
+    }
+
+    console.log(result);
+    return result;
+}
+
 //해당 칸이 비어있는지 확인
 function checkBlank(id, name) {
     let str = document.getElementById(id).value;
@@ -65,11 +130,11 @@ function checkBlank(id, name) {
 }
 
 //정규식으로 이메일 확인
-function checkEmail(email) {
+function checkEmail(errorSpan, email) {
     let emailRegExp = /^[A-Za-z0-9_]+[A-Za-z0-9]*[@][A-Za-z0-9]+[A-Za-z0-9]*[.][A-Za-z]{1,3}$/;
     if(!emailRegExp.test(email)) {
-        document.getElementById('email-error').innerHTML = '올바른 메일 주소를 입력하세요';
-        document.getElementById('email-error').style.display = 'inline';
+        document.getElementById(errorSpan).innerHTML = '올바른 메일 주소를 입력하세요';
+        document.getElementById(errorSpan).style.display = 'inline';
         return false;
     }
     return true;
@@ -146,4 +211,38 @@ function checkEmailUsable(email) {
     })
 
     return checkResult;
+}
+
+//가입된 메일인지 확인
+//가입한 메일이면 true, 아니면 false 반환
+function checkEmailMember(email) {
+    let data = {'email' : email};
+    let checkResult = false;
+
+    $.ajax({
+        url: '/reset-password/check-email',
+        data: data,
+        type: 'post',
+        async: false,
+        success: function (result){
+            if(result){
+                checkResult = true;
+            }else{
+                document.getElementById('reset-password-email-error').innerHTML = '아직 가입하지 않은 메일입니다';
+                document.getElementById('reset-password-email-error').style.display = 'inline';
+            }
+        }
+    })
+
+    return checkResult;
+}
+
+//표기했던 에러 문구들을 일괄 삭제
+function eraseErrors(){
+    //이전 검증 후 표시된 에러 문구를 일괄 삭제
+    let errorSpans = Array.from(document.getElementsByClassName('error-span'));
+    for (let i in errorSpans) {
+        errorSpans[i].innerHTML = '';
+        errorSpans[i].style.display = 'none';
+    }
 }

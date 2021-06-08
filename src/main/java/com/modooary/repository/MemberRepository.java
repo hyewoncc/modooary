@@ -31,7 +31,7 @@ public class MemberRepository {
     }
 
     //단일 이메일로 조회
-    public Member findOneByEmail(String email) {
+    public Member findOneByEmail(String email) throws NoResultException{
         return em.createQuery("select m from Member m" +
                 " where m.email = :email", Member.class)
                 .setParameter("email", email)

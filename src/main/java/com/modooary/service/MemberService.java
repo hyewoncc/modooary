@@ -93,11 +93,16 @@ public class MemberService {
 
     //로그인 처리를 위해 이메일로 검색 후 비밀번호 값 비교
     public boolean memberLogin(String email, String password) {
-        Member member = memberRepository.findOneByEmail(email);
-        if(member.getPassword().equals(password)){
-            return true;
-        }else {
-            return false;
+        boolean result = false;
+
+        try{
+            Member member = memberRepository.findOneByEmail(email);
+            if(member.getPassword().equals(password)) {
+                result = true;
+            }
+        }catch (NoResultException e){
+        }finally {
+            return result;
         }
     }
 

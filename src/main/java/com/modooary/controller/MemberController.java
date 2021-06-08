@@ -91,6 +91,15 @@ public class MemberController {
         return "redirect:/";
     }
 
+    //등록된 회원인지 이메일로 획인
+    @PostMapping("/reset-password/check-email")
+    @ResponseBody
+    public boolean checkEmailMember(HttpServletRequest request) {
+        //등록된 회원이면 true를, 아니면 false를 반환
+        String email = request.getParameter("reset-password-email");
+        return !(memberService.checkEmailUsable(email));
+    }
+
     //개인 정보 수정
     @PostMapping("/info")
     public String editInfo(HttpServletRequest request, @RequestParam("upload-picture") MultipartFile file)
