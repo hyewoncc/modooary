@@ -60,10 +60,16 @@ window.onload = function () {
     //친구 추가 창
     if(document.getElementById('add-friend-open') != null){
         document.getElementById('add-friend-open').onclick = function () {
+            document.getElementById('search-keyword').value = '';
+            document.getElementById('search-result-list').innerHTML = '';
+            document.getElementById('search-keyword-error').innerHTML = '';
+            document.getElementById('search-keyword-error').style.display = 'none';
             document.getElementById('add-friend-wrap').classList.add('show-modal');
         }
     }
     document.getElementById('add-friend-close').onclick = function () {
+        document.getElementById('search-keyword-error').innerHTML = '';
+        document.getElementById('search-keyword-error').style.display = 'none';
         document.getElementById('add-friend-wrap').classList.remove('show-modal');
         document.getElementById('search-keyword').value = '';
     }
@@ -113,7 +119,7 @@ window.onload = function () {
     document.getElementById('search-keyword').addEventListener(
         'keyup', function (e) {
             if (e.key === 'Enter') {
-                searchMember();
+                checkSearchKeyword();
             }
     })
 
@@ -190,16 +196,38 @@ function searchMember() {
         data: keyword,
         type: 'get',
         success: function(data){
-            $('#result-list').empty();
-            $.each(data, function (index, member){
-                let result = $('<div onclick="sendInvitation(' + member.id + ')" class="friend-found">'
-                    + '<img class="friend-picture" src="/img/' + member.picture + '">'
-                    + '<span class="friend-name">' + member.name +'</span>'
-                    + '<span class="friend-email">' + member.email +'</span></div>');
-                $('#result-list').append(result);
-            })
+            $('#search-result-list').empty();
+            let result = '';
+
+            //검색 결과가 있다면 친구 목록을, 없다면 안내문을 표기
+            if(data.length > 0){
+                $.each(data, function (index, member){
+                    result = $('<div onclick="sendInvitation(' + member.id + ')" class="friend-found">'
+                        + '<img class="friend-picture" src="/img/' + member.picture + '">'
+                        + '<span class="friend-name">' + member.name +'</span>'
+                        + '<span class="friend-email">' + member.email +'</span></div>');
+                })
+            }else{
+                result = $('<span>검색 결과가 없어요<br/>다른 키워드로 찾아보세요</span>');
+            }
+            $('#search-result-list').append(result);
         }
     })
+}
+
+//친구찾기 검색란의 유효성 검사, 비어있다면 재입력
+function checkSearchKeyword(){
+    let keywordError = document.getElementById('search-keyword-error');
+    //경고 문구가 있다면 일단 비우기
+    keywordError.style.display = 'none';
+    keywordError.innerHTML = '';
+
+    if((document.getElementById('search-keyword').value).length == 0){
+        keywordError.innerHTML = '검색어를 입력하세요';
+        keywordError.style.display = 'inline';
+    }else {
+        searchMember();
+    }
 }
 
 //친구에게 초대장 보내기 ajax 통신

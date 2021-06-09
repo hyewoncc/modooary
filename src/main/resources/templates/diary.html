@@ -52,9 +52,10 @@
                 </div>
                 <div class="friend-search-wrap">
                     <input type="text" class="input-box" id="search-keyword" placeholder="이름 또는 이메일로 찾기">
-                    <button type="button" th:onclick="'searchMember();'">찾기</button>
+                    <i class="fas fa-search" id="search-icon" onclick="checkSearchKeyword();"></i>
+                    <span id="search-keyword-error" class="error-span"></span>
                 </div>
-                <div id="result-list">
+                <div id="search-result-list">
                 </div>
                 <div class="form-button-wrap">
                     <button type="button" class="form-button cancel-button big-button" id="add-friend-close">닫기</button>
@@ -145,7 +146,7 @@
 
     <div class="body-wrap">
 
-        <div class="diary-list-wrap">
+        <div class="diary-list-wrap layout-wrap">
             <div class="list-header diary-list-title">
                 <div class="diary-list-title-wrap">
                     <a>모두어리 목록</a>
@@ -164,7 +165,7 @@
         </div>
 
 
-        <div class="diary-post-wrap">
+        <div class="diary-post-wrap layout-wrap">
             <div class="list-header content-wrap">
                 <div class="diary-title-wrap" id="diary-title-wrap" th:style="'background-color:' + '#' + ${diary.color}">
                     <div class="diary-title-content">
@@ -239,7 +240,7 @@
         </div>
 
 
-        <div class="member-list-wrap">
+        <div class="member-list-wrap layout-wrap">
             <div class="list-header">
                 <a>이 모두어리의 친구들</a>
             </div>
