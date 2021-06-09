@@ -58,10 +58,23 @@ public class Member {
         this.password = password;
     }
 
+    /* 편의 메소드 */
     public void setRandomPicture() {
         String[] randomPictures = {
                 "bear.png", "blackcat.png", "graycat.png", "parrot.png", "rabbit.png", "yellowcat.png"};
         this.picture = randomPictures[new Random().nextInt(6)];
+    }
+
+    //6자리의 난수를 랜덤키로 지정
+    public void resetPassword() {
+        Random random = new Random();
+        StringBuffer stringBuffer = new StringBuffer();
+
+        while (stringBuffer.length() < 6) {
+            stringBuffer.append(random.nextInt(10));
+        }
+
+        this.password = stringBuffer.toString();
     }
 
 }

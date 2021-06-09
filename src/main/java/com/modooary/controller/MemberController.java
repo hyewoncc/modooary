@@ -18,12 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 import javax.mail.MessagingException;
-import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
@@ -57,7 +55,7 @@ public class MemberController {
 
         //임시 회원 정보를 바탕으로 확인 이메일 발송 후 메인으로 리다이렉트
         try {
-            emailUtil.sendMail(
+            emailUtil.sendJoinMail(
                     preMember.getName(), preMember.getEmail(), preMember.getId(), preMember.getKey());
             model.addAttribute("emailAlert", "success");
         } catch (MessagingException | UnsupportedEncodingException e) {
@@ -91,12 +89,32 @@ public class MemberController {
         return "redirect:/";
     }
 
+    //임시 비밀번호 설정
+    @PostMapping("/reset-password")
+    public String resetPassword(HttpServletRequest request){
+        //이메일로 멤버 조회
+        String email = request.getParameter("reset-password-email");
+        Member member = memberService.findOneByEmail(email);
+
+        //비밀번호를 랜덤 숫자 6자리로 변경
+        memberService.resetPassword(member);
+
+        //임시 비밀번호를 포함한 메일 보내기
+        try {
+            emailUtil.sendResetPasswordMail(member);
+        } catch (MessagingException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        return "redirect:/";
+    }
+
     //등록된 회원인지 이메일로 획인
     @PostMapping("/reset-password/check-email")
     @ResponseBody
     public boolean checkEmailMember(HttpServletRequest request) {
         //등록된 회원이면 true를, 아니면 false를 반환
-        String email = request.getParameter("reset-password-email");
+        String email = request.getParameter("email");
         return !(memberService.checkEmailUsable(email));
     }
 

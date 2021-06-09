@@ -11,6 +11,13 @@ window.onload = function () {
             e.target === w ? w.classList.remove('show-modal') : false;
         })
     })
+
+    //임시 비밀번호 발송 취소 누르면 닫히기
+    document.getElementById('button-reset-password-cancel').onclick = function () {
+        document.getElementById('reset-password-wrap').classList.remove('show-modal');
+        document.getElementById('reset-password-email').value = '';
+        eraseErrors();
+    }
 }
 
 //임시 비밀번호 설정 창 열기

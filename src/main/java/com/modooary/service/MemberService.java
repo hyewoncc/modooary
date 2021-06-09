@@ -47,6 +47,10 @@ public class MemberService {
     public void editMemberPicture(Member member, String pic) {
         member.changePicture(pic);
     }
+    @Transactional
+    public void resetPassword(Member member) {
+        member.resetPassword();
+    }
 
 
     //단일 회원 조회
