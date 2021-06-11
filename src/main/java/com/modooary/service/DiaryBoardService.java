@@ -5,12 +5,19 @@ import com.modooary.domain.DiaryPost;
 import com.modooary.domain.PostReply;
 import com.modooary.repository.DiaryPostRepository;
 import com.modooary.repository.PostReplyRepository;
+import com.modooary.repository.PostRepositoryJpa;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -19,6 +26,7 @@ public class DiaryBoardService {
 
     private final DiaryPostRepository diaryPostRepository;
     private final PostReplyRepository postReplyRepository;
+    private final PostRepositoryJpa postRepositoryJpa;
 
     /* 포스트 CRUD */
     //포스트 생성과 저장
@@ -80,4 +88,11 @@ public class DiaryBoardService {
         diaryReplies = postReplyRepository.findPostReplies(diaryPost.getId());
         return diaryReplies;
     }
+
+    //페이징된 포스트 조회
+    public Page<DiaryPost> loadMorePosts(Diary diary, Pageable pageable) {
+        Page<DiaryPost> diaryPosts = postRepositoryJpa.findByDiary(diary, pageable);
+        return diaryPosts;
+    }
+
 }

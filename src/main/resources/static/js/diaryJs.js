@@ -4,6 +4,10 @@ const colors = ["EA698B", "F15152", "EF8354", "F9C74F", "8cb369",
 
 const pics = ["bear.png", "blackcat.png", "graycat.png", "parrot.png", "rabbit.png", "yellowcat.png"];
 
+const postSize = 5;
+let postPage = 1;
+let postTotal = 5;
+
 //모달창 열고 닫기 등록
 window.onload = function () {
 
@@ -144,6 +148,18 @@ window.onload = function () {
         resize_postarea(document.getElementById('post_text'), 'new-post-submit');
     })
 }
+
+$(function () {
+    if($(window).scrollTop() + $(window).height() == $(document).height()) {
+        loadMorePosts();
+    }
+
+    $(window).scroll(function () {
+        if($(window).scrollTop() + $(window).height() == $(document).height()) {
+            loadMorePosts();
+        }
+    });
+});
 
 //다이어리 설정 창 열기
 function editDiaryOpen(diaryId) {
@@ -363,4 +379,88 @@ function checkBlank(str) {
     }else{
         return true;
     }
+}
+
+//페이지네이션을 위한 함수
+async function loadMorePosts() {
+    let data = '';
+    let diaryId = document.getElementById('diary-id').value;
+
+    await $.get(`/diary/${diaryId}/load-post?page=${postPage}&size=${postSize}`, function (result){
+        data = result;
+    })
+
+    $.each(data, function (index, post){
+        $('#diary-post-content-wrap').append(toPostPage(post));
+    })
+
+    postTotal += 5;
+    postPage += 1;
+}
+
+function toPostPage(post) {
+    let result =
+        $(
+            '<div class="diary-post content-wrap note">'
+                + '<div class="post-low post-header">'
+                    + '<div class="post-picture-wrap">'
+                        + '<img class="post-picture" src="/img/' + post.member_picture + '">'
+                    + '</div>'
+                + '</div>'
+                + '<div class="post-header-content">'
+                    + '<a>' + post.member_name +'</a>'
+                    + '<a>' + post.regdate + '</a>'
+                + '</div>'
+                + '<div class="post-low">'
+                    + '<pre class="post-content">' + post.content + '</pre>'
+                + '</div>'
+            + '</div>')
+        ;
+
+    return result;
+    /*
+    <div class="diary-post content-wrap note" th:each="p : ${posts}">
+                    <div class="post-low post-header">
+                        <div class="post-picture-wrap">
+                            <img class="post-picture" th:src="'/img/' + ${p.member.picture}">
+                        </div>
+                        <div class="post-header-content">
+                            <a th:text="${p.member.name}"></a>
+                            <a th:text="${#temporals.format(p.regdate,'yyyy. MM. dd. HH : mm')}"></a>
+                        </div>
+                    </div>
+                    <div class="post-low">
+                        <pre class="post-content" th:text="${p.content}"></pre>
+                    </div>
+                    <div class="post-low" th:id="'reply-list' + ${p.id}">
+                        <div class="post-reply" th:each="reply : ${replyMap.get(p.id)}">
+                            <div class="reply-picture-wrap">
+                                <img class="reply-picture" th:src="'/img/' + ${reply.picture}">
+                            </div>
+                            <div class="reply-content">
+                                <div class="reply-name-wrap">
+                                    <span th:text="${reply.name}" class="reply-name"></span>
+                                </div>
+                                <div class="reply-content-wrap">
+                                    <pre th:text="${reply.content}" class="reply-text"></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="add-post-reply">
+                            <div class="post-reply">
+                                <div class="reply-picture-wrap">
+                                    <img class="reply-picture" th:src="'/img/' + ${member.picture}">
+                                </div>
+                                <div class="reply-content add-new-reply">
+                                    <textarea class="text-input-clear reply reply-text" th:id="'reply-content' + ${p.id}"
+                                              th:onkeyup="'resize_replyarea(this, \'new-reply-submit' + ${p.id} + '\');'"></textarea>
+                                    <i class="fas fa-pen custom-icon reply-submit hover-diary-color" th:id="'new-reply-submit' + ${p.id}"
+                                       th:onclick="'sendReply(' + ${p.id} + ');'"></i>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+     */
+
 }

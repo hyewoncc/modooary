@@ -9,14 +9,17 @@ import com.modooary.service.MemberService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -107,7 +110,6 @@ public class DiaryController {
         //모델에 현재 사용자 추가
         model.addAttribute("member", member);
 
-
         //이 다이어리가 존재하지 않는 다이어리거나,
         //현재 사용자가 소속 회원이 아니라면 되돌아가기 처리
         if(!(diaryExistCheck(diaryId) &&
@@ -179,6 +181,21 @@ public class DiaryController {
         return "diary";
     }
 
+    @ResponseBody
+    @GetMapping("/diary/{diaryId}/load-post")
+    public List<DiaryPostDto> loadMorePosts(
+            @PathVariable("diaryId") Long diaryId, @RequestParam int page, @RequestParam int size) {
+
+        Diary dairy = diarySetService.findDairy(diaryId);
+        Pageable pageable = PageRequest.of(page, size, Sort.by("regdate").descending());
+        Page<DiaryPost> diaryPosts = diaryBoardService.loadMorePosts(dairy, pageable);
+        List<DiaryPostDto> diaryPostDtos = diaryPosts.stream()
+                .map(i -> new DiaryPostDto(i))
+                .collect(Collectors.toList());
+
+        return diaryPostDtos;
+    }
+
     @Data
     @AllArgsConstructor
     static class InvitationDto {
@@ -203,6 +220,26 @@ public class DiaryController {
             return true;
         }else {
             return false;
+        }
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class DiaryPostDto {
+        private Long id;
+        private Long diary_id;
+        private String member_name;
+        private String member_picture;
+        private String content;
+        private LocalDateTime regdate;
+
+        public DiaryPostDto(DiaryPost diaryPost) {
+            id = diaryPost.getId();
+            diary_id = diaryPost.getDiary().getId();
+            member_name = diaryPost.getMember().getName();
+            member_picture = diaryPost.getMember().getPicture();
+            content = diaryPost.getContent();
+            regdate = diaryPost.getRegdate();
         }
     }
 }
