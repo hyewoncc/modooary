@@ -184,7 +184,7 @@ function sendReply(postId) {
     let data = {'reply' : document.getElementById('reply-content' + postId).value,
                 'postId' : postId};
     $.ajax({
-        url: '/reply',
+        url: '/post-reply',
         data: data,
         type: 'post',
         success: function(replyList){
@@ -383,15 +383,30 @@ function checkBlank(str) {
 
 //페이지네이션을 위한 함수
 async function loadMorePosts() {
-    let data = '';
+    let postData = '';
+    let replyData = '';
     let diaryId = document.getElementById('diary-id').value;
+    let memberPic = document.getElementById('past-picture').value;
 
     await $.get(`/diary/${diaryId}/load-post?page=${postPage}&size=${postSize}`, function (result){
-        data = result;
+        postData = result;
     })
 
-    $.each(data, function (index, post){
+    $.each(postData, function (index, post){
         $('#diary-post-content-wrap').append(toPostPage(post));
+
+        $.ajax({
+            url: '/load-reply?postId=' + post.id,
+            type: 'get',
+            success: function (result){
+                replyData = result;
+                $.each(replyData, function (index, reply){
+                    $('#post-' + post.id).append(toReplyPage(post.id, reply));
+                })
+            }
+        })
+
+        $('#diary-post-content-wrap').append(addReplyPage(post.id, memberPic));
     })
 
     postTotal += 5;
@@ -401,15 +416,15 @@ async function loadMorePosts() {
 function toPostPage(post) {
     let result =
         $(
-            '<div class="diary-post content-wrap note">'
+            '<div class="diary-post content-wrap note" id="post-' + post.id + '">'
                 + '<div class="post-low post-header">'
                     + '<div class="post-picture-wrap">'
                         + '<img class="post-picture" src="/img/' + post.member_picture + '">'
                     + '</div>'
-                + '</div>'
-                + '<div class="post-header-content">'
-                    + '<a>' + post.member_name +'</a>'
-                    + '<a>' + post.regdate + '</a>'
+                    + '<div class="post-header-content">'
+                        + '<a>' + post.member_name +'</a>'
+                        + '<a>' + post.regdate + '</a>'
+                    + '</div>'
                 + '</div>'
                 + '<div class="post-low">'
                     + '<pre class="post-content">' + post.content + '</pre>'
@@ -432,21 +447,7 @@ function toPostPage(post) {
                     <div class="post-low">
                         <pre class="post-content" th:text="${p.content}"></pre>
                     </div>
-                    <div class="post-low" th:id="'reply-list' + ${p.id}">
-                        <div class="post-reply" th:each="reply : ${replyMap.get(p.id)}">
-                            <div class="reply-picture-wrap">
-                                <img class="reply-picture" th:src="'/img/' + ${reply.picture}">
-                            </div>
-                            <div class="reply-content">
-                                <div class="reply-name-wrap">
-                                    <span th:text="${reply.name}" class="reply-name"></span>
-                                </div>
-                                <div class="reply-content-wrap">
-                                    <pre th:text="${reply.content}" class="reply-text"></pre>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                         <div class="add-post-reply">
                             <div class="post-reply">
                                 <div class="reply-picture-wrap">
@@ -464,3 +465,63 @@ function toPostPage(post) {
      */
 
 }
+
+function toReplyPage(postId, reply) {
+    let result =
+        $(
+            '<div class="post-low" id="reply-list' + postId + '">'
+                + '<div class="post-reply">'
+                    + '<div class="reply-picture-wrap">'
+                        + '<img class="reply-picture" src="/img/' + reply.picture + '">'
+                    + '</div>'
+                    + '<div class="reply-content">'
+                        + '<div class="reply-name-wrap">'
+                            + '<span class="reply-name">' + reply.name + '</span>'
+                        + '</div>'
+                        + '<div class="reply-content-wrap">'
+                            + '<pre class="reply-text">' + reply.content + '</pre>'
+                        + '</div>'
+                    + '</div>'
+                + '</div>'
+            + '</div>'
+        )
+
+    return result;
+}
+
+function addReplyPage(postId, memberPic) {
+    let result =
+        $(
+            '<div class="add-post-reply">'
+                + '<div class="post-reply">'
+                    + '<div class="reply-picture-wrap">'
+                        + '<img class="reply-picture" src="/img/' + memberPic +'">'
+                    + '</div>'
+                    + '<div class="reply-content add-new-reply">'
+                        + '<textarea class="text-input-clear reply reply-text" id="reply-content' + postId + '" '
+                            + 'onkeyup="resize_replyarea(this, \'new-reply-submit' + postId + '\');"></textarea>'
+                        + '<i class="fas fa-pen custom-icon reply-submit hover-diary-color" id="new-reply-submit' + postId + '">'
+                            + 'onclick="\'sendReply(' + postId + ');\'"></i>'
+                    + '</div>'
+                + '</div>'
+            + '</div>'
+        )
+
+    return result;
+}
+
+/*
+ <div class="add-post-reply">
+                            <div class="post-reply">
+                                <div class="reply-picture-wrap">
+                                    <img class="reply-picture" th:src="'/img/' + ${member.picture}">
+                                </div>
+                                <div class="reply-content add-new-reply">
+                                    <textarea class="text-input-clear reply reply-text" th:id="'reply-content' + ${p.id}"
+                                              th:onkeyup="'resize_replyarea(this, \'new-reply-submit' + ${p.id} + '\');'"></textarea>
+                                    <i class="fas fa-pen custom-icon reply-submit hover-diary-color" th:id="'new-reply-submit' + ${p.id}"
+                                       th:onclick="'sendReply(' + ${p.id} + ');'"></i>
+                                </div>
+                            </div>
+                        </div>
+ */

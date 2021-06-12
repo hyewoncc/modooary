@@ -222,19 +222,19 @@
                             </div>
                         </div>
                     </div>
-                        <div class="add-post-reply">
-                            <div class="post-reply">
-                                <div class="reply-picture-wrap">
-                                    <img class="reply-picture" th:src="'/img/' + ${member.picture}">
-                                </div>
-                                <div class="reply-content add-new-reply">
-                                    <textarea class="text-input-clear reply reply-text" th:id="'reply-content' + ${p.id}"
-                                              th:onkeyup="'resize_replyarea(this, \'new-reply-submit' + ${p.id} + '\');'"></textarea>
-                                    <i class="fas fa-pen custom-icon reply-submit hover-diary-color" th:id="'new-reply-submit' + ${p.id}"
-                                       th:onclick="'sendReply(' + ${p.id} + ');'"></i>
-                                </div>
+                    <div class="add-post-reply">
+                        <div class="post-reply">
+                            <div class="reply-picture-wrap">
+                                <img class="reply-picture" th:src="'/img/' + ${member.picture}">
+                            </div>
+                            <div class="reply-content add-new-reply">
+                                <textarea class="text-input-clear reply reply-text" th:id="'reply-content' + ${p.id}"
+                                          th:onkeyup="'resize_replyarea(this, \'new-reply-submit' + ${p.id} + '\');'"></textarea>
+                                <i class="fas fa-pen custom-icon reply-submit hover-diary-color" th:id="'new-reply-submit' + ${p.id}"
+                                   th:onclick="'sendReply(' + ${p.id} + ');'"></i>
                             </div>
                         </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -8,7 +8,9 @@ import com.modooary.service.DiaryBoardService;
 import com.modooary.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +25,7 @@ public class ReplyController {
     private final MemberService memberService;
     private final DiaryBoardService diaryBoardService;
 
-    @PostMapping("/reply")
+    @PostMapping("/post-reply")
     @ResponseBody
     public List<PostReplyDto> registerReply(HttpServletRequest request) {
 
@@ -41,6 +43,18 @@ public class ReplyController {
 
         //댓글을 작성한 포스트의 id값으로 댓글을 다시 읽어오기
         List<PostReply> postReplies = diaryBoardService.listPostReplies(diaryPost);
+        List<PostReplyDto> postReplyDtos = postReplies.stream()
+                .map(p -> new PostReplyDto(p))
+                .collect(Collectors.toList());
+
+        return postReplyDtos;
+    }
+
+    @GetMapping("/load-reply")
+    @ResponseBody
+    public List<PostReplyDto> loadPostReplies(@RequestParam Long postId){
+        DiaryPost post = diaryBoardService.findOnePost(postId);
+        List<PostReply> postReplies = diaryBoardService.listPostReplies(post);
         List<PostReplyDto> postReplyDtos = postReplies.stream()
                 .map(p -> new PostReplyDto(p))
                 .collect(Collectors.toList());
