@@ -403,10 +403,9 @@ async function loadMorePosts() {
                 $.each(replyData, function (index, reply){
                     $('#post-' + post.id).append(toReplyPage(post.id, reply));
                 })
+                $('#post-' + post.id).append(addReplyPage(post.id, memberPic));
             }
         })
-
-        $('#diary-post-content-wrap').append(addReplyPage(post.id, memberPic));
     })
 
     postTotal += 5;
@@ -500,8 +499,8 @@ function addReplyPage(postId, memberPic) {
                     + '<div class="reply-content add-new-reply">'
                         + '<textarea class="text-input-clear reply reply-text" id="reply-content' + postId + '" '
                             + 'onkeyup="resize_replyarea(this, \'new-reply-submit' + postId + '\');"></textarea>'
-                        + '<i class="fas fa-pen custom-icon reply-submit hover-diary-color" id="new-reply-submit' + postId + '">'
-                            + 'onclick="\'sendReply(' + postId + ');\'"></i>'
+                        + '<i class="fas fa-pen custom-icon reply-submit hover-diary-color" id="new-reply-submit' + postId + '"'
+                            + 'onclick="sendReply(' + postId + ');"></i>'
                     + '</div>'
                 + '</div>'
             + '</div>'
