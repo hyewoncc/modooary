@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -191,7 +193,7 @@ public class DiaryController {
         Pageable pageable = PageRequest.of(page, size, Sort.by("regdate").descending());
         Page<DiaryPost> diaryPosts = diaryBoardService.loadMorePosts(dairy, pageable);
         List<DiaryPostDto> diaryPostDtos = diaryPosts.stream()
-                .map(i -> new DiaryPostDto(i))
+                .map(p -> new DiaryPostDto(p))
                 .collect(Collectors.toList());
 
         return diaryPostDtos;
@@ -232,7 +234,7 @@ public class DiaryController {
         private String member_name;
         private String member_picture;
         private String content;
-        private LocalDateTime regdate;
+        private String regdate;
 
         public DiaryPostDto(DiaryPost diaryPost) {
             id = diaryPost.getId();
@@ -240,7 +242,7 @@ public class DiaryController {
             member_name = diaryPost.getMember().getName();
             member_picture = diaryPost.getMember().getPicture();
             content = diaryPost.getContent();
-            regdate = diaryPost.getRegdate();
+            regdate = diaryPost.getRegdate().format(DateTimeFormatter.ofPattern("yyyy. MM. dd. HH:mm"));
         }
     }
 }
