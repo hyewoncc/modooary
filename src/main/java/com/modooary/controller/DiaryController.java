@@ -138,7 +138,7 @@ public class DiaryController {
 
         //현재 다이어리의 페이징된 포스트 중 첫페이지를 조
         Diary diary = diarySetService.findDairy(diaryId);
-        Pageable pageable = PageRequest.of(0, 5, Sort.by("regdate").descending());
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("regdate").descending());
         Page<DiaryPost> diaryPosts = diaryBoardService.loadMorePosts(diary, pageable);
         //모델에 다이어리와 포스트 목록 추가
         model.addAttribute("diary", diary);

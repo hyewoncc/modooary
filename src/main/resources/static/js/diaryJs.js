@@ -4,9 +4,9 @@ const colors = ["EA698B", "F15152", "EF8354", "F9C74F", "8cb369",
 
 const pics = ["bear.png", "blackcat.png", "graycat.png", "parrot.png", "rabbit.png", "yellowcat.png"];
 
-const postSize = 5;
+const postSize = 10;
 let postPage = 1;
-let postTotal = 5;
+let postTotal = 10;
 
 //모달창 열고 닫기 등록
 window.onload = function () {
@@ -134,19 +134,15 @@ window.onload = function () {
         document.getElementById('info-name').focus();
     }
 
-    //아이콘 강조색을 다이어리 색으로 설정
-    let iconList = Array.from(document.getElementsByClassName('hover-diary-color'));
-    iconList.forEach(i => {i.addEventListener('mouseover', ()=>{
-        i.style.color = document.getElementById('diary-title-wrap').style.backgroundColor;})
-    })
-    iconList.forEach(i => {i.addEventListener('mouseout', ()=>{
-        i.style.color = '#9ba5b1';})
-    })
+    //아이콘 색상 설정
+    setHoverColor();
 
     //창 크기가 바뀔 때 작성중인 포스트의 입력창 크기도 재조정
     $(window).resize(function () {
         resize_postarea(document.getElementById('post_text'), 'new-post-submit');
     })
+
+    scrollTo(0, 0);
 }
 
 $(function () {
@@ -410,6 +406,7 @@ async function loadMorePosts() {
 
     postTotal += 5;
     postPage += 1;
+    setHoverColor();
 }
 
 function toPostPage(post) {
@@ -476,4 +473,15 @@ function addReplyPage(postId, memberPic) {
         )
 
     return result;
+}
+
+//아이콘 강조색을 다이어리 색으로 설정
+function setHoverColor() {
+    let iconList = Array.from(document.getElementsByClassName('hover-diary-color'));
+    iconList.forEach(i => {i.addEventListener('mouseover', ()=>{
+        i.style.color = document.getElementById('diary-title-wrap').style.backgroundColor;})
+    })
+    iconList.forEach(i => {i.addEventListener('mouseout', ()=>{
+        i.style.color = '#9ba5b1';})
+    })
 }
