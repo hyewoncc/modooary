@@ -137,6 +137,15 @@ window.onload = function () {
     //아이콘 색상 설정
     setHoverColor();
 
+    //포스트 창 다이어리 항목에 맞춰 세로 조정
+    let flags = document.getElementsByClassName('diary-flag').length;
+    let flagsHeight = (flags * 52 + 20);
+    let height = document.getElementById('diary-post-content-wrap').getBoundingClientRect().height;
+    if(height < flagsHeight) {
+        document.getElementById('diary-post-content-wrap').style.height = (flagsHeight + 'px');
+    }
+    console.log(height);
+
     //창 크기가 바뀔 때 작성중인 포스트의 입력창 크기도 재조정
     $(window).resize(function () {
         resize_postarea(document.getElementById('post_text'), 'new-post-submit');
@@ -218,11 +227,11 @@ function searchMember() {
                         + '<img class="friend-picture" src="/img/' + member.picture + '">'
                         + '<span class="friend-name">' + member.name +'</span>'
                         + '<span class="friend-email">' + member.email +'</span></div>');
+                    $('#search-result-list').append(result);
                 })
             }else{
-                result = $('<span>검색 결과가 없어요<br/>다른 키워드로 찾아보세요</span>');
+                $('#search-result-list').append($('<span>검색 결과가 없어요<br/>다른 키워드로 찾아보세요</span>'));
             }
-            $('#search-result-list').append(result);
         }
     })
 }
