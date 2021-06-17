@@ -56,9 +56,11 @@ window.onload = function () {
         document.getElementById('new-diary-title').value = "";
         document.getElementById('form-purpose').value = "create";
         document.getElementById('add-diary-wrap').classList.add('show-modal');
+        scrollLock();
     }
     document.getElementById('add-diary-close').onclick = function () {
         document.getElementById('add-diary-wrap').classList.remove('show-modal');
+        scrollUnlock();
     }
 
     //친구 추가 창
@@ -69,6 +71,7 @@ window.onload = function () {
             document.getElementById('search-keyword-error').innerHTML = '';
             document.getElementById('search-keyword-error').style.display = 'none';
             document.getElementById('add-friend-wrap').classList.add('show-modal');
+            scrollLock();
         }
     }
     document.getElementById('add-friend-close').onclick = function () {
@@ -76,21 +79,25 @@ window.onload = function () {
         document.getElementById('search-keyword-error').style.display = 'none';
         document.getElementById('add-friend-wrap').classList.remove('show-modal');
         document.getElementById('search-keyword').value = '';
+        scrollUnlock();
     }
 
     //초대장 목록 창
     document.getElementById('show-invitation-open').onclick = function () {
         document.getElementById('show-invitation-wrap').classList.add('show-modal');
         checkInvitations();
+        scrollLock();
     }
     document.getElementById('show-invitation-close').onclick = function () {
         document.getElementById('show-invitation-wrap').classList.remove('show-modal');
         location.reload();
+        scrollUnlock();
     }
 
     //설정 창
     document.getElementById('show-info-open').onclick = function () {
         document.getElementById('show-info-wrap').classList.add('show-modal');
+        scrollLock();
         $('#new-password-wrap').empty().append('<span>비밀번호</span>' +
             '<button type="button" class="clear-button" id="open-edit-password">변경하기</button>');
         $('#confirm-password-wrap').empty();
@@ -110,12 +117,14 @@ window.onload = function () {
     //설정 창 닫기
     document.getElementById('info-close').onclick = function () {
         document.getElementById('show-info-wrap').classList.remove('show-modal');
+        scrollUnlock();
     }
 
     //모달창 바깥을 클릭하면 닫히는 기능 추가
     Array.from(document.getElementsByClassName('modal-wrap')).forEach((w) => {
         window.addEventListener('click', (e) => {
             e.target === w ? w.classList.remove('show-modal') : false;
+            scrollUnlock();
         })
     })
 
@@ -144,7 +153,6 @@ window.onload = function () {
     if(height < flagsHeight) {
         document.getElementById('diary-post-content-wrap').style.height = (flagsHeight + 'px');
     }
-    console.log(height);
 
     //창 크기가 바뀔 때 작성중인 포스트의 입력창 크기도 재조정
     $(window).resize(function () {
@@ -505,4 +513,12 @@ function checkTitleBlank() {
         return true;
     }
     return false;
+}
+
+//모달창 여닫을 시 스크롤 잠그고 풀기
+function scrollLock(){
+    $('html, body').css({'overflow': 'hidden', 'height': '100%'});
+}
+function scrollUnlock(){
+    $('html, body').css({'overflow': 'auto', 'height': '100%'});
 }
