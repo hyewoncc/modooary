@@ -494,3 +494,15 @@ function setHoverColor() {
         i.style.color = '#9ba5b1';})
     })
 }
+
+//다이어리 이름 빈칸 유효성 검증
+function checkTitleBlank() {
+    let title = document.getElementById('new-diary-title').value;
+    document.getElementById('diary-title-error').style.display = 'none';
+    if(title.length < 1){
+        document.getElementById('diary-title-error').style.display = 'inline';
+    }else{
+        return true;
+    }
+    return false;
+}

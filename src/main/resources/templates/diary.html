@@ -23,12 +23,13 @@
                     <h3 class="modal-title" id="add-diary-title"></h3>
                 </div>
                 <div class="add-diary-form-wrap">
-                    <form role="form" action="/diary" method="post">
+                    <form role="form" action="/diary" onsubmit="return checkTitleBlank();" method="post">
                         <div class="new-diary-title-wrap">
-                            <input type="text" class="new-diary-title input-box" id="new-diary-title" name="new-diary-title" placeholder="모두어리 제목">
+                            <input type="text" class="new-diary-title input-box" id="new-diary-title" name="new-diary-title" placeholder="모두어리 이름">
                         </div>
                         <div class="color-palette" id="color-palette">
                         </div>
+                        <span class="error-span" id="diary-title-error">이름은 비워둘 수 없어요</span>
                         <input type="hidden" name="color-code" id="color-code" value="">
                         <input type="hidden" name="diary-id" id="diary-id" th:value="${diary.id}">
                         <input type="hidden" name="form-purpose" id="form-purpose" value="">
@@ -154,7 +155,7 @@
             </div>
             <div class="diary-list">
                 <div class="diary-flag" th:each="d : ${diaries}" th:onclick="'location.href=\'/diary/' + ${d.id} + '\''"
-                 th:style="'background-color:' + '#' + ${d.color}">
+                     th:style="'background-color:' + '#' + ${d.color}">
                     <input type="hidden" th:id="'diary-color' + ${d.id}" th:value="${d.color}">
                     <a th:text="${d.title}" class="diary-flag-title"></a>
                 </div>
