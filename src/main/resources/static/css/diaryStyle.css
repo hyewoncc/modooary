@@ -516,6 +516,24 @@ body {
     padding-right: 16px;
 }
 
+.user-setting-wrap {
+    display: flex;
+}
+
+.invitation-button-wrap {
+    display: flex;
+}
+
+#invitation-badge {
+    width: 10px;
+    height: 10px;
+    border-radius: 45%;
+    background-color: orangered;
+    position: relative;
+    left: 14px;
+    bottom: 2px;
+}
+
 .fa-book {
     color: rgba(255, 255, 255, 0.4);
 }

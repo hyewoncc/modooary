@@ -175,7 +175,11 @@
                     </div>
                 </div>
                 <div class="user-setting-wrap">
-                    <i class="fas fa-envelope custom-icon hover-diary-color" id="show-invitation-open"></i>
+                    <div class="invitation-button-wrap">
+                        <div th:if="${invitations.size() != 0}" id="invitation-badge">
+                        </div>
+                        <i class="fas fa-envelope custom-icon hover-diary-color" id="show-invitation-open"></i>
+                    </div>
                     <i class="fas fa-user custom-icon hover-diary-color" id="show-info-open"></i>
                     <i class="fas fa-sign-out-alt custom-icon hover-diary-color" onclick="location.href='/logout'"></i>
                 </div>
