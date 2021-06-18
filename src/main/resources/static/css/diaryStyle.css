@@ -204,6 +204,12 @@ body {
     display: none;
 }
 
+#search-result-list {
+    max-height: 250px;
+    overflow: auto;
+    padding: 6px 4px 6px 4px;
+}
+
 .friend-found {
     font-size: 14px;
     padding: 4px 0px 4px 0px;
