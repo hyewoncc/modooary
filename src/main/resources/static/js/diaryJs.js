@@ -160,6 +160,11 @@ window.onload = function () {
         resize_postarea(document.getElementById('post_text'), 'new-post-submit');
     })
 
+    //토스터 알림 설정
+    toastr.options = {
+        "progressBar": true
+    }
+
     scrollTo(0, 0);
 }
 
@@ -270,11 +275,14 @@ function sendInvitation(memberId) {
         success: function (result){
             switch (result) {
                 case 'already':
-                    alert('이미 가입한 친구입니다'); break;
+                    toastr.info('이미 가입한 친구입니다');
+                    break;
                 case 'waiting':
-                    alert('이미 초대장을 보낸 친구입니다'); break;
+                    toastr.warning('이미 초대장을 보낸 친구입니다');
+                    break;
                 case 'complete':
-                    alert('초대장을 전송했습니다'); break;
+                    toastr.success('초대장을 전송했습니다');
+                    break;
                 default: break;
             }
         }
