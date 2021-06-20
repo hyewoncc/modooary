@@ -1,8 +1,17 @@
 
 //임시 비밀번호 설정 모달창 열고 닫기
 window.onload = function () {
-    document.getElementById('reset-password-open').onclick = function () {
-        resetPasswordOpen();
+
+    if(document.getElementById('reset-password-open') != null){
+        document.getElementById('reset-password-open').onclick = function () {
+            resetPasswordOpen();
+        }
+        //임시 비밀번호 발송 취소 누르면 닫히기
+        document.getElementById('button-reset-password-cancel').onclick = function () {
+            document.getElementById('reset-password-wrap').classList.remove('show-modal');
+            document.getElementById('reset-password-email').value = '';
+            eraseErrors();
+        }
     }
 
     //모달창 바깥을 클릭하면 닫히는 기능 추가
@@ -12,12 +21,23 @@ window.onload = function () {
         })
     })
 
-    //임시 비밀번호 발송 취소 누르면 닫히기
-    document.getElementById('button-reset-password-cancel').onclick = function () {
-        document.getElementById('reset-password-wrap').classList.remove('show-modal');
-        document.getElementById('reset-password-email').value = '';
-        eraseErrors();
+
+    //토스터 알림 설정
+    toastr.options = {
+        "progressBar": true,
+
     }
+
+    if(document.getElementById('email-alert') != null) {
+        if(document.getElementById('email-alert').value == 1){
+            toastr.success('메일 링크로 가입을 완료하세요', '메일 발신 성공');
+        }else if(document.getElementById('email-alert').value == -1){
+            toastr.error('문제가 생겼어요, 다시 시도해보세요', '메일 발신 실패');
+        }else{
+        }
+    }
+
+    console.log(document.getElementById('email-alert'));
 }
 
 //임시 비밀번호 설정 창 열기
@@ -72,6 +92,12 @@ function checkJoinForm() {
         result = false;
     }
 
+    if(result){
+        toastr.info('가입 메일을 전송하고 있어요');
+    }else{
+        toastr.warning('입력 양식을 확인해주세요');
+    }
+
     return result;
 }
 
@@ -121,7 +147,6 @@ function checkResetForm() {
         result = false;
     }
 
-    console.log(result);
     return result;
 }
 

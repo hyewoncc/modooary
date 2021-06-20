@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="/css/mainStyle.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     <script type="text/javascript" src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -28,14 +29,16 @@
                         <div class="form-low">
                             <div class="input-low">
                                 <label for="name">닉네임</label>
-                                <input type="text" class="text-input" id="name" th:field="*{name}" placeholder="나중에 변경할 수 있어요">
+                                <input type="text" class="text-input" id="name" th:field="*{name}"
+                                       autocomplete="false" placeholder="나중에 변경할 수 있어요">
                             </div>
                             <span id="name-error" class="error-span"></span>
                         </div>
                         <div class="form-low">
                             <div class="input-low">
                                 <label for="email">이메일</label>
-                                <input type="text" class="text-input" id="email" th:field="*{email}" placeholder="변경할 수 없어요">
+                                <input type="text" class="text-input" id="email" th:field="*{email}"
+                                       autocomplete="false" placeholder="변경할 수 없어요">
                             </div>
                             <span id="email-error" class="error-span"></span>
                         </div>
@@ -67,5 +70,6 @@
 
 </div>
 <script type="text/javascript" src="/js/joinJs.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </body>
 </html>

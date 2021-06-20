@@ -41,12 +41,7 @@ public class MemberController {
     }
 
     @PostMapping("/sign-in")
-    public String sendSignInMail(@Valid MemberForm memberForm, BindingResult result, Model model) {
-
-        //공란이 있을 시 재작성
-        if (result.hasErrors()) {
-            return "signIn";
-        }
+    public String sendSignInMail(@Valid MemberForm memberForm, BindingResult result, HttpSession session) {
 
         //입력 정보를 받아 임시 회원으로 저장
         PreMember preMember = PreMember.createPreMember(
@@ -57,9 +52,9 @@ public class MemberController {
         try {
             emailUtil.sendJoinMail(
                     preMember.getName(), preMember.getEmail(), preMember.getId(), preMember.getKey());
-            model.addAttribute("emailAlert", "success");
+            session.setAttribute("emailAlert", 1);
         } catch (MessagingException | UnsupportedEncodingException e) {
-            model.addAttribute("emailAlert", "fail");
+            session.setAttribute("emailAlert", -1);
             e.printStackTrace();
         }
 

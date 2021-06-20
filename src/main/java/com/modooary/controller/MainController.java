@@ -23,8 +23,10 @@ public class MainController {
     @RequestMapping("/")
     public String main(Model model, HttpSession session) {
         model.addAttribute("loginForm", new LoginForm());
-        if (!model.containsAttribute("emailAlert")) {
-            model.addAttribute("emailAlert", "");
+
+        if (session.getAttribute("emailAlert") != null) {
+            model.addAttribute("emailAlert", session.getAttribute("emailAlert"));
+            session.removeAttribute("emailAlert");
         }
 
         //이미 로그인 한 사람이라면 다이어리 페이지로 이동시킴

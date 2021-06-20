@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <title>main</title>
     <link href="/css/mainStyle.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     <script type="text/javascript" src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -57,18 +58,18 @@
 
             <div class="login-wrap">
                 <div class="login-form">
-                    <form role="form" action="/login" th:object="${loginForm}" onsubmit="return checkLoginForm();" method="post">
+                    <form role="form" action="/login" onsubmit="return checkLoginForm();" method="post">
                         <div class="form-low">
                             <div class="input-low">
                                 <label for="email">이메일️</label>
-                                <input type="text" class="text-input" id="email" th:field="*{email}" placeholder="이메일 주소">
+                                <input type="text" class="text-input" id="email" name="email" placeholder="이메일 주소">
                             </div>
                             <span id="email-error" class="error-span"></span>
                         </div>
                         <div class="form-low">
                             <div class="input-low">
                                 <label for="password">비밀번호</label>
-                                <input type="password" class="text-input" id="password" th:field="*{password}" placeholder="비밀번호">
+                                <input type="password" class="text-input" id="password" name="password" placeholder="비밀번호">
                             </div>
                             <span id="password-error" class="error-span"></span>
                         </div>
@@ -82,12 +83,10 @@
                             <a class="form-tag" id="reset-password-open">비밀번호를 잊으셨나요?</a>
                         </div>
                     </form>
-                        <div class="form-low" th:switch="${emailAlert}">
-                            <span th:case="''"></span>
-                            <span th:case="'success'">가입완료 링크가 포함된 메일을 보내드렸어요.</span>
-                            <span th:case="'fail'">메일 발송에 실패했어요. 다시 시도해주세요.</span>
-                        </div>
                 </div>
+            </div>
+            <div class="email-info" th:if="${emailAlert != null}">
+                <input type="hidden" id="email-alert" th:value="${emailAlert}">
             </div>
         </div>
 
@@ -95,5 +94,6 @@
 
 </div>
 <script type="text/javascript" src="/js/joinJs.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </body>
 </html>
