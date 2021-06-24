@@ -29,6 +29,11 @@ public class MainController {
             session.removeAttribute("emailAlert");
         }
 
+        if (session.getAttribute("passwordAlert") != null) {
+            model.addAttribute("passwordAlert", session.getAttribute("passwordAlert"));
+            session.removeAttribute("passwordAlert");
+        }
+
         //이미 로그인 한 사람이라면 다이어리 페이지로 이동시킴
         if (session.getAttribute("memberId") != null) {
             return "redirect:/diary";

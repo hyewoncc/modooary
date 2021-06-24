@@ -37,7 +37,14 @@ window.onload = function () {
         }
     }
 
-    console.log(document.getElementById('email-alert'));
+    if(document.getElementById('password-alert') != null) {
+        if(document.getElementById('password-alert').value == 'success'){
+            toastr.success('이메일로 새 비밀번호를 보냈어요', '메일 발신 성공');
+        }else if(document.getElementById('password-alert').value == 'fail'){
+            toastr.error('문제가 생겼어요, 다시 시도해보세요', '메일 발신 실패');
+        }else{
+        }
+    }
 }
 
 //임시 비밀번호 설정 창 열기
@@ -145,6 +152,12 @@ function checkResetForm() {
     //이메일 칸이 비었는지 확인
     if(!checkBlank('reset-password-email', '이메일을')){
         result = false;
+    }
+
+    if(result){
+        toastr.info('메일을 전송하고 있어요');
+    }else{
+        toastr.warning('이메일 주소를 확인하세요');
     }
 
     return result;

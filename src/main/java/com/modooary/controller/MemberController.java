@@ -94,10 +94,14 @@ public class MemberController {
         //비밀번호를 랜덤 숫자 6자리로 변경
         memberService.resetPassword(member);
 
+        HttpSession session = request.getSession();
+
         //임시 비밀번호를 포함한 메일 보내기
         try {
             emailUtil.sendResetPasswordMail(member);
+            session.setAttribute("passwordAlert", "success");
         } catch (MessagingException | UnsupportedEncodingException e) {
+            session.setAttribute("passwordAlert", "fail");
             e.printStackTrace();
         }
 

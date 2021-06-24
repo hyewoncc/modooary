@@ -297,6 +297,7 @@ function acceptInvitation(invitationId) {
         type: 'post',
         success: function (){
             $('#invitation-' + invitationId).remove();
+            toastr.success('가입했습니다');
             checkInvitations();
         }
     })
@@ -310,6 +311,7 @@ function rejectInvitation(invitationId) {
         type: 'post',
         success: function (){
             $('#invitation-' + invitationId).remove();
+            toastr.info('가입을 거졀했습니다');
             checkInvitations();
         }
     })
