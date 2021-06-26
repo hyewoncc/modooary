@@ -1,4 +1,6 @@
 
+let submitCheck = true;
+
 //임시 비밀번호 설정 모달창 열고 닫기
 window.onload = function () {
 
@@ -45,6 +47,8 @@ window.onload = function () {
         }else{
         }
     }
+
+    submitCheck = true;
 }
 
 //임시 비밀번호 설정 창 열기
@@ -100,7 +104,13 @@ function checkJoinForm() {
     }
 
     if(result){
-        toastr.info('가입 메일을 전송하고 있어요');
+        if(submitCheck){
+            toastr.info('가입 메일을 전송하고 있어요');
+            submitCheck = false;
+        }else{
+            toastr.info('메일을 전송중이에요<br/>잠시 기다려주세요');
+            result = false;
+        }
     }else{
         toastr.warning('입력 양식을 확인해주세요');
     }
@@ -291,3 +301,5 @@ function eraseErrors(){
         errorSpans[i].style.display = 'none';
     }
 }
+
+//폼의 중복 제출을 막는 함수
