@@ -477,6 +477,7 @@ body {
     justify-content: space-between;
     padding-left: 10px;
     padding-right: 10px;
+    margin: 3px 0px 3px 0px;
 }
 
 .invitation-wrap.invisible {
@@ -502,6 +503,15 @@ body {
 
 .invitation-button.reject:hover {
     color: tomato;
+}
+
+.invitation-content-wrap {
+    display: flex;
+    flex-direction: column;
+}
+
+.invitation-content {
+    width: 100%;
 }
 
 .big-button {

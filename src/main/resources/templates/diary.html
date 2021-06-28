@@ -82,8 +82,10 @@
                         <div class="post-picture-wrap">
                             <img class="post-picture small" th:src="'/img/' + ${i.sender_picture}">
                         </div>
-                        <span th:text="${i.sender_name} + '님의 초대 - ['"> </span>
-                        <span th:text="${i.diary_title} + ']'"></span>
+                        <div class="invitation-content-wrap">
+                            <span class="invitation-content" th:text="${i.sender_name} + '님의 초대'"></span>
+                            <span class="invitation-content" th:text="'[' + ${i.diary_title} + ']'"></span>
+                        </div>
                     </div>
                     <div class="invitation-wrap right">
                         <i class="fas fa-check invitation-button accept" th:onclick="'acceptInvitation(' + ${i.id} + ');'"></i>
