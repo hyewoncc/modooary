@@ -1,8 +1,9 @@
 # 모두어리
-모두어리는 교환일기 컨셉의 웹서비스입니다  
-현재 개발중이며 아래는 최종 결과물의 예상 이미지 입니다  
+모두 함께 쓰는 다이어리, 모두어리는 교환일기 컨셉의 웹서비스입니다  
 
-![sketch00](https://user-images.githubusercontent.com/80666066/116812151-33545980-ab88-11eb-829a-4f1c70a5a67a.png)
+<img width="1433" alt="스크린샷 2021-06-28 오전 10 08 33" src="https://user-images.githubusercontent.com/80666066/123565769-e6dc7180-d7f8-11eb-8993-3246b0ef3488.png">
+
+![2021-06-28 10 10 11](https://user-images.githubusercontent.com/80666066/123565937-6702d700-d7f9-11eb-9653-c856d9ed791a.gif)
 
 
 ### 기술 스택
