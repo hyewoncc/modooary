@@ -45,7 +45,7 @@ public class DiarySetService {
         return diaryMember.getId();
     }
 
-    //다이어리 제목과 생상 정보 변경
+    //다이어리 제목과 색상 정보 변경
     @Transactional
     public void changeDiaryInfo(Diary diary, String title, String color) {
         diary.changeTitle(title);

@@ -27,15 +27,18 @@ window.onload = function () {
 
     //사진 수정 클릭 시 기본 사진 목록 생성
     document.getElementById('edit-picture-open').onclick = function () {
-        if(document.getElementById('edit-picture-open').getAttribute('class') == ''){
+        if(document.getElementById('edit-picture-open').getAttribute('class') == 'fas fa-images'){
+
+            document.getElementById('picture-list').style.height = '100%';
+
             for(let pic of pics) {
                 $('#sample-pics').append('<div class="picture-chip" id="'+ pic +'">' +
                     '<img class="picture-chip-img" src="/img/' + pic + '"></div>');
             }
             $('#upload-picture-wrap').empty();
-            $('#upload-picture-wrap').append('<label for="upload-picture">직접 업로드</label>'
+            $('#upload-picture-wrap').append('<label for="upload-picture"><i class="fas fa-folder-open"></i></label>'
             + '<input type="file" class="upload-picture" id="upload-picture" name="upload-picture" onchange="setUploadImg(); cancelSelection();" onerror="resetImg();">');
-            document.getElementById('edit-picture-open').setAttribute('class', 'opened');
+            document.getElementById('edit-picture-open').setAttribute('class', 'fas fa-images opened');
 
             //기본 사진 클릭 시 선택되는 기능 추가
             let basicPics = Array.from(document.getElementsByClassName('picture-chip'));
